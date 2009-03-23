@@ -1,18 +1,31 @@
-monotone (0.42-2) unstable; urgency=low
+monotone (0.43-1) unstable; urgency=low
 
-  * debian/control: Allow use of boost1.35-dev or boost1.37-dev
-    as alternatives to plain boost-dev.  Add ${misc:Depends} to
-    monotone and monotone-doc Depends: lines.
+  [ Zack Weinberg ]
+
+  * New upstream version (closes: #512035).
+    - Upstream no longer bundles any dependent libraries (closes: #318509).
+    - Options are now supported in $EDITOR (closes: #320565)
+    - Many bugs have been fixed since the last Debian package, and several
+      important new features added.  Users are strongly encouraged to read
+      the upstream NEWS file, especially if they run netsync servers.
+
   * po/es.po: New Spanish debconf template translation, thanks to
     Fernando González de Requena (closes: #512996).
+  * debian/control: Add library dependencies.  Allow use of boost1.35-dev
+    or boost1.37-dev as alternatives to plain boost-dev.  Add ${misc:Depends}
+    to monotone and monotone-doc Depends: lines.
   * Include a manpage for mtnopt.
   * Add missing 'set -e' to monotone-doc.postinst.
-  * Recreate /var/run/monotone in init script if missing, to
-    accommodate systems where /var/run is a tmpfs.
   * Tweak handling of config.sub/config.guess for build reproducibility.
-  * Upload to unstable now lenny is released (closes: #512035).
 
- -- Zack Weinberg <zackw@panix.com>  Mon, 16 Feb 2009 10:22:12 -0800
+  [ Richard Levitte ]
+
+  * Policy 3.8.1:
+    - Create /var/run/monotone in the monotone-server init script instead
+      of shipping it in the package, to accommodate systems where /var/run
+      is erased on boot.
+
+ -- Zack Weinberg <zackw@panix.com>  Mon, 23 Mar 2009 13:08:44 -0700
 
 monotone (0.42-1) unstable; urgency=low
 
