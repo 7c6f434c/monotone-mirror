@@ -15,6 +15,7 @@ monotone (0.43-1) unstable; urgency=low
     or boost1.37-dev as alternatives to plain boost-dev.  Add ${misc:Depends}
     to monotone and monotone-doc Depends: lines.
   * Include a manpage for mtnopt.
+  * Fix two bad linebreaks in mtn.1 (Closes: #520808).
   * Add missing 'set -e' to monotone-doc.postinst.
   * Tweak handling of config.sub/config.guess for build reproducibility.
 
