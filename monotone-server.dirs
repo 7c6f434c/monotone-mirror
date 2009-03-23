@@ -1,0 +1,6 @@
+var/lib/monotone
+var/lib/monotone/keys
+etc/monotone
+var/log/monotone
+usr/share/doc
+usr/share/monotone
