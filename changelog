@@ -1,3 +1,9 @@
+monotone (0.43-1+lenny) unstable; urgency=low
+
+  * Backport to distribution 'lenny'.
+
+ -- Richard Levitte <richard@levitte.org>  Tue, 24 Mar 2009 11:24:33 +0100
+
 monotone (0.43-1) unstable; urgency=low
 
   [ Zack Weinberg ]
