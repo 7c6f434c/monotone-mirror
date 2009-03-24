@@ -1,4 +1,4 @@
-monotone (0.43-1+lenny) unstable; urgency=low
+monotone (0.43-1+lenny) lenny; urgency=low
 
   * Backport to distribution 'lenny'.
 
