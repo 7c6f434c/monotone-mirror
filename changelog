@@ -1,4 +1,4 @@
-monotone (0.43-1+etch) unstable; urgency=low
+monotone (0.43-1+etch) etch; urgency=low
 
   * Backport to distribution 'etch'.
 
