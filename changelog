@@ -1,3 +1,9 @@
+monotone (0.43-1+stable) stable; urgency=low
+
+  * Backport to distribution 'stable'.
+
+ -- Richard Levitte <richard@levitte.org>  Tue, 24 Mar 2009 11:25:37 +0100
+
 monotone (0.43-1) unstable; urgency=low
 
   [ Zack Weinberg ]
