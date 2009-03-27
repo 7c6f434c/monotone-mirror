@@ -1,4 +1,4 @@
-Monotone is a collective work, Copyright 2002-2008 by its development team.
+Monotone is a collective work, Copyright 2002-2009 by its development team.
 Copyright holders are listed in /usr/share/doc/monotone/AUTHORS.gz.
 The source file was downloaded from http://www.monotone.ca/downloads/
 Upstream authors are reachable at monotone-devel@nongnu.org
@@ -24,9 +24,18 @@ Overall license:
    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 On Debian systems, the complete text of the GNU General Public License
-can be found in `/usr/share/common-licenses/GPL-2'.
+can be found in '/usr/share/common-licenses/GPL-2'.
 
-Monotone includes substantial bodies of code developed by
-others and available under terms more permissive than the GPL.
-See /usr/share/doc/monotone/AUTHORS.gz for complete statements of
-authorship, copyrights, and licensing.
+The monotone sources contain some files developed by third parties,
+that may qualify as "independent and separate works in themselves"
+for the purpose of GPLv2 section 2, if separated from monotone itself.
+Upstream provides a comprehensive statement of authorship and licensing
+for these files; please see /usr/share/doc/monotone/AUTHORS.gz.
+
+The directory /usr/share/doc/monotone/contrib contains files which are
+included in the upstream source distribution, and may be useful in
+conjunction with monotone proper, but are not considered part of
+monotone.  Upstream does not provide definitive copyright and
+licensing information for all these files, but asserts that "to the
+best of our collective knowledge, all files are available under terms
+compatible with the GPL version 2 (*not* necessarily later versions)."
