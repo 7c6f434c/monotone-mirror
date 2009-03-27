@@ -19,6 +19,9 @@ monotone (0.43-1) unstable; urgency=low
   * Add missing 'set -e' to monotone-doc.postinst.
   * Tweak handling of config.sub/config.guess for build reproducibility.
 
+  * debhelper compat level 7
+  * section changes for squeeze
+
   [ Richard Levitte ]
 
   * Policy 3.8.1:

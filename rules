@@ -139,7 +139,7 @@ clean:
 binary-indep: build-indep
 	dh_testdir
 	dh_testroot
-	dh_clean -k
+	dh_prep
 
 	dh_installdirs -i
 	cd debian/monotone-doc/usr/share/doc && \
@@ -177,7 +177,7 @@ binary-indep: build-indep
 binary-arch: build-arch
 	dh_testdir
 	dh_testroot
-	dh_clean -k
+	dh_prep
 	dh_installdirs -a
 
 # again because we don't want the documentation in *-arch, we can't
@@ -195,7 +195,8 @@ binary-arch: build-arch
 	cp contrib/monotone.bash_completion \
 	   debian/monotone/etc/bash_completion.d/monotone
 
-	dh_installchangelogs -a
+# upstream file "ChangeLog" is not actually a change log
+	dh_installchangelogs -a -X ChangeLog
 	dh_installdocs -a
 	dh_installexamples -a
 	dh_installman -a
