@@ -1,3 +1,11 @@
+monotone (0.43-2) unstable; urgency=low
+
+  * Using quilt for patches to upstream code.
+  * Backport upstream fix for unreliable test "spawn_redirected_hook_helper";
+    should fix FTBFS on powerpc and mips.
+
+ -- Zack Weinberg <zackw@panix.com>  Mon, 06 Apr 2009 17:00:59 -0700
+
 monotone (0.43-1) unstable; urgency=low
 
   [ Zack Weinberg ]
