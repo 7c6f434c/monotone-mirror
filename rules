@@ -50,6 +50,10 @@ PAR := $(patsubst parallel=%,-j%,$(filter parallel=%,$(DEB_BUILD_OPTIONS)))
 export DISABLE_NETWORK_TESTS = 1
 export DH_VERBOSE = 1
 
+# This is a hack to get more detail out of the alpha and sparc testsuite
+# crashes.
+export MTN_STACKTRACE_ON_CRASH = 1
+
 
 # Building
 

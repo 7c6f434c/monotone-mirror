@@ -3,6 +3,10 @@ monotone (0.43-2) unstable; urgency=low
   * Using quilt for patches to upstream code.
   * Backport upstream fix for unreliable test "spawn_redirected_hook_helper";
     should fix FTBFS on powerpc and mips.
+  * Temporarily introduce a mode where the fatal signal handler invokes
+    gdb to print a stack trace, and activate it in the testsuite.
+    This will hopefully reveal the cause of the alpha and sparc FTBFSes.
+    Temporarily add build-dep on gdb for this.
 
  -- Zack Weinberg <zackw@panix.com>  Mon, 06 Apr 2009 17:00:59 -0700
 
