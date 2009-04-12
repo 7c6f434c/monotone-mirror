@@ -1,2 +1,2 @@
 00upstream-fix-test-spawn-redirected-hook-helper.diff
-90-gdb-stacktrace-on-crash.diff
+90-stacktrace-on-crash.diff

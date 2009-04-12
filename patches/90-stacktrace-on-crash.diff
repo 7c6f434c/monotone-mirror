@@ -1,0 +1,63 @@
+Add a hack to the fatal signal handlers to invoke gdb and get a full stack
+trace on crash.  This won't fix anything, but by activating this mode
+in the testsuite, we can get more detail on the alpha and sparc FTBFSes.
+
+Index: monotone-0.43/unix/main.cc
+===================================================================
+--- monotone-0.43.orig/unix/main.cc	2009-04-12 13:39:49.000000000 -0700
++++ monotone-0.43/unix/main.cc	2009-04-12 13:42:56.000000000 -0700
+@@ -36,12 +36,21 @@
+ 
+ #include "base.hh"
+ #include <signal.h>
+-#include <time.h>
++#include <stdlib.h>
+ #include <string.h>
+ #include <sys/resource.h>
+ #include <unistd.h>
++#include <time.h>
++
++#if __GLIBC__ >= 3 || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 1)
++# define HAVE_BACKTRACE
++# include <execinfo.h>
++#endif
+ 
+ static char const * argv0;
++#ifdef HAVE_BACKTRACE
++static bool backtrace_on_crash = false;
++#endif
+ 
+ // a convenient wrapper
+ inline void
+@@ -75,6 +84,18 @@
+   write_str_to_stderr("do not send a core dump, but if you have one, "
+                       "\nplease preserve it in case we ask you for "
+                       "information from it.\n");
++#ifdef HAVE_BACKTRACE
++  if (backtrace_on_crash)
++    {
++      void *tracebuf[20];
++      int frames = backtrace(tracebuf, 20);
++      if (frames)
++        {
++          write_str_to_stderr("stack trace:\n");
++          backtrace_symbols_fd(tracebuf, frames, 2);
++        }
++    }
++#endif
+ 
+   raise(signo);
+   // The signal has been reset to the default handler by SA_RESETHAND
+@@ -129,6 +150,12 @@
+ 
+   argv0 = argv[0];
+ 
++#ifdef HAVE_BACKTRACE
++  char *ev = getenv("MTN_STACKTRACE_ON_CRASH");
++  if (ev && ev[0])
++    backtrace_on_crash = true;
++#endif
++
+   bug_signal_action.sa_flags   = SA_RESETHAND;
+   bug_signal_action.sa_handler = &bug_signal;
+   sigemptyset(&bug_signal_action.sa_mask);

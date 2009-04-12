@@ -1,3 +1,11 @@
+monotone (0.43-3) unstable; urgency=low
+
+  * Verified to build with libboost1.38-dev, add to boost alternatives.
+  * Change backtrace-on-crash mechanism to use glibc's backtrace() instead
+    of gdb; less informative, hopefully more robust.
+
+ -- Zack Weinberg <zackw@panix.com>  Sun, 12 Apr 2009 13:01:34 -0700
+
 monotone (0.43-2) unstable; urgency=low
 
   * Using quilt for patches to upstream code.
