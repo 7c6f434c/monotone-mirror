@@ -1,3 +1,12 @@
+monotone (0.44-1) unstable; urgency=low
+
+  * New upstream release.
+  * Rebuilt against libbotan 1.8.2 (closes: #527314).
+  * Revert to unversioned boost build-dependencies now that we have
+    boost-defaults.
+
+ -- Zack Weinberg <zackw@panix.com>  Tue, 12 May 2009 17:43:48 -0700
+
 monotone (0.43-3) unstable; urgency=low
 
   * Verified to build with libboost1.38-dev, add to boost alternatives.
