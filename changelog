@@ -1,7 +1,14 @@
-monotone (0.44-1) unstable; urgency=low
+monotone (0.44-2) unstable; urgency=low
+
+  * Rebuilt against properly versioned botan packages (closes: #527314).
+  * Use #!/bin/bash for script that uses bash arrays (closes: #530143).
+  * Policy 3.8.2; no changes required.
+
+ -- Zack Weinberg <zackw@panix.com>  Thu, 16 Jul 2009 22:10:33 -0700
+
+monotone (0.44-1) UNRELEASED; urgency=low
 
   * New upstream release.
-  * Rebuilt against libbotan 1.8.2 (closes: #527314).
   * Revert to unversioned boost build-dependencies now that we have
     boost-defaults.
 

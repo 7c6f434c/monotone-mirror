@@ -1,0 +1,15 @@
+Fix for Debian bug 530143 (upstream bug 26647) backported from
+upstream revision a2e3901cf187fc830b5a08f67e3bcbf24abbafda:
+|   Use #!/bin/bash for contrib script that makes extensive use of bash
+|   array variables; there is no equivalent for these in portable shell.
+
+Index: monotone-0.44/contrib/monotone-mail-notify.sh
+===================================================================
+--- monotone-0.44.orig/contrib/monotone-mail-notify.sh	2009-07-16 22:15:42.000000000 -0700
++++ monotone-0.44/contrib/monotone-mail-notify.sh	2009-07-16 22:15:57.000000000 -0700
+@@ -1,4 +1,4 @@
+-#! /bin/sh
++#! /bin/bash
+ 
+ # Create a file "notify" next to "read-permissions" and ensure
+ # its contents are in the same format as "read-permissions",

@@ -1,1 +1,2 @@
+00-upstream-fix-shebang-for-bash-script.diff
 90-stacktrace-on-crash.diff
