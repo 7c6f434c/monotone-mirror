@@ -1,0 +1,42 @@
+The Debian packaging for monotone is stored in the "org.debian.monotone" 
+branch of the upstream version control system.  This branch is meant
+to be checked out into the "debian" subdirectory within an upstream
+tarball release.  Revisions on this branch that correspond to numbered
+revisions in debian/changelog are tagged with the pattern
+"debian-monotone-X.Y-N" where X.Y is the upstream version and -N is
+the Debian version.
+
+Thus, this sequence of commands will replicate any Debian version
+starting with 0.43-1:
+
+$ wget -O monotone_X.Y.orig.tar.gz \
+       http://monotone.ca/downloads/X.Y/monotone-X.Y.tar.gz
+$ tar zxf monotone_X.Y.orig.tar.gz
+$ cd monotone-X.Y
+$ mtn clone -r t:debian-monotone-X.Y-N monotone.ca \
+      org.debian.monotone debian
+$ dpkg-buildpackage -i
+
+However, if it is more convenient, feel free to start with the latest
+.diff.gz in the archive and modify as necessary.
+
+We have limited time for Debian work; in particular, we are often slow
+about responding to bug reports, and we generally cannot make an
+upload with less than a week's latency.  Thus, NMUs are welcome, as
+long as we are notified of your intentions and modifications.  If you
+need help with debugging or patching, you may get a quicker response
+from the upstream developers' mailing list <monotone-devel@nongnu.org>
+than from the maintainer address, and we will see messages sent there.
+
+When it is necessary to modify upstream sources, we use quilt.  See
+/usr/share/doc/quilt/README.source for instructions for adding or
+modifying patches.  Patches backported from future upstream releases
+should have a sequence number in the 00-09 range, and patches that are
+not intended to be sent upstream should have a sequence number in the
+90-99 range.
+
+Contra the po-debconf documentation, we do *not* run debconf-updatepo
+in debian/rules clean, because we do not want dpkg-buildpackage modifying
+the debian directory from what is in version control.  Make sure to run
+debconf-updatepo manually if you change monotone-server.templates or
+incorporate new translations.
