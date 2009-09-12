@@ -1,5 +1,13 @@
-monotone (0.44-3) UNRELEASED; urgency=low
+monotone (0.45-1) UNRELEASED; urgency=low
 
+  * New upstream version.
+    - Major changes to key handling, see NEWS and UPGRADE for details.
+    - Database schema upgrade is required.
+    - Now properly skips files with unsupported names, instead of crashing
+      (closes: #444153).
+  * Bump version for automatic database migration in monotone-server.postinst.
+  * Adjust LSB header in monotone-server.monotone.init per advice by
+    Petter Reinholdtsen (closes: #542287).
   * Incorporate Russian template translation (closes: #541758).
     Thanks to Yuri Kozlov.
   * Update all template translations with debconf-updatepo; this
@@ -9,7 +17,7 @@ monotone (0.44-3) UNRELEASED; urgency=low
     French translation to UTF-8.
   * Add a README.source to the debian directory.
 
- -- Zack Weinberg <zackw@panix.com>  Fri, 04 Sep 2009 14:45:23 -0700
+ -- Zack Weinberg <zackw@panix.com>  Sat, 12 Sep 2009 12:01:35 -0700
 
 monotone (0.44-2) unstable; urgency=low
 

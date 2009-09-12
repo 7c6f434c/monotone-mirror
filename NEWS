@@ -1,3 +1,26 @@
+monotone (0.45-1) UNRELEASED; urgency=low
+
+  * Upstream made major changes to key handling: certs now refer to
+    the key that signed them by hash, not name.  This permits some
+    significant security and usability improvements: for instance, it
+    is now possible to retire an old key without changing to a new
+    email address.  See NEWS and UPGRADE for full details.
+
+    There is no "flag day" for this: you do not have to upgrade at the
+    same time as everyone else in your projects.  However, if you have
+    more than one public key in your database with the same name,
+    older clients will not be able to process all of the certs signed
+    with those keys.
+
+    The database format did change.  You need to do the following on
+    each of your databases after taking a backup of them (except for
+    the server database handled by the monotone-server package, for
+    which it is done automatically):
+
+    	mtn db migrate
+
+ -- Zack Weinberg <zackw@panix.com> Sat, 12 Sep 2009 12:01:35 -0700
+
 monotone (0.40-1) unstable; urgency=low
 
   * The database format has changed for efficiency.  You need to do the
