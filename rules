@@ -70,7 +70,13 @@ config.status: configure
 build-arch: build-arch-stamp
 build-arch-stamp: config.status
 	dh_auto_build -- $(PAR) INFO_DEPS=
-	dh_auto_test -- $(PAR) INFO_DEPS= || sh contrib/dump-test-logs.sh
+ifeq "$(findstring nocheck,$(DEB_BUILD_OPTIONS))" ""
+	if [ `id -u` -eq 0 ]; then \
+	  echo "WARNING: Test suite does not work for root - skipping"; \
+	else \
+	  dh_auto_test -- $(PAR) INFO_DEPS= || sh contrib/dump-test-logs.sh; \
+	fi
+endif
 	touch $@
 
 # Conversely, in build-indep all we want is the documentation.

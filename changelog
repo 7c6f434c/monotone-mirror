@@ -13,6 +13,7 @@ monotone (0.45-1) unstable; urgency=low
     or earlier (closes: #542287).
   * Build-depend on poppler-utils | xpdf-utils, as the latter may be dropped
     from squeeze (closes: #549386).
+  * Force-disable testsuite if built with root privileges (closes: #537719).
   * New template translations:
     - Russian, thanks to Yuri Kozlov (closes: #541758).
     - Italian, thanks to Vincenzo Campanella (no bug).
