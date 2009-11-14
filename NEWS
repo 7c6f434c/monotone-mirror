@@ -1,5 +1,11 @@
 monotone (0.45-1) unstable; urgency=low
 
+  * The fix for bug #542287 changes the default run-levels in which
+    the monotone server is started, and may overwrite local customizations
+    to those run-levels in some cases.  If you use the monotone-server
+    package and you changed the /etc/rc*.d links for it, check after
+    upgrade to make sure they are the way you want them.
+
   * Upstream made major changes to key handling: certs now refer to
     the key that signed them by hash, not name.  This permits some
     significant security and usability improvements: for instance, it
