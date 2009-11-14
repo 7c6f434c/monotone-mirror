@@ -1,21 +1,24 @@
-monotone (0.45-1) UNRELEASED; urgency=low
+monotone (0.45-1) unstable; urgency=low
 
   * New upstream version.
     - Major changes to key handling, see NEWS and UPGRADE for details.
     - Database schema upgrade is required.
     - Now properly skips files with unsupported names, instead of crashing
       (closes: #444153).
+    - Incorporates 00-upstream-fix-shebang-for-bash-script.diff.
   * Bump version for automatic database migration in monotone-server.postinst.
   * Adjust LSB header in monotone-server.monotone.init per advice by
     Petter Reinholdtsen (closes: #542287).
-  * Incorporate Russian template translation (closes: #541758).
-    Thanks to Yuri Kozlov.
+  * New template translations:
+    - Russian, thanks to Yuri Kozlov (closes: #541758).
+    - Italian, thanks to Vincenzo Campanella (no bug).
   * Update all template translations with debconf-updatepo; this
     had not been done since 2006.  Fortunately, the templates have
     not changed in at least that long, so no fuzzies are introduced.
   * Fix copyright boilerplate on most template translations.  Convert
     French translation to UTF-8.
   * Add a README.source to the debian directory.
+  * Policy 3.8.3; no changes required.
 
  -- Zack Weinberg <zackw@panix.com>  Sat, 12 Sep 2009 12:01:35 -0700
 

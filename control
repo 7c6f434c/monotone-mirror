@@ -11,7 +11,7 @@ Build-Depends: debhelper (>= 7), autotools-dev, po-debconf, quilt, patch,
  libsqlite3-dev, libz-dev
 Build-Depends-Indep: texinfo, xpdf-utils, ps2eps, texlive-generic-recommended,
  texlive-latex-base
-Standards-Version: 3.8.2
+Standards-Version: 3.8.3
 
 Package: monotone
 Architecture: any

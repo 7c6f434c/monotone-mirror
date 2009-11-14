@@ -1,4 +1,4 @@
-monotone (0.45-1) UNRELEASED; urgency=low
+monotone (0.45-1) unstable; urgency=low
 
   * Upstream made major changes to key handling: certs now refer to
     the key that signed them by hash, not name.  This permits some
@@ -19,7 +19,7 @@ monotone (0.45-1) UNRELEASED; urgency=low
 
     	mtn db migrate
 
- -- Zack Weinberg <zackw@panix.com> Sat, 12 Sep 2009 12:01:35 -0700
+ -- Zack Weinberg <zackw@panix.com>  Sat, 12 Sep 2009 12:01:35 -0700
 
 monotone (0.40-1) unstable; urgency=low
 
