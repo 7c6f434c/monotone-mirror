@@ -7,6 +7,7 @@ monotone (0.45-1) unstable; urgency=low
       (closes: #444153).
     - Incorporates 00-upstream-fix-shebang-for-bash-script.diff.
   * Bump version for automatic database migration in monotone-server.postinst.
+  * Backport upstream fix for 'mtn clone' documentation (closes: #555262).
   * Adjust LSB header in monotone-server.monotone.init per advice by
     Petter Reinholdtsen (closes: #542287).
   * New template translations:
