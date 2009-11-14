@@ -25,7 +25,7 @@ monotone (0.45-1) unstable; urgency=low
   * Add a README.source to the debian directory.
   * Policy 3.8.3; no changes required.
 
- -- Zack Weinberg <zackw@panix.com>  Sat, 12 Sep 2009 12:01:35 -0700
+ -- Zack Weinberg <zackw@panix.com>  Sat, 14 Nov 2009 12:38:19 -0800
 
 monotone (0.44-2) unstable; urgency=low
 
