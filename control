@@ -8,8 +8,8 @@ Homepage: http://monotone.ca/
 Vcs-Browser: http://viewmtn.angrygoats.net/branch/changes/net.venge.monotone
 Build-Depends: debhelper (>= 7), autotools-dev, po-debconf, quilt, patch,
  libboost-dev, libbotan1.8-dev, libidn11-dev, liblua5.1-0-dev, libpcre3-dev,
- libsqlite3-dev, libz-dev
-Build-Depends-Indep: texinfo, poppler-utils | xpdf-utils, ps2eps,
+ libsqlite3-dev, libz-dev, texinfo
+Build-Depends-Indep: poppler-utils | xpdf-utils, ps2eps,
  texlive-generic-recommended, texlive-latex-base
 Standards-Version: 3.8.3
 

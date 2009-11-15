@@ -1,3 +1,11 @@
+monotone (0.45-2) unstable; urgency=low
+  
+  * debian/control (Build-Depend-Indep): move texinfo to Build-Depends;
+    upstream's Makefile wants to use it to build the doc even when not
+    building the -doc package.
+
+ -- Ludovic Brenta <lbrenta@debian.org>  Sun, 15 Nov 2009 10:53:40 +0100
+  
 monotone (0.45-1) unstable; urgency=low
 
   * New upstream version.
