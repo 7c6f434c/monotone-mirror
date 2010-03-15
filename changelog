@@ -1,3 +1,9 @@
+monotone (0.47) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Richard Levitte <richard@levitte.org>  Mon, 15 Mar 2010 07:50:37 +0100
+
 monotone (0.46) UNRELEASED; urgency=low
 
   * New upstream version.  (never got release as Debian package)
