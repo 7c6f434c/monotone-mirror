@@ -1,3 +1,11 @@
+monotone (0.46) UNRELEASED; urgency=low
+
+  * New upstream version.  (never got release as Debian package)
+    - Database schema upgrade is required
+  * Bump version for automatic database migration in monotone-server.postinst.
+
+ -- Richard Levitte <richard@levitte.org>  Mon, 15 Mar 2010 07:34:08 +0100
+
 monotone (0.45-2) unstable; urgency=low
   
   * debian/control (Build-Depend-Indep): move texinfo to Build-Depends;
