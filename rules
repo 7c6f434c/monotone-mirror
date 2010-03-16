@@ -116,7 +116,8 @@ binary-arch: build-arch
 	dh_installchangelogs -a -X ChangeLog
 	dh_installexamples -a
 	dh_installman -a
-	dh_compress -a
+# colorize seems to compress to something weird, Lintian keeps warning about it
+	dh_compress -a -Xcolorize
 	dh_fixperms -a
 	dh_strip -a
 	dh_shlibdeps -a
