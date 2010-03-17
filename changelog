@@ -1,3 +1,10 @@
+monotone (0.47-2) UNRELEASED; urgency=low
+
+  * Updated the copyright years.
+  * Added --timestamp to the server startup in monotone-server.
+
+ -- Richard Levitte <richard@levitte.org>  Wed, 17 Mar 2010 07:46:15 +0100
+
 monotone (0.47-1) unstable; urgency=low
 
   * New upstream version.
