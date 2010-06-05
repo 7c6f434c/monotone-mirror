@@ -1,0 +1,22 @@
+Upstream changelog:
+  A regression in 0.47 prevent successful execution of push / pull /
+  sync over pipes (Debian bug 574512); this has been fixed.
+
+Backported from revision cb7a30cbe9fd90d88ea9085f86b4c3f6e5c8fa73.
+
+Index: monotone-0.47/network/reactor.cc
+===================================================================
+--- monotone-0.47.orig/network/reactor.cc	2010-06-04 23:22:26.822163631 +0100
++++ monotone-0.47/network/reactor.cc	2010-06-04 23:22:34.176915430 +0100
+@@ -87,9 +87,9 @@
+   if (i != items.end())
+     {
+       items.erase(i);
+-      have_pipe = false;
+-      if (readying)
++      if (readying && !have_pipe)
+         item->remove_from_probe(probe);
++      have_pipe = false;
+     }
+ }
+ 
