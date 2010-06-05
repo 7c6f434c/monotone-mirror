@@ -1,2 +1,3 @@
 00-push-pull-sync-fail.diff
+10-slow-branchy-ancestry.diff
 90-stacktrace-on-crash.diff

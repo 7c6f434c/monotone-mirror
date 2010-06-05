@@ -6,8 +6,10 @@ monotone (0.47-2) UNRELEASED; urgency=low
 
   [ Francis Russell ]
   * Backport upstream fix for fatal error during sync (closes: #574512).
+  * Backport upstream fix for slow ancestry checking that made monotone
+    unusable in certain cases.
 
- -- Francis Russell <francis@unchartedbackwaters.co.uk>  Fri, 04 Jun 2010 23:28:47 +0100
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Sat, 05 Jun 2010 01:45:20 +0100
 
 monotone (0.47-1) unstable; urgency=low
 
