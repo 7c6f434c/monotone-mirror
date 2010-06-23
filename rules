@@ -162,6 +162,8 @@ binary-indep: build-indep
 	    debian/monotone-doc/usr/share/doc/monotone/html
 	cp -p html/figures/*.png \
 	    debian/monotone-doc/usr/share/doc/monotone/html/figures
+	cp -p html/images/*.png \
+	    debian/monotone-doc/usr/share/doc/monotone/html/images
 	dh_installdocs -p monotone-doc -X copyright -X NEWS
 
 	cp -p examples/read-permissions \
