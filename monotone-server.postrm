@@ -20,6 +20,9 @@ set -e
 
 MTN_HOME="/var/lib/monotone"
 MTN_KEY_DIR="${MTN_HOME}/keys"
+MTN_LOG_DIR="/var/log/monotone"
+MAINLOG="${MTN_LOG_DIR}/mtn.log"
+ERRORLOG="${MTN_LOG_DIR}/error.log"
 
 locate_key()
 {
@@ -134,6 +137,14 @@ case "$1" in
 	   fi
 	   echo "warning: not deleting monotone user or group because $reason" >&2
        fi
+
+       # delete log files if they exist
+       if [ -d ${MTN_LOG_DIR} ]; then
+         rm -f ${MAINLOG}
+         rm -f ${ERRORLOG}
+         rmdir --ignore-fail-on-non-empty ${MTN_LOG_DIR}
+       fi
+
     ;;
     remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
     ;;

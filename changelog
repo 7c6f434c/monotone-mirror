@@ -4,9 +4,11 @@ monotone (0.48-1) UNRELEASED; urgency=low
     - Incorporates 00-push-pull-sync-fail.diff and
       10-slow-branchy-ancestry.diff.
   * Fix monotone-server postrm script to delete auto-generated key during purge.
-    This broke when the filenames of keys started incorporating the key hash.
+    This became broken when the filenames of keys started incorporating the key
+    hash.
+  * Fix monotone-server postrm script to delete log files on purge. 
 
- -- Francis Russell <francis@unchartedbackwaters.co.uk>  Wed, 23 Jun 2010 17:52:34 +0100
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Thu, 24 Jun 2010 00:55:27 +0100
 
 monotone (0.47-2) unstable; urgency=low
 
