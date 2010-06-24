@@ -1,4 +1,4 @@
-monotone (0.48-1) UNRELEASED; urgency=low
+monotone (0.48-1) unstable; urgency=low
 
   * New upstream version.
     - Incorporates 00-push-pull-sync-fail.diff and
