@@ -3,7 +3,8 @@ Section: vcs
 Priority: optional
 Maintainer: Debian Maintainers for Monotone <monotone-debian@nongnu.org>
 Uploaders: Richard Levitte <richard@levitte.org>,
- Zack Weinberg <zackw@panix.com>, Ludovic Brenta <lbrenta@debian.org>
+ Zack Weinberg <zackw@panix.com>, Ludovic Brenta <lbrenta@debian.org>,
+ Francis Russell <francis@unchartedbackwaters.co.uk>
 Homepage: http://monotone.ca/
 Vcs-Browser: http://viewmtn.angrygoats.net/branch/changes/net.venge.monotone
 Build-Depends: debhelper (>= 7), autotools-dev, po-debconf, quilt, patch,

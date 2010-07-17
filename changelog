@@ -1,3 +1,9 @@
+monotone (0.48-2) UNRELEASED; urgency=low
+
+  * Add myself to list of uploaders.
+
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Sat, 17 Jul 2010 18:47:44 +0100
+
 monotone (0.48-1) unstable; urgency=low
 
   * New upstream version.
