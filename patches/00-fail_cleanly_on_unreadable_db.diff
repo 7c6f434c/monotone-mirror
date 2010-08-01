@@ -1,0 +1,17 @@
+From upstream changelog for revision 78f4db157a353de19b33df875959efc2492812b4:
+  SQLite 3.7 is less eager about creting journal files; in particular a
+  do-nothing 'db migrate' doesn't create one. So don't require that
+  'db migrate' fail if the database directory isn't writeable.
+
+Index: monotone-0.48/tests/fail_cleanly_on_unreadable_db/__driver__.lua
+===================================================================
+--- monotone-0.48.orig/tests/fail_cleanly_on_unreadable_db/__driver__.lua	2010-08-01 02:38:13.994830204 +0100
++++ monotone-0.48/tests/fail_cleanly_on_unreadable_db/__driver__.lua	2010-08-01 02:38:52.708854534 +0100
+@@ -48,7 +48,6 @@
+ check(mtn("--db=subdir/foo.db", "ls", "branches"), 0, false, false)
+ check(mtn("--db=subdir/foo.db", "db", "info"), 0, false, false)
+ check(mtn("--db=subdir/foo.db", "db", "version"), 0, false, false)
+-check(mtn("--db=subdir/foo.db", "db", "migrate"), 1, false, false)
+ check(mtn("--db=subdir/bar.db", "db", "load"), 1, false, false)
+ check(mtn("--db=subdir/baz.db", "db", "init"), 1, false, false)
+ check({"chmod", "a+w", "subdir"})

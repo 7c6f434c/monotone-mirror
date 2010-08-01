@@ -1,1 +1,2 @@
+00-fail_cleanly_on_unreadable_db.diff
 90-stacktrace-on-crash.diff
