@@ -1,4 +1,4 @@
-monotone (0.48-2) UNRELEASED; urgency=low
+monotone (0.48-2) unstable; urgency=low
 
   * Add myself to list of uploaders.
   * Update to standards version 3.9.0 (no changes required).
