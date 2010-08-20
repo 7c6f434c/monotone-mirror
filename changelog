@@ -1,3 +1,9 @@
+monotone (0.48-3) UNRELEASED; urgency=low
+
+  * Add debian/source/format file as it may become mandatory.
+
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Fri, 20 Aug 2010 23:23:05 +0100
+
 monotone (0.48-2) unstable; urgency=low
 
   * Add myself to list of uploaders.
