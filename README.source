@@ -13,8 +13,14 @@ $ wget -O monotone_X.Y.orig.tar.gz \
        http://monotone.ca/downloads/X.Y/monotone-X.Y.tar.gz
 $ tar zxf monotone_X.Y.orig.tar.gz
 $ cd monotone-X.Y
-$ mtn clone -r t:debian-monotone-X.Y-N monotone.ca \
-      org.debian.monotone debian
+$
+$ ##### This is with mtn 0.48[.x]
+$ mtn clone -r t:debian-monotone-X.Y-N \
+      mtn://monotone.ca/debian-mtn org.debian.monotone debian
+$ ##### This is with mtn newer than 0.48[.x] (such as 0.99 and on)
+$ mtn clone -r t:debian-monotone-X.Y-N \
+      'mtn://monotone.ca/debian-mtn?org.debian.monotone' debian
+$
 $ dpkg-buildpackage -i
 
 However, if it is more convenient, feel free to start with the latest
