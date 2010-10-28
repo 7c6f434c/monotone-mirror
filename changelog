@@ -1,17 +1,13 @@
-monotone (0.48.1-1) UNRELEASED; urgency=high
-
-  * New upstream release.
-    - Contains security fix to prevent crashing of servers with remote command
-      execution enabled.
-  * Backport upstream fix for change in SQLite empty blob behaviour.
-
- -- Francis Russell <francis@unchartedbackwaters.co.uk>  Tue, 26 Oct 2010 17:11:42 +0100
-
-monotone (0.48-3) UNRELEASED; urgency=low
+monotone (0.48-3) unstable; urgency=high
 
   * Add debian/source/format file as it may become mandatory.
+  * debian/patches/10-sqlite_3.7.3_empty_blob.diff: new.  Backport
+    upstream fix for change in SQLite empty blob behaviour.   Closes: #601700.
+  * debian/patches/????????.diff: new.  Backport upstream security fix
+    to prevent crashing of servers with remote command execution enabled.
+    Closes: #??????.
 
- -- Francis Russell <francis@unchartedbackwaters.co.uk>  Fri, 20 Aug 2010 23:23:05 +0100
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Thu, 28 Oct 2010 22:59:20 +0200
 
 monotone (0.48-2) unstable; urgency=low
 
