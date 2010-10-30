@@ -1,3 +1,4 @@
 00-fail_cleanly_on_unreadable_db.diff
 10-sqlite_3.7.3_empty_blob.diff
+20-empty-command.diff
 90-stacktrace-on-crash.diff

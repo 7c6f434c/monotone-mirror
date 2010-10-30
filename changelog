@@ -1,11 +1,11 @@
 monotone (0.48-3) unstable; urgency=high
 
   * Add debian/source/format file as it may become mandatory.
-  * debian/patches/10-sqlite_3.7.3_empty_blob.diff: new.  Backport
-    upstream fix for change in SQLite empty blob behaviour.   Closes: #601700.
-  * debian/patches/????????.diff: new.  Backport upstream security fix
-    to prevent crashing of servers with remote command execution enabled.
-    Closes: #??????.
+  * debian/patches/10-sqlite_3.7.3_empty_blob.diff: new. Backport
+    upstream fix for change in SQLite empty blob behaviour (closes: #601700).
+  * debian/patches/20-empty-command.diff: new. Backport upstream security fix
+    to prevent crashing of servers with remote command execution enabled
+    (closes: #601850).
 
  -- Francis Russell <francis@unchartedbackwaters.co.uk>  Thu, 28 Oct 2010 22:59:20 +0200
 
