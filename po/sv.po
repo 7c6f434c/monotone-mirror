@@ -1,13 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Swedish debconf templates translation for monotone.
+# Copyright (C) 2007 Andreas Henriksson <andreas@fatal.se>
+#
+# This file is made available under the GNU GPL version 2.0 or
+# greater.  See the accompanying file COPYING for details.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: monotone\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-13 19:50+0100\n"
+"Report-Msgid-Bugs-To: monotone@packages.debian.org\n"
+"POT-Creation-Date: 2009-09-04 14:30-0700\n"
 "PO-Revision-Date: 2007-01-22 00:08+0100\n"
 "Last-Translator: Andreas Henriksson <andreas@fatal.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -26,8 +27,14 @@ msgstr "Hantera automatiskt monotone databasen?"
 #. Type: boolean
 #. Description
 #: ../monotone-server.templates:1001
-msgid "Select this option to automatically manage the monotone database. If selected, the database will automatically be created. Also when upgrading, the database will be automatically migrated if necessary."
-msgstr "Välj detta alternativ för att automatiskt hantera monotone-databasen. Om vald, kommer databasen automatiskt skapas. Och vid uppgradering kommer databasen automatiskt migreras om nödvändigt."
+msgid ""
+"Select this option to automatically manage the monotone database. If "
+"selected, the database will automatically be created. Also when upgrading, "
+"the database will be automatically migrated if necessary."
+msgstr ""
+"Välj detta alternativ för att automatiskt hantera monotone-databasen. Om "
+"vald, kommer databasen automatiskt skapas. Och vid uppgradering kommer "
+"databasen automatiskt migreras om nödvändigt."
 
 #. Type: string
 #. Description
@@ -38,8 +45,12 @@ msgstr "Monotone nyckel-id:"
 #. Type: string
 #. Description
 #: ../monotone-server.templates:2001
-msgid "Enter the id of the key your monotone server will use. The key id is typically an email address."
-msgstr "Ange id för nyckeln din monotone-server kommer använda. Nyckel-id är normalt en epost-adress."
+msgid ""
+"Enter the id of the key your monotone server will use. The key id is "
+"typically an email address."
+msgstr ""
+"Ange id för nyckeln din monotone-server kommer använda. Nyckel-id är normalt "
+"en epost-adress."
 
 #. Type: password
 #. Description
@@ -50,7 +61,9 @@ msgstr "Monotone nyckel lösenordsfras:"
 #. Type: password
 #. Description
 #: ../monotone-server.templates:3001
-msgid "Please choose a passphrase for your monotone key. If left blank, one will be generated for you."
-msgstr "Vänligen välj en lösenordsfras för din monotone-nyckel. Om detta lämnas tomt kommer en genereras åt dig."
-
-
+msgid ""
+"Please choose a passphrase for your monotone key. If left blank, one will be "
+"generated for you."
+msgstr ""
+"Vänligen välj en lösenordsfras för din monotone-nyckel. Om detta lämnas tomt "
+"kommer en genereras åt dig."

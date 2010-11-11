@@ -1,3 +1,149 @@
+monotone (0.99.1-1) unstable; urgency=low
+
+  * New upstream version.
+  * debian/patches/00-fail_cleanly_on_unreadable_db.diff: removed, since
+    it's been fixed upstream.
+  * debian/patches/10-sqlite_3.7.3_empty_blob.diff: removed, since it's
+    been fixed upstream.
+  * debian/patches/20-empty-command.diff: removed, , since it's been fixed
+    upstream.
+
+ -- Richard Levitte <richard@levitte.org>  Thu, 11 Nov 2010 07:41:12 +0100
+
+monotone (0.48-3) unstable; urgency=high
+
+  * Add debian/source/format file as it may become mandatory.
+  * debian/patches/10-sqlite_3.7.3_empty_blob.diff: new. Backport
+    upstream fix for change in SQLite empty blob behaviour (closes: #601700).
+  * debian/patches/20-empty-command.diff: new. Backport upstream security fix
+    to prevent crashing of servers with remote command execution enabled
+    (closes: #601850).
+
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Thu, 28 Oct 2010 22:59:20 +0200
+
+monotone (0.48-2) unstable; urgency=low
+
+  * Add myself to list of uploaders.
+  * Update to standards version 3.9.0 (no changes required).
+  * Apply upstream patch to fix FTBFS. A unit test
+    assumed that it was always impossible to migrate a monotone database located
+    inside an unwritable directory. This is no longer true with SQLite 3.7
+    (closes: #591112).
+
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Sun, 01 Aug 2010 02:41:40 +0100
+
+monotone (0.48-1) unstable; urgency=low
+
+  * New upstream version.
+    - Incorporates 00-push-pull-sync-fail.diff and
+      10-slow-branchy-ancestry.diff.
+  * Fix monotone-server postrm script to delete auto-generated key during purge.
+    This became broken when the filenames of keys started incorporating the key
+    hash.
+  * Fix monotone-server postrm script to delete log files on purge. 
+
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Thu, 24 Jun 2010 00:55:27 +0100
+
+monotone (0.47-2) unstable; urgency=low
+
+  [ Richard Levitte ]
+  * Updated the copyright years.
+  * Added --timestamp to the server startup in monotone-server.
+
+  [ Francis Russell ]
+  * Backport upstream fix for fatal error during sync (closes: #574512).
+  * Backport upstream fix for slow ancestry checking that made monotone
+    unusable in certain cases.
+
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Sat, 05 Jun 2010 01:45:20 +0100
+
+monotone (0.47-1) unstable; urgency=low
+
+  * New upstream version.
+
+ -- Richard Levitte <richard@levitte.org>  Mon, 15 Mar 2010 07:50:37 +0100
+
+monotone (0.46-1) UNRELEASED; urgency=low
+
+  * New upstream version.  (never got release as Debian package)
+    - Database schema upgrade is required
+  * Bump version for automatic database migration in monotone-server.postinst.
+
+ -- Richard Levitte <richard@levitte.org>  Mon, 15 Mar 2010 07:34:08 +0100
+
+monotone (0.45-2) unstable; urgency=low
+  
+  * debian/control (Build-Depend-Indep): move texinfo to Build-Depends;
+    upstream's Makefile wants to use it to build the doc even when not
+    building the -doc package.
+
+ -- Ludovic Brenta <lbrenta@debian.org>  Sun, 15 Nov 2009 10:53:40 +0100
+  
+monotone (0.45-1) unstable; urgency=low
+
+  * New upstream version.
+    - Major changes to key handling, see NEWS and UPGRADE for details.
+    - Database schema upgrade is required.
+    - Now properly skips files with unsupported names, instead of crashing
+      (closes: #444153).
+    - Incorporates 00-upstream-fix-shebang-for-bash-script.diff.
+  * Bump version for automatic database migration in monotone-server.postinst.
+  * Backport upstream fix for 'mtn clone' documentation (closes: #555652).
+  * Adjust LSB header in monotone-server.monotone.init to match update-rc.d
+    settings, and force those settings to be applied on upgrade from 0.44-2
+    or earlier (closes: #542287).
+  * Build-depend on poppler-utils | xpdf-utils, as the latter may be dropped
+    from squeeze (closes: #549386).
+  * Force-disable testsuite if built with root privileges (closes: #537719).
+  * New template translations:
+    - Russian, thanks to Yuri Kozlov (closes: #541758).
+    - Italian, thanks to Vincenzo Campanella (no bug).
+  * Update all template translations with debconf-updatepo; this
+    had not been done since 2006.  Fortunately, the templates have
+    not changed in at least that long, so no fuzzies are introduced.
+  * Fix copyright boilerplate on most template translations.  Convert
+    French translation to UTF-8.
+  * Add a README.source to the debian directory.
+  * Policy 3.8.3; no changes required.
+
+ -- Zack Weinberg <zackw@panix.com>  Sat, 14 Nov 2009 12:38:19 -0800
+
+monotone (0.44-2) unstable; urgency=low
+
+  * Rebuilt against properly versioned botan packages (closes: #527314).
+  * Use #!/bin/bash for script that uses bash arrays (closes: #530143).
+  * Policy 3.8.2; no changes required.
+
+ -- Zack Weinberg <zackw@panix.com>  Thu, 16 Jul 2009 22:10:33 -0700
+
+monotone (0.44-1) UNRELEASED; urgency=low
+
+  * New upstream release.
+  * Revert to unversioned boost build-dependencies now that we have
+    boost-defaults.
+
+ -- Zack Weinberg <zackw@panix.com>  Tue, 12 May 2009 17:43:48 -0700
+
+monotone (0.43-3) unstable; urgency=low
+
+  * Verified to build with libboost1.38-dev, add to boost alternatives.
+  * Change backtrace-on-crash mechanism to use glibc's backtrace() instead
+    of gdb; less informative, hopefully more robust.
+
+ -- Zack Weinberg <zackw@panix.com>  Sun, 12 Apr 2009 13:01:34 -0700
+
+monotone (0.43-2) unstable; urgency=low
+
+  * Using quilt for patches to upstream code.
+  * Backport upstream fix for unreliable test "spawn_redirected_hook_helper";
+    should fix FTBFS on powerpc and mips.
+  * Temporarily introduce a mode where the fatal signal handler invokes
+    gdb to print a stack trace, and activate it in the testsuite.
+    This will hopefully reveal the cause of the alpha and sparc FTBFSes.
+    Temporarily add build-dep on gdb for this.
+
+ -- Zack Weinberg <zackw@panix.com>  Mon, 06 Apr 2009 17:00:59 -0700
+
 monotone (0.43-1+testing) testing; urgency=low
 
   * Backport to distribution 'testing'.
@@ -25,6 +171,9 @@ monotone (0.43-1) unstable; urgency=low
   * Add missing 'set -e' to monotone-doc.postinst.
   * Tweak handling of config.sub/config.guess for build reproducibility.
 
+  * debhelper compat level 7
+  * section changes for squeeze
+
   [ Richard Levitte ]
 
   * Policy 3.8.1:
@@ -48,6 +197,12 @@ monotone (0.41-1) unstable; urgency=low
   * Policy 3.8.0; no changes required.
 
  -- Zack Weinberg <zackw@panix.com>  Wed, 03 Sep 2008 23:25:14 +0200
+
+monotone (0.40-7) unstable; urgency=low
+
+  * Re-upload with no changes to correct problems in 0.40-6.diff.gz.
+
+ -- Ludovic Brenta <lbrenta@debian.org>  Mon, 28 Jul 2008 16:18:42 +0200
 
 monotone (0.40-6) unstable; urgency=low
 

@@ -18,6 +18,40 @@ set -e
 # for details, see http://www.debian.org/doc/debian-policy/ or
 # the debian-policy package
 
+MTN_HOME="/var/lib/monotone"
+MTN_KEY_DIR="${MTN_HOME}/keys"
+MTN_LOG_DIR="/var/log/monotone"
+MAINLOG="${MTN_LOG_DIR}/mtn.log"
+ERRORLOG="${MTN_LOG_DIR}/error.log"
+
+locate_key()
+{
+  # This function attempts to locate the auto-generated keypair for the monotone-server.
+  # It may list multiple filenames, or none at all.
+  # Filenames are printed to standard out.
+  db_get monotone-server/key
+
+  if [ -d ${MTN_KEY_DIR} ]; then
+    find ${MTN_KEY_DIR} -type f -regextype posix-egrep -regex "${MTN_KEY_DIR}/${RET}(\.[0-9a-f]{40})?"
+  fi
+}
+
+delete_key()
+{
+  local KEY
+  local KEY_COUNT
+
+  KEY=`locate_key`
+  KEY_COUNT=`echo ${KEY} | wc -w`
+
+  if [ ${KEY_COUNT} -gt 1 ]; then
+    echo "Unable to determine auto-generated monotone-server keypair." >&2
+    echo "Please delete it manually from ${MTN_KEY_DIR}." >&2
+  elif [ ${KEY_COUNT} -eq 1 ]; then
+    rm -f "${KEY}"
+  fi
+}
+
 case "$1" in
     purge)
        # note: when executing in this mode, this script cannot assume
@@ -55,33 +89,39 @@ case "$1" in
 
 	   db_get monotone-server/manage-db
 	   if [ "$RET" = true ]; then
-	       db_get monotone-server/key
-	       rm -f /var/lib/monotone/keys/"$RET"
+	       delete_key
+               rm -f ${MTN_HOME}/default.mtn
+               rm -f ${MTN_HOME}/default.mtn~
+               rm -f ${MTN_HOME}/default.mtn-journal
 
-	       rm -f /var/lib/monotone/default.mtn
-	       rm -f /var/lib/monotone/default.mtn~
-	       rm -f /var/lib/monotone/default.mtn-journal
-
-	       grep -v "$RET" /etc/monotone/passphrases \
-	                    > /etc/monotone/passphrases.dpkg-new || true
-	       if [ -s /etc/monotone/passphrases.dpkg-new ]; then
-		   mv -f /etc/monotone/passphrases.dpkg-new \
-		         /etc/monotone/passphrases
-	       else
-		   rm -f /etc/monotone/passphrases.dpkg-new \
-		         /etc/monotone/passphrases
+               if [ -f /etc/monotone/passphrases ]; then
+                 db_get monotone-server/key
+	         grep -v "$RET" /etc/monotone/passphrases \
+	                      > /etc/monotone/passphrases.dpkg-new || true
+	         if [ -s /etc/monotone/passphrases.dpkg-new ]; then
+	  	     mv -f /etc/monotone/passphrases.dpkg-new \
+		           /etc/monotone/passphrases
+	         else
+		     rm -f /etc/monotone/passphrases.dpkg-new \
+		           /etc/monotone/passphrases
+	         fi
 	       fi
-
 	   fi
 	   # do not stop debconf, the debhelper additions will need it.
        fi
-       rmdir --ignore-fail-on-non-empty /var/lib/monotone/keys
-       rmdir --ignore-fail-on-non-empty /var/lib/monotone
+
+       if [ -d ${MTN_KEY_DIR} ]; then
+         rmdir --ignore-fail-on-non-empty ${MTN_KEY_DIR}
+       fi
+
+       if [ -d ${MTN_HOME} ]; then
+         rmdir --ignore-fail-on-non-empty ${MTN_HOME}
+       fi
 
        # if deluser/delgroup exist, remove the server user and group.
        # do not do this if /var/lib/monotone still exists (so that it
        # will still have a named user owning it).
-       if which deluser > /dev/null && [ ! -e /var/lib/monotone ]; then
+       if which deluser > /dev/null && [ ! -e ${MTN_HOME} ]; then
 	   if [ -n "`id -u monotone 2>/dev/null`" ]; then
                deluser --quiet monotone 2>/dev/null >/dev/null
 	   fi
@@ -90,13 +130,21 @@ case "$1" in
                delgroup --quiet monotone 2>/dev/null >/dev/null
 	   fi
        else
-	   if [ -e /var/lib/monotone ]; then
-	       reason="/var/lib/monotone still exists"
+	   if [ -e ${MTN_HOME} ]; then
+	       reason="${MTN_HOME} still exists"
 	   else
 	       reason="deluser is not available"
 	   fi
 	   echo "warning: not deleting monotone user or group because $reason" >&2
        fi
+
+       # delete log files if they exist
+       if [ -d ${MTN_LOG_DIR} ]; then
+         rm -f ${MAINLOG}
+         rm -f ${ERRORLOG}
+         rmdir --ignore-fail-on-non-empty ${MTN_LOG_DIR}
+       fi
+
     ;;
     remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
     ;;

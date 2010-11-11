@@ -11,6 +11,7 @@ Index: /usr/share/doc/monotone/html/index.html
 Files: /usr/share/doc/monotone/html/*.html 
  /usr/share/doc/monotone/html/*.css
  /usr/share/doc/monotone/html/figures/*.png
+ /usr/share/doc/monotone/html/images/*.png
 
 Format: PDF
 Files: /usr/share/doc/monotone/monotone.pdf
