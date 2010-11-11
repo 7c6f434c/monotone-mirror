@@ -1,18 +1,19 @@
-# translation of de.po to german
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# German debconf templates translation for monotone.
+# Copyright (C) 2007 Alwin Meschede <ameschede@gmx.de>.
 #
-# Alwin Meschede <ameschede@gmx.de>, 2007.
+# This file is made available under the GNU GPL version 2.0 or
+# greater.  See the accompanying file COPYING for details.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-07 04:32+0100\n"
+"Report-Msgid-Bugs-To: monotone@packages.debian.org\n"
+"POT-Creation-Date: 2009-09-04 14:30-0700\n"
 "PO-Revision-Date: 2007-01-06 16:01+0100\n"
 "Last-Translator: Alwin Meschede <ameschede@gmx.de>\n"
 "Language-Team: german <debian-l10n-german@lists.debian.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
@@ -48,8 +49,8 @@ msgid ""
 "Enter the id of the key your monotone server will use. The key id is "
 "typically an email address."
 msgstr ""
-"Geben Sie die ID für den Schlüssel des Monotone-Servers ein. Die Schlüssel-ID "
-"ist üblicherweise eine E-Mailadresse."
+"Geben Sie die ID für den Schlüssel des Monotone-Servers ein. Die Schlüssel-"
+"ID ist üblicherweise eine E-Mailadresse."
 
 #. Type: password
 #. Description
@@ -66,5 +67,3 @@ msgid ""
 msgstr ""
 "Bitte wählen Sie ein Passwort für Ihren Monotone-Schlüssel. Wenn Sie nichts "
 "eingeben, wird eines für Sie generiert."
-
-
