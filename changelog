@@ -5,7 +5,7 @@ monotone (0.99.1-1) UNRELEASED; urgency=low
     it's been fixed upstream.
   * debian/patches/10-sqlite_3.7.3_empty_blob.diff: removed, since it's
     been fixed upstream.
-  * debian/patches/20-empty-command.diff: removed, , since it's been fixed
+  * debian/patches/20-empty-command.diff: removed, since it's been fixed
     upstream.
   * debian/monotone-server.postinst: updated because 0.99 has another need
     for database migration.
