@@ -7,8 +7,10 @@ monotone (0.99.1-1) UNRELEASED; urgency=low
     been fixed upstream.
   * debian/patches/20-empty-command.diff: removed, , since it's been fixed
     upstream.
+  * debian/monotone-server.postinst: updated because 0.99 has another need
+    for database migration.
 
- -- Richard Levitte <richard@levitte.org>  Thu, 11 Nov 2010 07:41:12 +0100
+ -- Richard Levitte <richard@levitte.org>  Fri, 12 Nov 2010 17:29:41 +0100
 
 monotone (0.48-3) unstable; urgency=high
 
