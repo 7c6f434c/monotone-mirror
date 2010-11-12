@@ -1,4 +1,4 @@
-monotone (0.99.1-1) unstable; urgency=low
+monotone (0.99.1-1) UNRELEASED; urgency=low
 
   * New upstream version.
   * debian/patches/00-fail_cleanly_on_unreadable_db.diff: removed, since
