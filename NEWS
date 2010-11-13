@@ -1,4 +1,4 @@
-monotone (0.99.1-1) unstable; urgency=low
+monotone (0.99.1-1) UNRELEASED; urgency=low
 
   * Upstream made major changes, for speed, usability and more.  This may
     disrupt some script, as some commands and options have been changed as
