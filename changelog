@@ -1,5 +1,6 @@
 monotone (0.99.1-1) UNRELEASED; urgency=low
 
+  [ Richard Levitte ]
   * New upstream version.
   * debian/patches/00-fail_cleanly_on_unreadable_db.diff: removed, since
     it's been fixed upstream.
@@ -10,7 +11,11 @@ monotone (0.99.1-1) UNRELEASED; urgency=low
   * debian/monotone-server.postinst: updated because 0.99 has another need
     for database migration.
 
- -- Richard Levitte <richard@levitte.org>  Fri, 12 Nov 2010 17:29:41 +0100
+  [ Francis Russell ]
+  * Make monotone-doc suggest monotone instead of require.
+  * Update Vcs-Browser field to point to new source management front-end.
+
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Sat, 13 Nov 2010 22:50:30 +0000
 
 monotone (0.48-3) unstable; urgency=high
 
