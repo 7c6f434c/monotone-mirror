@@ -9,7 +9,10 @@ monotone (0.99.1-1) UNRELEASED; urgency=low
   * debian/patches/20-empty-command.diff: removed, since it's been fixed
     upstream.
   * debian/monotone-server.postinst: updated because 0.99 has another need
-    for database migration.
+    for database migration.  Changed all occurences of --norc to
+    --no-standard-rcfiles.
+  * debian/monotone-server.monotone.init: changed all occurences of --norc
+    to --no-standard-rcfiles.
 
   [ Francis Russell ]
   * Make monotone-doc suggest monotone instead of require.
