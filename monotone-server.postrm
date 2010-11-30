@@ -60,7 +60,7 @@ case "$1" in
        # below we do cleanups only if the relevant program exists.
 
        # remove config files from ucf database and filesystem
-       for conf in write-permissions read-permissions hooks.lua; do
+       for conf in write-permissions read-permissions serverrc; do
 
           # mimic dpkg and remove backups too
           for ext in '' '~' '%' .bak .ucf-new .ucf-old .ucf-dist; do
