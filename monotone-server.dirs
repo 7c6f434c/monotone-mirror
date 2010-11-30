@@ -1,6 +1,8 @@
 var/lib/monotone
 var/lib/monotone/keys
 etc/monotone
+etc/monotone/hooks.d
 var/log/monotone
 usr/share/doc
 usr/share/monotone
+usr/share/monotone/hooks

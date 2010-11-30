@@ -122,13 +122,27 @@ case "$1" in
        MTN_CONFDIR=/etc/monotone
        MTN_KEYDIR=$MTN_HOME/keys
 
-       ucf --debconf-ok /usr/share/monotone/write-permissions.base /etc/monotone/write-permissions
-       ucf --debconf-ok /usr/share/monotone/read-permissions.base /etc/monotone/read-permissions
-       ucf --debconf-ok /usr/share/monotone/hooks.lua.base /etc/monotone/hooks.lua
+       ucf --debconf-ok /usr/share/monotone/write-permissions.base $MTN_CONFDIR/write-permissions
+       ucf --debconf-ok /usr/share/monotone/read-permissions.base $MTN_CONFDIR/read-permissions
+       if [ -f $MTN_CONFDIR/hooks.lua -a ! -f $MTN_CONFDIR/serverrc ]; then
+	   ucf --debconf-ok /usr/share/monotone/serverrc.base $MTN_CONFDIR/hooks.lua
+	   mv  $MTN_CONFDIR/hooks.lua $MTN_CONFDIR/serverrc
+           # mimic dpkg and remove backups too
+           for ext in '' '~' '%' .bak .ucf-new .ucf-old .ucf-dist; do
+               rm -f $MTN_CONFDIR/hooks.lua$ext || true
+           done
+	   ucfr --purge monotone-server $MTN_CONFDIR/hooks.lua
+       else
+	   ucf --debconf-ok /usr/share/monotone/serverrc.base $MTN_CONFDIR/serverrc
+       fi
 
-       ucfr monotone-server /etc/monotone/write-permissions
-       ucfr monotone-server /etc/monotone/read-permissions
-       ucfr monotone-server /etc/monotone/hooks.lua
+       if [ ! -f $MTN_CONFDIR/hooks.d/get_passphrase_from_file.lua ]; then
+	   ln -s /usr/share/monotone/get_passphrase_from_file.lua $MTN_CONFDIR/hooks.d/
+       fi
+
+       ucfr monotone-server $MTN_CONFDIR/write-permissions
+       ucfr monotone-server $MTN_CONFDIR/read-permissions
+       ucfr monotone-server $MTN_CONFDIR/serverrc
 
        # if this is our first install give config files correct permissions
        if [ -z "$2" ]; then
@@ -148,12 +162,12 @@ case "$1" in
            chmod 0750 $MTN_CONFDIR
            chmod 0750 $MTN_KEYDIR
 
-           chown monotone:monotone /etc/monotone/write-permissions
-           chown monotone:monotone /etc/monotone/read-permissions
-           chown monotone:monotone /etc/monotone/hooks.lua
-           chmod 0640 /etc/monotone/write-permissions
-           chmod 0640 /etc/monotone/read-permissions
-           chmod 0640 /etc/monotone/hooks.lua
+           chown monotone:monotone $MTN_CONFDIR/write-permissions
+           chown monotone:monotone $MTN_CONFDIR/read-permissions
+           chown monotone:monotone $MTN_CONFDIR/serverrc
+           chmod 0640 $MTN_CONFDIR/write-permissions
+           chmod 0640 $MTN_CONFDIR/read-permissions
+           chmod 0640 $MTN_CONFDIR/serverrc
        fi
 
        db_get monotone-server/manage-db
@@ -163,7 +177,7 @@ case "$1" in
 
            # read our passphrase from a file
            if [ -e "$MTN_CONFDIR/passphrases" ]; then
-               db_set monotone-server/passphrase "`grep "$MTN_KEY" $MTN_CONFDIR/passphrases | awk -F ' "|" "|" |"' '{print $2}'`"
+               db_set monotone-server/passphrase "`grep "$MTN_KEY" $MTN_CONFDIR/passphrases | cut -f2 -d"\""`"
            fi
 
            db_get monotone-server/passphrase

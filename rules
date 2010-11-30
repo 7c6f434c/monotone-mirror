@@ -170,8 +170,14 @@ binary-indep: build-indep
 	    debian/monotone-server/usr/share/monotone/read-permissions.base
 	cp -p examples/write-permissions \
 	    debian/monotone-server/usr/share/monotone/write-permissions.base
+	cp -p examples/server-setup/serverrc
+	    debian/monotone-server/usr/share/monotone/serverrc.base
 	cp -p contrib/get_passphrase_from_file.lua \
-	    debian/monotone-server/usr/share/monotone/hooks.lua.base
+	    debian/monotone-server/usr/share/monotone/hooks/
+	cp -p contrib/authorize_remote_automate.lua \
+	    debian/monotone-server/usr/share/monotone/hooks/
+	cp -p contrib/monotone-mail-notify.lua contrib/monotone-mail-notify.sh \
+	    debian/monotone-server/usr/share/monotone/hooks/
 
 	dh_installdebconf -i
 
