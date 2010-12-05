@@ -1,3 +1,22 @@
+monotone (0.99.1-1) UNRELEASED; urgency=low
+
+  * Upstream made major changes, for speed, usability and more.  This may
+    disrupt some script, as some commands and options have been changed as
+    well as the output of some commands.  See NEWS and UPGRADE for full
+    details.
+
+    The database format has changed slightly.  You need to do the following
+    on each of your databases after taking a backup of the (except for the
+    server database handled by the monotone-server package, for which it is
+    done automatically):
+
+        mtn db migrate
+
+    No "flag day" is needed for this, you do not have to upgrade at the
+    same time as everyone else in your projects.
+
+ -- Richard Levitte <richard@levitte.org>  Thu, 11 Nov 2010 13:17:33 +0100
+
 monotone (0.45-1) unstable; urgency=low
 
   * The fix for bug #542287 changes the default run-levels in which

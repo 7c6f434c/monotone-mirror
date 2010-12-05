@@ -40,7 +40,7 @@ monotone_check_minimum_previous_version ()
 
 monotone_migrate ()
 {
-    if dpkg --compare-versions "$MTN_VERSION" lt "0.46-1"; then
+    if dpkg --compare-versions "$MTN_VERSION" lt "0.99-1"; then
 	# upgradable version of monotone
 	echo "Attempting to migrate monotone database.  This may take a while..." >&2
 	echo "A backup named '`basename $MTN_DB~`' will be created in $MTN_HOME." >&2
@@ -48,7 +48,8 @@ monotone_migrate ()
 	cp $MTN_DB $MTN_DB~
 
 	if $MTN --db=$MTN_DB db migrate --rcfile=$MTN_CONFDIR/hooks.lua \
-	    --norc --keydir=$MTN_KEYDIR --confdir=$MTN_CONFDIR >&2; then
+	    --no-standard-rcfiles --keydir=$MTN_KEYDIR --confdir=$MTN_CONFDIR \
+	    >&2; then
 	    echo "Database successfully migrated." >&2
 	    true
 	else
@@ -69,7 +70,8 @@ monotone_rosterify ()
 	echo "Attempting to rosterify monotone database..." >&2
 
 	if $MTN --db=$MTN_DB db rosterify --rcfile=$MTN_CONFDIR/hooks.lua \
-	    --norc --keydir=$MTN_KEYDIR --confdir=$MTN_CONFDIR >&2; then
+	    --no-standard-rcfiles --keydir=$MTN_KEYDIR --confdir=$MTN_CONFDIR \
+	    >&2; then
 	    echo "Database successfully rosterified." >&2
 	    true
 	else
@@ -90,7 +92,8 @@ monotone_regenerate_caches ()
 	echo "Attempting to regenerate caches..." >&2
 
 	if $MTN --db=$MTN_DB db regenerate_caches --rcfile=$MTN_CONFDIR/hooks.lua \
-	    --norc --keydir=$MTN_KEYDIR --confdir=$MTN_CONFDIR >&2; then
+	    --no-standard-rcfiles --keydir=$MTN_KEYDIR --confdir=$MTN_CONFDIR \
+	    >&2; then
 	    echo "Caches successfully regenerated." >&2
 	    true
 	else
@@ -178,7 +181,8 @@ case "$1" in
               if [ ! -e $MTN_DB ]; then
                   echo "Creating Monotone database..." >&2
                   $MTN --db=$MTN_DB db init \
-                     --norc --keydir=$MTN_KEYDIR --confdir=$MTN_CONFDIR
+                     --no-standard-rcfiles --keydir=$MTN_KEYDIR \
+                     --confdir=$MTN_CONFDIR
 
                   chmod 0600 $MTN_DB
                   chown monotone:monotone $MTN_DB
@@ -187,7 +191,8 @@ case "$1" in
 
                   yes "$MTN_KEY_PASSWD" |
                      $MTN --db=$MTN_DB genkey $MTN_KEY --quiet \
-                     --norc --keydir=$MTN_KEYDIR --confdir=$MTN_CONFDIR
+                     --no-standard-rcfiles --keydir=$MTN_KEYDIR \
+                     --confdir=$MTN_CONFDIR
 
                   chown monotone:monotone $MTN_HOME/keys/*
 

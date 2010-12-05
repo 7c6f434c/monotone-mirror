@@ -64,8 +64,8 @@ d_start()
     if start-stop-daemon --start --quiet --oknodo --background \
         --pidfile $PIDFILE --exec $DAEMON --chuid monotone --chdir $MTN_HOME \
 	-- \
-        --confdir=$MTN_CONFDIR --db=$MTN_DB --norc --pid-file=$PIDFILE \
-        --log=$MAINLOG --dump=$ERRORLOG --timestamps \
+        --confdir=$MTN_CONFDIR --db=$MTN_DB --no-standard-rcfiles \
+	--pid-file=$PIDFILE --log=$MAINLOG --dump=$ERRORLOG --timestamps \
         --rcfile=$MTN_CONFDIR/hooks.lua --keydir=$MTN_KEYDIR --quiet \
         --bind=$ADDRESS serve
 
