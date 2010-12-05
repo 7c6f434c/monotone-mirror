@@ -15,7 +15,6 @@ monotone (0.99.1-1) UNRELEASED; urgency=low
     to --no-standard-rcfiles.
 
   [ Francis Russell ]
-  * Make monotone-doc suggest monotone instead of require.
   * Update Vcs-Browser field to point to new source management front-end.
   * Install manual page auto-generated during build instead of outdated version.
 
