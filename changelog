@@ -1,3 +1,10 @@
+monotone (0.48-4) UNRELEASED; urgency=low
+
+  * Add updated french po translation from the debian-l10n-french mailing list
+    with minor fixes from Richard Levitte (closes: #606185). 
+
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Sun, 26 Dec 2010 13:55:48 +0000
+
 monotone (0.48-3) unstable; urgency=high
 
   * Add debian/source/format file as it may become mandatory.
