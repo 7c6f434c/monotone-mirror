@@ -1,4 +1,4 @@
-monotone (0.48-4) UNRELEASED; urgency=low
+monotone (0.48-4) unstable; urgency=low
 
   * Add updated french po translation from the debian-l10n-french mailing list
     with minor fixes from Richard Levitte (closes: #606185). 
