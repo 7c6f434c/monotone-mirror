@@ -17,7 +17,8 @@ Standards-Version: 3.9.1
 
 Package: monotone
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, bash (>= 4.0)
+Depends: ${shlibs:Depends}, ${misc:Depends}, ${perl:Depends}, 
+ ${python:Depends},bash (>= 4.0)
 Suggests: monotone-doc, monotone-server
 Recommends: monotone-extras
 Description: A distributed version (revision) control system
