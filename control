@@ -7,7 +7,7 @@ Uploaders: Richard Levitte <richard@levitte.org>,
  Francis Russell <francis@unchartedbackwaters.co.uk>
 Homepage: http://monotone.ca/
 Vcs-Browser: http://code.monotone.ca/p/monotone/source/tree/h:net.venge.monotone/
-Build-Depends: debhelper (>= 7), autotools-dev, po-debconf, quilt, patch,
+Build-Depends: debhelper (>= 7.0.50~), autotools-dev, po-debconf, quilt, patch,
  libboost-dev, libbotan1.8-dev, libidn11-dev, liblua5.1-0-dev, libpcre3-dev,
  libsqlite3-dev, libz-dev, texinfo,
  expect, bash-completion, bash (>= 4.0), source-highlight, mime-construct
@@ -31,7 +31,7 @@ Description: A distributed version (revision) control system
 
 Package: monotone-extras
 Architecture: all
-Depends: monotone (>= ${source:Version})
+Depends: ${misc:Depends}, monotone (>= ${source:Version})
 Suggests: mime-construct, highlight-source, perl
 Description: A distributed version (revision) control system - extras
  Monotone is a free, distributed version control system. It provides
