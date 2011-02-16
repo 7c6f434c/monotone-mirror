@@ -10,7 +10,7 @@ Vcs-Browser: http://code.monotone.ca/p/monotone/source/tree/h:net.venge.monotone
 Build-Depends: debhelper (>= 7), autotools-dev, po-debconf, quilt, patch,
  libboost-dev, libbotan1.8-dev, libidn11-dev, liblua5.1-0-dev, libpcre3-dev,
  libsqlite3-dev, libz-dev, texinfo,
- expect, bash-completion, bash (>= 4.0), highlight-source, mime-construct
+ expect, bash-completion, bash (>= 4.0), source-highlight, mime-construct
 Build-Depends-Indep: poppler-utils | xpdf-utils, ps2eps,
  texlive-generic-recommended, texlive-latex-base
 Standards-Version: 3.9.1
@@ -42,12 +42,12 @@ Description: A distributed version (revision) control system - extras
  .
  This package contains scripts, monotone hooks and more:
  .
- * mtn-cleanup
-   (please install perl to use this)
- * monotone-mail-notify.lua + monotone-mail-notify
-   (please install mime-construct and highlight-source to use this)
- * get_passphrase_from_file.lua
- * authorize_remote_automate.lua
+   * mtn-cleanup
+     (please install perl to use this)
+   * monotone-mail-notify.lua + monotone-mail-notify
+     (please install mime-construct and highlight-source to use this)
+   * get_passphrase_from_file.lua
+   * authorize_remote_automate.lua
 
 Package: monotone-server
 Architecture: all

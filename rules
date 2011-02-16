@@ -42,8 +42,8 @@ export DH_VERBOSE=1
 # relevant dh_auto_* calls behave differently for arch and indep
 # calls.
 override_dh_auto_build:
-	dh_auto_build -pmonotone-doc -- info pdf html
-	dh_auto_build --remaining-packages -- INFO_DEPS=''
+	LANG=POSIX dh_auto_build -pmonotone-doc -- info pdf html
+	LANG=POSIX dh_auto_build --remaining-packages -- INFO_DEPS=''
 
 # Thanks to buildd configuration decisions that no one will explain to
 # me in sufficient detail to detect reliably, we have to disable all
