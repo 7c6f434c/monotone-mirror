@@ -9,15 +9,17 @@ Homepage: http://monotone.ca/
 Vcs-Browser: http://code.monotone.ca/p/monotone/source/tree/h:net.venge.monotone/
 Build-Depends: debhelper (>= 7), autotools-dev, po-debconf, quilt, patch,
  libboost-dev, libbotan1.8-dev, libidn11-dev, liblua5.1-0-dev, libpcre3-dev,
- libsqlite3-dev, libz-dev, texinfo
+ libsqlite3-dev, libz-dev, texinfo,
+ expect, bash-completion, bash (>= 4.0), highlight-source, mime-construct
 Build-Depends-Indep: poppler-utils | xpdf-utils, ps2eps,
  texlive-generic-recommended, texlive-latex-base
 Standards-Version: 3.9.1
 
 Package: monotone
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, bash (>= 4.0)
 Suggests: monotone-doc, monotone-server
+Recommends: monotone-extras
 Description: A distributed version (revision) control system
  Monotone is a free, distributed version control system. It provides
  fully disconnected operation, manages complete tree versions, keeps
@@ -26,9 +28,31 @@ Description: A distributed version (revision) control system
  network protocol, performs history-sensitive merging, and delegates
  trust functions to client-side RSA certificates.
 
+Package: monotone-extras
+Architecture: all
+Depends: monotone (>= ${source:Version})
+Suggests: mime-construct, highlight-source, perl
+Description: A distributed version (revision) control system - extras
+ Monotone is a free, distributed version control system. It provides
+ fully disconnected operation, manages complete tree versions, keeps
+ its state in a local transactional database, supports overlapping
+ branches and extensible metadata, uses an efficient peer-to-peer
+ network protocol, performs history-sensitive merging, and delegates
+ trust functions to client-side RSA certificates.
+ .
+ This package contains scripts, monotone hooks and more:
+ .
+ * mtn-cleanup
+   (please install perl to use this)
+ * monotone-mail-notify.lua + monotone-mail-notify
+   (please install mime-construct and highlight-source to use this)
+ * get_passphrase_from_file.lua
+ * authorize_remote_automate.lua
+
 Package: monotone-server
 Architecture: all
-Depends: monotone (>= ${source:Version}), adduser, ucf (>= 0.28), 
+Depends: monotone (>= ${source:Version}), 
+ monotone-extras (>= ${source:Version}), adduser, ucf (>= 0.28), 
  lsb-base (>= 3.0-6), ${misc:Depends}
 Description: A distributed version (revision) control system - server scripts
  Monotone is a free, distributed version control system. It provides

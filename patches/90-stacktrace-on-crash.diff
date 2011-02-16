@@ -2,13 +2,13 @@ Add a hack to the fatal signal handlers to invoke gdb and get a full stack
 trace on crash.  This won't fix anything, but by activating this mode
 in the testsuite, we can get more detail on the alpha and sparc FTBFSes.
 
-Index: monotone-0.43/unix/main.cc
+Index: monotone-1.0/src/unix/main.cc
 ===================================================================
---- monotone-0.43.orig/unix/main.cc	2009-04-12 13:39:49.000000000 -0700
-+++ monotone-0.43/unix/main.cc	2009-04-12 13:42:56.000000000 -0700
+--- monotone-1.0.orig/src/unix/main.cc	2009-04-12 13:39:49.000000000 -0700
++++ monotone-1.0/src/unix/main.cc	2009-04-12 13:42:56.000000000 -0700
 @@ -36,12 +36,21 @@
  
- #include "base.hh"
+ #include "../base.hh"
  #include <signal.h>
 -#include <time.h>
 +#include <stdlib.h>

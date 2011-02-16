@@ -1,3 +1,12 @@
+monotone (1.0~dev-2) unstable; urgency=low
+
+  * New upstream development version.  The upstream source has gone
+    through a dramatic change, where the source has been reorganised.
+  * New package produced, monotone-extras.
+  * rules: rewritten to use dh.
+
+ -- Richard Levitte <richard@levitte.org>  Sat, 05 Feb 2011 10:53:58 +0100
+
 monotone (1.0~dev-1) UNRELEASED; urgency=low
 
   * New upstream development version.

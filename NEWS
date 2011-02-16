@@ -1,3 +1,10 @@
+monotone (1.0~dev-2) unstable; urgency=low
+
+  A new package is produced, called monotone-extras, containing a
+  tested collection of extra scripts and monotone hooks.
+
+ -- Richard Levitte <richard@levitte.org>  Wed, 16 Feb 2011 01:26:39 +0100
+
 monotone (0.99.1-1) UNRELEASED; urgency=low
 
   * Upstream made major changes, for speed, usability and more.  This may

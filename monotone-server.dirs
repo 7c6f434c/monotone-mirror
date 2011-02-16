@@ -5,4 +5,3 @@ etc/monotone/hooks.d
 var/log/monotone
 usr/share/doc
 usr/share/monotone
-usr/share/monotone/hooks
