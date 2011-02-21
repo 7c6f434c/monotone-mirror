@@ -3,7 +3,25 @@ monotone (1.0~dev-2) unstable; urgency=low
   A new package is produced, called monotone-extras, containing a
   tested collection of extra scripts and monotone hooks.
 
- -- Richard Levitte <richard@levitte.org>  Wed, 16 Feb 2011 01:26:39 +0100
+  The hook 'get_netsync_key' has been split upstream into two separate
+  hooks, 'get_netsync_client_key' and 'get_netsync_server_key'.
+  Please notify the users that they will need to change their custom
+  hooks to accomodate this change.
+
+  The database format has changed slightly upstream, for speed
+  improvements.  You need to do the following on each of your
+  databases after taking a backup of the (except for the server
+  database handled by the monotone-server package, for which it is
+  done automatically):
+
+        mtn db migrate
+
+  No "flag day" is needed for this, you do not have to upgrade at the
+  same time as everyone else in your projects.
+
+  For more information, please read the upstream NEWS file.
+
+ -- Richard Levitte <richard@levitte.org>  Mon, 21 Feb 2011 03:59:13 +0100
 
 monotone (0.99.1-1) UNRELEASED; urgency=low
 
