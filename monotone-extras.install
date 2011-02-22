@@ -1,2 +1,3 @@
+usr/bin/mtn-cleanup
 usr/share/monotone/hooks
 usr/share/monotone/scripts
