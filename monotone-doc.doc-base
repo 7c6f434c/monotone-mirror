@@ -14,7 +14,7 @@ Files: /usr/share/doc/monotone/html/*.html
  /usr/share/doc/monotone/html/images/*.png
 
 Format: PDF
-Files: /usr/share/doc/monotone/monotone.pdf.gz
+Files: /usr/share/doc/monotone/monotone.pdf
 
 Format: Info
 Index: /usr/share/info/monotone.info.gz

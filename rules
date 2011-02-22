@@ -89,8 +89,9 @@ override_dh_installchangelogs:
 	dh_installchangelogs -X ChangeLog
 
 # colorize seems to compress to something weird, Lintian keeps warning about it
+# PDFs should generally not be compressed.
 override_dh_compress:
-	dh_compress -Xcolorize
+	dh_compress -Xcolorize -X.pdf
 
 # The upstream makefiles' install targets do nothing useful for these
 # packages.  (In particular, we do not want the monolithic
