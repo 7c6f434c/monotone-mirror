@@ -177,7 +177,7 @@ case "$1" in
 
            # read our passphrase from a file
            if [ -e "$MTN_CONFDIR/passphrases" ]; then
-               db_set monotone-server/passphrase "`grep "$MTN_KEY" $MTN_CONFDIR/passphrases | cut -f2 -d"\""`"
+               db_set monotone-server/passphrase "`grep "$MTN_KEY" $MTN_CONFDIR/passphrases | cut -f2 -d"\\""`"
            fi
 
            db_get monotone-server/passphrase
