@@ -6,30 +6,39 @@
 
 # put this up top so it's the default rule.
 #
-# Policy (section 4.9) says that build should depend on build-indep.
-# However, this is only a "should", and it doesn't work, because
-# dpkg-buildpackage uses build even in -B mode.  Thus, if build
-# depends on build-indep, even a -B build will try to generate the
-# manuals -- and the buildds will do this having installed only the
-# Build-Depends, for they are ignorant of B-D-I.  All die, O the
-# embarrassment.  (This has been a festering known problem for 
-# nearly a *decade*, with no forward progress since 2007.  See bugs
-# #218893 and #229357.)
+# Policy (version 3.9.1.0, 2010-07-26, section 4.9) says that when
+# different binary packages are produced in different ways, it doesn't
+# make sense to have a build target that builds it all.  Quoted:
 #
-# Conversely, not having build depend on build-indep means that if you
-# do a normal dpkg-buildpackage, the manual gets generated in the
-# binary-indep phase rather than the build phase, which works fine (as
-# long as you are being sensible and using fakeroot, anyway; I haven't
-# tried it with actual root privileges and don't propose to).
+#   or some packages, notably ones where the same source tree is
+#   compiled in different ways to produce two binary packages, the
+#   build target does not make much sense. For these packages it is
+#   good enough to provide two (or more) targets (build-a and build-b
+#   or whatever) for each of the ways of building the package, and a
+#   build target that does nothing. The binary target will have to
+#   build the package in each of the possible ways and make the binary
+#   package out of each.
 #
-# Note that we don't want the 'build' and 'binary' targets themselves
-# to do anything, and instead only rely on the dependencies doing the
-# actual work.  Therefore, we need to give them a no-op, or the target
-# will be caught by the % target just below. 
-build: build-arch
-	@:
-binary: binary-indep binary-arch
-	@:
+#   ...
+#
+#   When a package has a configuration and build routine which takes a
+#   long time, or when the makefiles are poorly designed, or when
+#   build needs to run clean first, it is a good idea to touch build
+#   when the build process is complete. This will ensure that if
+#   debian/rules build is run again it will not rebuild the whole
+#   program.
+#
+# We definitely have this situation, as we have -indep packages and
+# -arch packages, and we need to treat them separately, because the
+# buildds will build with -B after having installed only the Build-
+# Depends (for they are ignorant of B-D-I.  All die, O the
+# embarrassment)
+#
+# So, we disable the build target entirely and let the binary targets
+# take care of building as well (which dh provides support for, so we
+# really need nothing extra here).
+build:
+	@echo 'The build target is disabled, please use the appropriate binary target.'
 
 # Uncomment this to turn on verbose mode.
 export DH_VERBOSE=1
@@ -69,10 +78,11 @@ override_dh_auto_install:
 		cp -p examples/$$x debian/tmp/usr/share/monotone/$${x##*/}.base; \
 	done
 
+# Finally, there are a few overrides needed for the install phase.
+
+# Targets where we rely entirely on the upstream installation
 override_dh_install:
 	dh_install --sourcedir=debian/tmp
-
-# Finally, there are a few overrides needed for the install phase.
 
 # Upstream file "ChangeLog" is not actually a change log
 override_dh_installchangelogs:
