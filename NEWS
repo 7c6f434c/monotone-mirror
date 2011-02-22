@@ -6,7 +6,7 @@ monotone (1.0~dev-2) unstable; urgency=low
   The hook 'get_netsync_key' has been split upstream into two separate
   hooks, 'get_netsync_client_key' and 'get_netsync_server_key'.
   Please notify the users that they will need to change their custom
-  hooks to accomodate this change.
+  hooks to accommodate this change.
 
   The database format has changed slightly upstream, for speed
   improvements.  You need to do the following on each of your
