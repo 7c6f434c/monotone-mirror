@@ -31,7 +31,7 @@ Description: A distributed version (revision) control system
 Package: monotone-extras
 Architecture: all
 Depends: ${misc:Depends}, monotone (>= ${source:Version})
-Suggests: mime-construct, highlight-source, perl
+Recommends: mime-construct, highlight-source, perl, python
 Description: A distributed version (revision) control system - extras
  Monotone is a free, distributed version control system. It provides
  fully disconnected operation, manages complete tree versions, keeps
