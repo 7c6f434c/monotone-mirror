@@ -31,7 +31,7 @@ Description: A distributed version (revision) control system
 Package: monotone-extras
 Architecture: all
 Depends: ${misc:Depends}, monotone (>= ${source:Version})
-Recommends: mime-construct, highlight-source, perl, python
+Recommends: mime-construct, source-highlight, perl, python
 Description: A distributed version (revision) control system - extras
  Monotone is a free, distributed version control system. It provides
  fully disconnected operation, manages complete tree versions, keeps
@@ -45,7 +45,7 @@ Description: A distributed version (revision) control system - extras
    * mtn-cleanup
      (please install perl to use this)
    * monotone-mail-notify.lua + monotone-mail-notify
-     (please install mime-construct and highlight-source to use this)
+     (please install mime-construct and source-highlight to use this)
    * get_passphrase_from_file.lua
    * authorize_remote_automate.lua
 
