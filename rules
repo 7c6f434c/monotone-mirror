@@ -34,6 +34,11 @@
 # Depends (for they are ignorant of B-D-I.  All die, O the
 # embarrassment)
 #
+# However, it also means that we're having configuring, building and
+# testing done via fakeroot, which isn't a good idea.  However, that's
+# easy to deal with with a little hack (see the file 'nofakeroot' in
+# this directory) and overrides for those cases.
+#
 # So, we disable the build target entirely and let the binary targets
 # take care of building as well (which dh provides support for, so we
 # really need nothing extra here).
@@ -46,13 +51,17 @@ export DH_VERBOSE=1
 %:
 	dh $@ --parallel --with=bash_completion
 
+override_dh_auto_configure:
+	debian/nofakeroot dh_auto_configure
 # To enable documentation to only be built for the monotone-doc
 # package (really, any -indep target), we need to make sure all
 # relevant dh_auto_* calls behave differently for arch and indep
 # calls.
 override_dh_auto_build:
-	LANG=POSIX dh_auto_build -pmonotone-doc -- info pdf html
-	LANG=POSIX dh_auto_build --remaining-packages -- INFO_DEPS=''
+	LANG=POSIX debian/nofakeroot \
+	    dh_auto_build -pmonotone-doc -- info pdf html
+	LANG=POSIX debian/nofakeroot \
+	    dh_auto_build --remaining-packages -- INFO_DEPS=''
 
 # Thanks to buildd configuration decisions that no one will explain to
 # me in sufficient detail to detect reliably, we have to disable all
@@ -65,7 +74,7 @@ export DISABLE_NETWORK_TESTS = 1
 export MTN_STACKTRACE_ON_CRASH = 1
 
 override_dh_auto_test:
-	dh_auto_test -pmonotone -- INFO_DEPS='' || \
+	debian/nofakeroot dh_auto_test -pmonotone -- INFO_DEPS='' || \
 	    sh extra/building/dump-test-logs.sh
 
 override_dh_auto_install:
