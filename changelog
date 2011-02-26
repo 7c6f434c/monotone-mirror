@@ -4,8 +4,12 @@ monotone (1.0~dev-2) unstable; urgency=low
     through a dramatic change, where the source has been reorganised.
   * New package produced, monotone-extras.
   * rules: rewritten to use dh.
+  * nofakeroot: added script that runs a command after temporarly disabling
+    the effects of fakeroot.  We need this because we build via the binary /
+    binary-arch / binary-indep targets, and they are run via fakeroot, which
+    is not recommended for certain build targets.
 
- -- Richard Levitte <richard@levitte.org>  Sat, 05 Feb 2011 10:53:58 +0100
+ -- Richard Levitte <richard@levitte.org>  Sat, 26 Feb 2011 08:15:03 +0100
 
 monotone (1.0~dev-1) UNRELEASED; urgency=low
 
