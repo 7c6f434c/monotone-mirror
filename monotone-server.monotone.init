@@ -66,7 +66,7 @@ d_start()
 	-- \
         --confdir=$MTN_CONFDIR --db=$MTN_DB --no-standard-rcfiles \
 	--pid-file=$PIDFILE --log=$MAINLOG --dump=$ERRORLOG --timestamps \
-        --rcfile=$MTN_CONFDIR/hooks.lua --keydir=$MTN_KEYDIR --quiet \
+        --rcfile=$MTN_CONFDIR/serverrc --keydir=$MTN_KEYDIR --quiet \
         --bind=$ADDRESS serve
 
     then log_end_msg 0
