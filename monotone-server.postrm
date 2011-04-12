@@ -21,6 +21,7 @@ set -e
 MTN_HOME="/var/lib/monotone"
 MTN_KEY_DIR="${MTN_HOME}/keys"
 MTN_LOG_DIR="/var/log/monotone"
+MTN_RUN_DIR="/var/run/monotone"
 MAINLOG="${MTN_LOG_DIR}/mtn.log"
 ERRORLOG="${MTN_LOG_DIR}/error.log"
 
@@ -116,6 +117,10 @@ case "$1" in
 
        if [ -d ${MTN_HOME} ]; then
          rmdir --ignore-fail-on-non-empty ${MTN_HOME}
+       fi
+
+       if [ -d ${MTN_RUN_DIR} ]; then
+         rmdir --ignore-fail-on-non-empty ${MTN_RUN_DIR}
        fi
 
        # if deluser/delgroup exist, remove the server user and group.

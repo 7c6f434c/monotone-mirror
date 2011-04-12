@@ -1,10 +1,14 @@
 monotone (1.0-1) unstable; urgency=low
 
+  [ Richard Levitte ]
   * New upstream release.
   * monotone-server.monotone.init: Small adaptation, the startup lua
     script changed name from hooks.lua to serverrc.
 
- -- Richard Levitte <richard@levitte.org>  Wed, 06 Apr 2011 07:41:00 +0200
+  [ Francis Russell ]
+  * Attempt deletion of /var/run/monotone on purge. 
+
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Tue, 12 Apr 2011 14:06:55 +0100
 
 monotone (1.0~dev-2) unstable; urgency=low
 
