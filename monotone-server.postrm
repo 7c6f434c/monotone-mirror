@@ -19,6 +19,7 @@ set -e
 # the debian-policy package
 
 MTN_HOME="/var/lib/monotone"
+MTN_CONF_DIR="/etc/monotone"
 MTN_KEY_DIR="${MTN_HOME}/keys"
 MTN_LOG_DIR="/var/log/monotone"
 MTN_RUN_DIR="/var/run/monotone"
@@ -121,6 +122,13 @@ case "$1" in
 
        if [ -d ${MTN_RUN_DIR} ]; then
          rmdir --ignore-fail-on-non-empty ${MTN_RUN_DIR}
+       fi
+
+       # We only delete get_passphrase_from_file.lua if it is a symlink
+       # (as that is what the postinst script creates).
+       GET_PASSPHRASE_HOOK="${MTN_CONF_DIR}/hooks.d/get_passphrase_from_file.lua"
+       if [ -L ${GET_PASSPHRASE_HOOK} ]; then
+         rm ${GET_PASSPHRASE_HOOK}
        fi
 
        # if deluser/delgroup exist, remove the server user and group.
