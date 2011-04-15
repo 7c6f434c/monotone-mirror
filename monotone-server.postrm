@@ -132,9 +132,10 @@ case "$1" in
        fi
 
        # if deluser/delgroup exist, remove the server user and group.
-       # do not do this if /var/lib/monotone still exists (so that it
-       # will still have a named user owning it).
-       if which deluser > /dev/null && [ ! -e ${MTN_HOME} ]; then
+       # do not do this if /var/lib/monotone or /var/run/monotone still
+       # exists (so that it will still have a named user owning it).
+       if which deluser > /dev/null && \
+	   [ ! -e ${MTN_HOME} ] && [ ! -e ${MTN_RUN_DIR} ]; then
 	   if [ -n "`id -u monotone 2>/dev/null`" ]; then
                deluser --quiet monotone 2>/dev/null >/dev/null
 	   fi
@@ -143,8 +144,8 @@ case "$1" in
                delgroup --quiet monotone 2>/dev/null >/dev/null
 	   fi
        else
-	   if [ -e ${MTN_HOME} ]; then
-	       reason="${MTN_HOME} still exists"
+	   if [ -e ${MTN_HOME} ] || [ -e ${MTN_RUN_DIR} ]; then
+	       reason="${MTN_HOME} or ${MTN_RUN_DIR} still exist"
 	   else
 	       reason="deluser is not available"
 	   fi
