@@ -1,3 +1,69 @@
+monotone (1.0-1) unstable; urgency=low
+
+  [ Richard Levitte ]
+  * New upstream release (closes: #622954).
+  * monotone-server.monotone.init: Small adaptation, the startup lua
+    script changed name from hooks.lua to serverrc.
+  * Remove the monotone user and group on purge, only if
+    /var/lib/monotone and /var/run/monotone have been successfully
+    removed.
+
+  [ Francis Russell ]
+  * Attempt deletion of /var/run/monotone and /etc/monotone on purge.
+  * Add successful removal of /etc/monotone as condition for removal of
+    monotone user and group as well.
+  * debian/patches/00-db-extension-bash-completion.diff: new, backported
+    from upstream to support both "mtn" and "db" file extensions for
+    databases.
+
+  [ Richard Levitte ]
+  * debian/control: Change the package descriptions not to start with "A".
+    (removes lintian warning description-synopsis-starts-with-article)
+
+ -- Richard Levitte <richard@levitte.org>  Sat, 16 Apr 2011 17:52:38 +0200
+
+monotone (1.0~dev-2) unstable; urgency=low
+
+  * New upstream development version.  The upstream source has gone
+    through a dramatic change, where the source has been reorganised.
+  * New package produced, monotone-extras.
+  * rules: rewritten to use dh.
+  * nofakeroot: added script that runs a command after temporarly disabling
+    the effects of fakeroot.  We need this because we build via the binary /
+    binary-arch / binary-indep targets, and they are run via fakeroot, which
+    is not recommended for certain build targets.
+
+ -- Richard Levitte <richard@levitte.org>  Sat, 26 Feb 2011 08:15:03 +0100
+
+monotone (1.0~dev-1) UNRELEASED; urgency=low
+
+  * New upstream development version.
+
+ -- Richard Levitte <richard@levitte.org>  Tue, 30 Nov 2010 09:41:26 +0100
+
+monotone (0.99.1-1) UNRELEASED; urgency=low
+
+  [ Richard Levitte ]
+  * New upstream version.
+  * debian/patches/00-fail_cleanly_on_unreadable_db.diff: removed, since
+    it's been fixed upstream.
+  * debian/patches/10-sqlite_3.7.3_empty_blob.diff: removed, since it's
+    been fixed upstream.
+  * debian/patches/20-empty-command.diff: removed, since it's been fixed
+    upstream.
+  * debian/monotone-server.postinst: updated because 0.99 has another need
+    for database migration.  Changed all occurences of --norc to
+    --no-standard-rcfiles.
+  * debian/monotone-server.monotone.init: changed all occurences of --norc
+    to --no-standard-rcfiles.
+
+  [ Francis Russell ]
+  * Make monotone-doc suggest monotone instead of require.
+  * Update Vcs-Browser field to point to new source management front-end.
+  * Install manual page auto-generated during build instead of outdated version.
+
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Sun, 14 Nov 2010 01:20:10 +0000
+
 monotone (0.48-4) unstable; urgency=low
 
   * Add updated french po translation from the debian-l10n-french mailing list

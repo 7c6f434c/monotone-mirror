@@ -1,0 +1,33 @@
+#! /bin/sh
+
+# Usage:
+#   nofakeroot [command ...]
+#
+# Runs command after removing any trace of fakeroot from the environment it
+# receives.
+
+my_PRELOAD=
+for l in $LD_PRELOAD; do
+    if ! echo $l | grep "libfakeroot[-a-z]*\\.so" > /dev/null; then
+	if [ -n "$my_PRELOAD" ]; then
+	    my_PRELOAD="$my_PRELOAD $l"
+	else
+	    my_PRELOAD="$l"
+	fi
+    fi
+done
+
+was_IFS="$IFS" IFS=:
+my_LIBRARY_PATH=
+for p in $LD_LIBRARY_PATH; do
+    if ! echo $p | grep "/libfakeroot\$" > /dev/null; then
+	if [ -n "$my_LIBRARY_PATH" ]; then
+	    my_LIBRARY_PATH="${my_LIBRARY_PATH}:$p"
+	else
+	    my_LIBRARY_PATH="$p"
+	fi
+    fi
+done
+IFS="$was_IFS"
+
+LD_PRELOAD="$my_PRELOAD" LD_LIBRARY_PATH="$my_LIBRARY_PATH" eval "$@"

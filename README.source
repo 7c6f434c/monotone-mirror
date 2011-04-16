@@ -7,10 +7,10 @@ revisions in debian/changelog are tagged with the pattern
 the Debian version.
 
 Thus, this sequence of commands will replicate any Debian version
-starting with 0.43-1:
+starting with 1.0-1:
 
-$ wget -O monotone_X.Y.orig.tar.gz \
-       http://monotone.ca/downloads/X.Y/monotone-X.Y.tar.gz
+$ wget -O monotone_X.Y.orig.tar.bz2 \
+	http://monotone.ca/downloads/X.Y/monotone-X.Y.tar.bz2
 $ tar zxf monotone_X.Y.orig.tar.gz
 $ cd monotone-X.Y
 $
