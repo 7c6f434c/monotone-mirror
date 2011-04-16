@@ -4,11 +4,14 @@ monotone (1.0-1) unstable; urgency=low
   * New upstream release (closes: #622954).
   * monotone-server.monotone.init: Small adaptation, the startup lua
     script changed name from hooks.lua to serverrc.
-  * Remove the monotone user and group, only if /var/lib/monotone AND
-    /var/run/monotone have been successfully removed.
+  * Remove the monotone user and group on purge, only if
+    /var/lib/monotone and /var/run/monotone have been successfully
+    removed.
 
   [ Francis Russell ]
-  * Attempt deletion of /var/run/monotone on purge. 
+  * Attempt deletion of /var/run/monotone and /etc/monotone on purge.
+  * Add successful removal of /etc/monotone as condition for removal of
+    monotone user and group as well.
   * debian/patches/00-db-extension-bash-completion.diff: new, backported
     from upstream to support both "mtn" and "db" file extensions for
     databases.
