@@ -9,6 +9,9 @@ monotone (1.0-1) unstable; urgency=low
 
   [ Francis Russell ]
   * Attempt deletion of /var/run/monotone on purge. 
+  * debian/patches/00-db-extension-bash-completion.diff: new, backported
+    from upstream to support both "mtn" and "db" file extensions for
+    databases.
 
   [ Richard Levitte ]
   * debian/control: Change the package descriptions not to start with "A".
