@@ -34,6 +34,9 @@ monotone (1.0-1) unstable; urgency=low
   * debian/patches/00-db-extension-bash-completion.diff: new, backported
     from upstream to support both "mtn" and "db" file extensions for
     databases.
+  
+  [Ludovic Brenta]
+  * debian/patches/30-french-po-translation.diff: remove, merged upstream.
 
  -- Richard Levitte <richard@levitte.org>  Sat, 16 Apr 2011 17:52:38 +0200
 
