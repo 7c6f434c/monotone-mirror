@@ -1,7 +1,7 @@
 monotone (1.0-1) unstable; urgency=low
 
   [ Richard Levitte ]
-  * New upstream release.
+  * New upstream release (closes: #622954).
   * monotone-server.monotone.init: Small adaptation, the startup lua
     script changed name from hooks.lua to serverrc.
   * Remove the monotone user and group, only if /var/lib/monotone AND
