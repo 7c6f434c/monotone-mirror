@@ -20,7 +20,7 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, bash (>= 4.0)
 Suggests: monotone-doc, monotone-server
 Recommends: monotone-extras
-Description: A distributed version (revision) control system
+Description: Distributed version (revision) control system
  Monotone is a free, distributed version control system. It provides
  fully disconnected operation, manages complete tree versions, keeps
  its state in a local transactional database, supports overlapping
@@ -32,7 +32,7 @@ Package: monotone-extras
 Architecture: all
 Depends: ${misc:Depends}, monotone (>= ${source:Version})
 Recommends: mime-construct, source-highlight, perl, python
-Description: A distributed version (revision) control system - extras
+Description: Distributed version (revision) control system - extras
  Monotone is a free, distributed version control system. It provides
  fully disconnected operation, manages complete tree versions, keeps
  its state in a local transactional database, supports overlapping
@@ -54,7 +54,7 @@ Architecture: all
 Depends: monotone (>= ${source:Version}), 
  monotone-extras (>= ${source:Version}), adduser, ucf (>= 0.28), 
  lsb-base (>= 3.0-6), ${misc:Depends}
-Description: A distributed version (revision) control system - server scripts
+Description: Distributed version (revision) control system - server scripts
  Monotone is a free, distributed version control system. It provides
  fully disconnected operation, manages complete tree versions, keeps
  its state in a local transactional database, supports overlapping
@@ -69,7 +69,7 @@ Section: doc
 Architecture: all
 Depends: ${misc:Depends}
 Suggests: monotone
-Description: A distributed version (revision) control system - documentation
+Description: Distributed version (revision) control system - documentation
  Monotone is a free, distributed version control system. It provides
  fully disconnected operation, manages complete tree versions, keeps
  its state in a local transactional database, supports overlapping

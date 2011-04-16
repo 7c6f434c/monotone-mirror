@@ -10,7 +10,11 @@ monotone (1.0-1) unstable; urgency=low
   [ Francis Russell ]
   * Attempt deletion of /var/run/monotone on purge. 
 
- -- Richard Levitte <richard@levitte.org>  Sat, 16 Apr 2011 01:23:51 +0200
+  [ Richard Levitte ]
+  * debian/control: Change the package descriptions not to start with "A".
+    (removes lintian warning description-synopsis-starts-with-article)
+
+ -- Richard Levitte <richard@levitte.org>  Sat, 16 Apr 2011 17:52:38 +0200
 
 monotone (1.0~dev-2) unstable; urgency=low
 
