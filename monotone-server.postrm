@@ -20,6 +20,7 @@ set -e
 
 MTN_HOME="/var/lib/monotone"
 MTN_CONF_DIR="/etc/monotone"
+MTN_HOOKS_DIR="${MTN_CONF_DIR}/hooks.d"
 MTN_KEY_DIR="${MTN_HOME}/keys"
 MTN_LOG_DIR="/var/log/monotone"
 MTN_RUN_DIR="/var/run/monotone"
@@ -126,16 +127,39 @@ case "$1" in
 
        # We only delete get_passphrase_from_file.lua if it is a symlink
        # (as that is what the postinst script creates).
-       GET_PASSPHRASE_HOOK="${MTN_CONF_DIR}/hooks.d/get_passphrase_from_file.lua"
+       GET_PASSPHRASE_HOOK="${MTN_HOOKS_DIR}/get_passphrase_from_file.lua"
        if [ -L ${GET_PASSPHRASE_HOOK} ]; then
          rm ${GET_PASSPHRASE_HOOK}
        fi
 
+       if [ -d ${MTN_HOOKS_DIR} ]; then
+         rmdir --ignore-fail-on-non-empty ${MTN_HOOKS_DIR}
+       fi
+
+       if [ -d ${MTN_CONF_DIR} ]; then
+         rmdir --ignore-fail-on-non-empty ${MTN_CONF_DIR}
+       fi
+
+       # delete log files if they exist
+       if [ -d ${MTN_LOG_DIR} ]; then
+         rm -f ${MAINLOG}
+         rm -f ${ERRORLOG}
+         rmdir --ignore-fail-on-non-empty ${MTN_LOG_DIR}
+       fi
+
+       # Create a list of paths that still exist and may contain files owned by the monotone
+       # user or group.
+       MTN_USED_PATHS=""
+       for MTN_USED_PATH in "${MTN_HOME}" "${MTN_CONF_DIR}" "${MTN_LOG_DIR}" "${MTN_RUN_DIR}"; do
+         if [ -d "${MTN_USED_PATH}" ]; then
+           MTN_USED_PATHS="${MTN_USED_PATHS:+${MTN_USED_PATHS}, }${MTN_USED_PATH}"
+         fi
+       done
+
        # if deluser/delgroup exist, remove the server user and group.
        # do not do this if /var/lib/monotone or /var/run/monotone still
        # exists (so that it will still have a named user owning it).
-       if which deluser > /dev/null && \
-	   [ ! -e ${MTN_HOME} ] && [ ! -e ${MTN_RUN_DIR} ]; then
+       if which deluser > /dev/null && [ -z "${MTN_USED_PATHS}" ]; then
 	   if [ -n "`id -u monotone 2>/dev/null`" ]; then
                deluser --quiet monotone 2>/dev/null >/dev/null
 	   fi
@@ -144,19 +168,12 @@ case "$1" in
                delgroup --quiet monotone 2>/dev/null >/dev/null
 	   fi
        else
-	   if [ -e ${MTN_HOME} ] || [ -e ${MTN_RUN_DIR} ]; then
-	       reason="${MTN_HOME} or ${MTN_RUN_DIR} still exist"
+	   if [ -n "${MTN_USED_PATHS}" ]; then
+	       reason="the following paths still exist: ${MTN_USED_PATHS}"
 	   else
 	       reason="deluser is not available"
 	   fi
-	   echo "warning: not deleting monotone user or group because $reason" >&2
-       fi
-
-       # delete log files if they exist
-       if [ -d ${MTN_LOG_DIR} ]; then
-         rm -f ${MAINLOG}
-         rm -f ${ERRORLOG}
-         rmdir --ignore-fail-on-non-empty ${MTN_LOG_DIR}
+	   echo "warning: not deleting monotone user or group because $reason." >&2
        fi
 
     ;;
