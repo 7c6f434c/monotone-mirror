@@ -1,3 +1,9 @@
+monotone (1.0-2) unstable; urgency=low
+
+  * debian/watch: also check for bzip2 compressed monotone releases.
+
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Sun, 17 Apr 2011 00:53:18 +0100
+
 monotone (1.0-1) unstable; urgency=low
 
   [ Richard Levitte ]
