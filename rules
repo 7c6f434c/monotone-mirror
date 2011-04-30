@@ -48,8 +48,12 @@ build:
 # Uncomment this to turn on verbose mode.
 export DH_VERBOSE=1
 
+# It is desirable to be able to pass the "--parallel" option to dh.
+# Unfortunately, parallel builds of monotone currently cause make to
+# enter an infinite loop. When the cause has been determined and
+# resolved, this option should be re-enabled.
 %:
-	dh $@ --parallel --with=bash_completion
+	dh $@ --with=bash_completion
 
 override_dh_auto_configure:
 	debian/nofakeroot dh_auto_configure
