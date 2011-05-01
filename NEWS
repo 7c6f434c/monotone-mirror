@@ -1,4 +1,4 @@
-monotone (1.0~dev-2) unstable; urgency=low
+monotone (1.0-1) unstable; urgency=low
 
   A new package is produced, called monotone-extras, containing a
   tested collection of extra scripts and monotone hooks.

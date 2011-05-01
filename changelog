@@ -2,8 +2,10 @@ monotone (1.0-3) unstable; urgency=low
 
   * debian/po/fr.po: minor fix to the French Debconf translation
     (closes: #623226). 
+  * debian/NEWS: update version of most recent entry to 1.0-1 to keep
+    Lintian happy.
 
- -- Francis Russell <francis@unchartedbackwaters.co.uk>  Sun, 01 May 2011 15:26:00 +0100
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Sun, 01 May 2011 19:18:10 +0100
 
 monotone (1.0-2) unstable; urgency=low
 
