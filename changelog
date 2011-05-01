@@ -4,8 +4,10 @@ monotone (1.0-3) unstable; urgency=low
     (closes: #623226). 
   * debian/NEWS: update version of most recent entry to 1.0-1 to keep
     Lintian happy.
+  * debian/watch: update regular expression to avoid including the file
+    suffix in the version number reported by uscan. 
 
- -- Francis Russell <francis@unchartedbackwaters.co.uk>  Sun, 01 May 2011 19:18:10 +0100
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Sun, 01 May 2011 19:28:51 +0100
 
 monotone (1.0-2) unstable; urgency=low
 
