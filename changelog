@@ -6,8 +6,11 @@ monotone (1.0-3) unstable; urgency=low
     Lintian happy.
   * debian/watch: update regular expression to avoid including the file
     suffix in the version number reported by uscan. 
+  * debian/control: Update Vcs-Browser field to point to Debian
+    packaging instead of upstream development and add Vcs-Mtn field
+    (closes: #638501).
 
- -- Francis Russell <francis@unchartedbackwaters.co.uk>  Sun, 01 May 2011 19:28:51 +0100
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Fri, 09 Sep 2011 21:59:19 +0100
 
 monotone (1.0-2) unstable; urgency=low
 
