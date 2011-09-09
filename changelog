@@ -9,8 +9,9 @@ monotone (1.0-3) unstable; urgency=low
   * debian/control: Update Vcs-Browser field to point to Debian
     packaging instead of upstream development and add Vcs-Mtn field
     (closes: #638501).
+  * Standards-Version: 3.9.2 (no changes required). 
 
- -- Francis Russell <francis@unchartedbackwaters.co.uk>  Fri, 09 Sep 2011 21:59:19 +0100
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Fri, 09 Sep 2011 22:17:14 +0100
 
 monotone (1.0-2) unstable; urgency=low
 
