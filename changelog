@@ -1,5 +1,6 @@
 monotone (1.0-3) unstable; urgency=low
 
+  [Francis Russell]
   * debian/po/fr.po: minor fix to the French Debconf translation
     (closes: #623226). 
   * debian/NEWS: update version of most recent entry to 1.0-1 to keep
@@ -11,7 +12,11 @@ monotone (1.0-3) unstable; urgency=low
     (closes: #638501).
   * Standards-Version: 3.9.2 (no changes required). 
 
- -- Francis Russell <francis@unchartedbackwaters.co.uk>  Fri, 09 Sep 2011 22:17:14 +0100
+  [Ludovic Brenta]
+  * Tighten build-dependencies to libbotan1.8-dev (>= 1.8.13-4).
+    Closes: #635776.
+
+ -- Ludovic Brenta <lbrenta@debian.org>  Fri, 23 Sep 2011 23:46:49 +0200
 
 monotone (1.0-2) unstable; urgency=low
 
