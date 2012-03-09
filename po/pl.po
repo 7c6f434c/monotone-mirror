@@ -1,0 +1,73 @@
+# Polish debconf templates translation for monotone.
+#
+# This file is made available under the GNU GPL version 2.0 or
+# greater.  See the accompanying file COPYING for details.
+#
+# Michał Kułach <michal.kulach@gmail.com>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: monotone@packages.debian.org\n"
+"POT-Creation-Date: 2009-09-04 14:30-0700\n"
+"PO-Revision-Date: 2012-03-07 10:43+0100\n"
+"Last-Translator: Michał Kułach <michal.kulach@gmail.com>\n"
+"Language-Team: Polish <debian-l10n-polish@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pl\n"
+"X-Generator: Lokalize 1.2\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+
+#. Type: boolean
+#. Description
+#: ../monotone-server.templates:1001
+msgid "Automatically manage monotone database?"
+msgstr "Zarządzać bazą danych monotone w sposób automatyczny?"
+
+#. Type: boolean
+#. Description
+#: ../monotone-server.templates:1001
+msgid ""
+"Select this option to automatically manage the monotone database. If "
+"selected, the database will automatically be created. Also when upgrading, "
+"the database will be automatically migrated if necessary."
+msgstr ""
+"Wybranie tej opcji spowoduje automatyczne zarządzanie bazą danych monotone. "
+"Baza zostanie wtedy utworzona automatycznie, a także, jeśli to będzie "
+"konieczne podczas aktualizacji, zostanie wykonana automatyczna migracja bazy "
+"danych."
+
+#. Type: string
+#. Description
+#: ../monotone-server.templates:2001
+msgid "Monotone key id:"
+msgstr "Identyfikator klucza monotone:"
+
+#. Type: string
+#. Description
+#: ../monotone-server.templates:2001
+msgid ""
+"Enter the id of the key your monotone server will use. The key id is "
+"typically an email address."
+msgstr ""
+"Proszę wprowadzić identyfikator klucza, który będzie używany przez serwer "
+"monotone. Z reguły jest to adres poczty elektronicznej."
+
+#. Type: password
+#. Description
+#: ../monotone-server.templates:3001
+msgid "Monotone key passphrase:"
+msgstr "Hasło klucza monotone:"
+
+#. Type: password
+#. Description
+#: ../monotone-server.templates:3001
+msgid ""
+"Please choose a passphrase for your monotone key. If left blank, one will be "
+"generated for you."
+msgstr ""
+"Proszę wybrać hasło do klucza monotone. Jeśli pole pozostanie puste, zostanie "
+"wygenerowane automatycznie."
+
