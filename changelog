@@ -1,3 +1,31 @@
+monotone (1.0-3) unstable; urgency=low
+
+  [Francis Russell]
+  * debian/po/fr.po: minor fix to the French Debconf translation
+    (closes: #623226). 
+  * debian/NEWS: update version of most recent entry to 1.0-1 to keep
+    Lintian happy.
+  * debian/watch: update regular expression to avoid including the file
+    suffix in the version number reported by uscan. 
+  * debian/control: Update Vcs-Browser field to point to Debian
+    packaging instead of upstream development and add Vcs-Mtn field
+    (closes: #638501).
+  * Standards-Version: 3.9.2 (no changes required). 
+
+  [Ludovic Brenta]
+  * Tighten build-dependencies to libbotan1.8-dev (>= 1.8.13-4).
+    Closes: #635776.
+
+ -- Ludovic Brenta <lbrenta@debian.org>  Fri, 23 Sep 2011 23:46:49 +0200
+
+monotone (1.0-2) unstable; urgency=low
+
+  * debian/watch: also check for bzip2 compressed monotone releases.
+  * debian/rules: disable parallel builds since they have been observed
+    to cause make to enter an infinite loop (closes: #623734).
+
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Sat, 30 Apr 2011 03:57:31 +0100
+
 monotone (1.0-1) unstable; urgency=low
 
   [ Richard Levitte ]

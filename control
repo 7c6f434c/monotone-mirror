@@ -6,14 +6,15 @@ Uploaders: Richard Levitte <richard@levitte.org>,
  Zack Weinberg <zackw@panix.com>, Ludovic Brenta <lbrenta@debian.org>,
  Francis Russell <francis@unchartedbackwaters.co.uk>
 Homepage: http://monotone.ca/
-Vcs-Browser: http://code.monotone.ca/p/monotone/source/tree/h:net.venge.monotone/
+Vcs-Browser: https://code.monotone.ca/p/debian-mtn/source/tree/h:org.debian.monotone/
+Vcs-Mtn: mtn://monotone.ca/debian-mtn?org.debian.monotone
 Build-Depends: debhelper (>= 7.0.50~), autotools-dev, po-debconf, quilt, patch,
- libboost-dev, libbotan1.8-dev, libidn11-dev, liblua5.1-0-dev, libpcre3-dev,
- libsqlite3-dev, libz-dev, texinfo,
- expect, bash-completion, bash (>= 4.0), source-highlight, mime-construct
+ libboost-dev, libbotan1.8-dev (>= 1.8.13-4), libidn11-dev, liblua5.1-0-dev,
+ libpcre3-dev, libsqlite3-dev, libz-dev, texinfo, expect, bash-completion,
+ bash (>= 4.0), source-highlight, mime-construct
 Build-Depends-Indep: poppler-utils | xpdf-utils, ps2eps,
  texlive-generic-recommended, texlive-latex-base
-Standards-Version: 3.9.1
+Standards-Version: 3.9.2
 
 Package: monotone
 Architecture: any
