@@ -4,8 +4,11 @@ monotone (1.0-4) unstable; urgency=low
     in unstable (1:8.30-4) treats a regular expression used in one of
     the monotone tests differently from previous versions, causing the
     test to fail. See the patch for more information. Closes: 665448.
+  * Switch to debhelper compatibility level 9. Most importantly, this
+    causes dh_auto_* to set the environment variables listed by
+    dpkg-buildflags that are no longer set by dpkg-buildpackage. 
 
- -- Francis Russell <francis@unchartedbackwaters.co.uk>  Sun, 25 Mar 2012 20:15:06 +0100
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Sun, 25 Mar 2012 23:47:13 +0100
 
 monotone (1.0-3.1) unstable; urgency=low
 
