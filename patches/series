@@ -1,3 +1,4 @@
 00-db-extension-bash-completion.diff
+01-format-security.diff
 10-mtn-ignore-syntax-error-test.diff
 90-stacktrace-on-crash.diff
