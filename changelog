@@ -1,16 +1,21 @@
-monotone (1.0-4) unstable; urgency=low
+monotone (1.0-5) unstable; urgency=low
 
-  * patches/10-mtn-ignore-syntax-error-test.diff: The version of pcre3
-    in unstable (1:8.30-4) treats a regular expression used in one of
-    the monotone tests differently from previous versions, causing the
-    test to fail. See the patch for more information. Closes: 665448.
   * Switch to debhelper compatibility level 9. Most importantly, this
     causes dh_auto_* to set the environment variables listed by
     dpkg-buildflags that are no longer set by dpkg-buildpackage. 
   * patches/01-format-security.diff: Backport upstream fix for building 
     with hardened Debian build flags. Closes: #646349. 
 
- -- Francis Russell <francis@unchartedbackwaters.co.uk>  Sun, 25 Mar 2012 23:56:36 +0100
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Tue, 27 Mar 2012 10:43:24 +0100
+
+monotone (1.0-4) unstable; urgency=low
+
+  * patches/10-mtn-ignore-syntax-error-test.diff: The version of pcre3
+    in unstable (1:8.30-4) treats a regular expression used in one of
+    the monotone tests differently from previous versions, causing the
+    test to fail. See the patch for more information. Closes: 665448.
+
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Sun, 25 Mar 2012 20:15:06 +0100
 
 monotone (1.0-3.1) unstable; urgency=low
 
