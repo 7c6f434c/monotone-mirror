@@ -5,8 +5,11 @@ monotone (1.0-5) unstable; urgency=low
     dpkg-buildflags that are no longer set by dpkg-buildpackage. 
   * patches/01-format-security.diff: Backport upstream fix for building 
     with hardened Debian build flags. Closes: #646349. 
+  * patches/02-file_handle.diff: Backport upstream fix for name clash
+    between monotone's "file_handle" struct and the one defined in
+    "fcntl.h" from (e)glibc >=2.14.
 
- -- Francis Russell <francis@unchartedbackwaters.co.uk>  Tue, 27 Mar 2012 10:43:24 +0100
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Tue, 27 Mar 2012 12:36:29 +0100
 
 monotone (1.0-4) unstable; urgency=low
 
