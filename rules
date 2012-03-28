@@ -106,14 +106,7 @@ override_dh_installchangelogs:
 override_dh_compress:
 	dh_compress -Xcolorize -X.pdf
 
-# The upstream makefiles' install targets do nothing useful for these
-# packages.  (In particular, we do not want the monolithic
-# monotone.html installed.)  Annoyingly, at present we cannot simply
-# dh_installdocs the entire html directory, because it contains a
-# bunch of unwanted junk; instead we dh_installdirs the directory
-# hierarchy that is required and use cp -p to put all the files in
-# place.  (Using globs in monotone-doc.docs would get everything dumped
-# directly into /usr/share/doc/monotone, which doesn't work.)
+# For now, we link /usr/share/doc/monotone-doc to /usr/share/doc/monotone
 override_dh_installdocs:
 	dh_installdocs --link-doc=monotone
 
