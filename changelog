@@ -8,8 +8,10 @@ monotone (1.0-5) unstable; urgency=low
   * patches/02-file_handle.diff: Backport upstream fix for name clash
     between monotone's "file_handle" struct and the one defined in
     "fcntl.h" from (e)glibc >=2.14.
+  * patches/03-url_escaping.diff: Backport upstream fix for non-escaped URLs
+    being passed to monotone in its test suite. 
 
- -- Francis Russell <francis@unchartedbackwaters.co.uk>  Tue, 27 Mar 2012 12:36:29 +0100
+ -- Francis Russell <francis@unchartedbackwaters.co.uk>  Sat, 28 Apr 2012 15:48:34 +0100
 
 monotone (1.0-4) unstable; urgency=low
 
