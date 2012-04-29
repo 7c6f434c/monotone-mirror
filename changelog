@@ -9,7 +9,7 @@ monotone (1.0-5) unstable; urgency=low
     between monotone's "file_handle" struct and the one defined in
     "fcntl.h" from (e)glibc >=2.14.
   * patches/03-url_escaping.diff: Backport upstream fix for non-escaped URLs
-    being passed to monotone in its test suite. 
+    being passed to monotone in its test suite.  Closes: #668457.
 
  -- Francis Russell <francis@unchartedbackwaters.co.uk>  Sat, 28 Apr 2012 15:48:34 +0100
 
