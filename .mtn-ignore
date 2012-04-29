@@ -1,0 +1,7 @@
+^files$
+^monotone$
+^monotone-doc$
+^monotone-extras$
+^monotone-server.*$
+^[^/]+\.debhelper.*$
+^[^/]+\.substvars.*$
