@@ -6,7 +6,7 @@ monotone (1.0-6) unstable; urgency=low
   * Upgrade Standards-Version to 3.9.3, move documentation to the
     monotone-doc directory. Drop call to dh_installdocs.
 
- -- Markus Wanner <markus@bluegap.ch>  Sun, Apr 29 12:19:30 +0200
+ -- Markus Wanner <markus@bluegap.ch>  Sun, 29 Apr 2012 14:19:41 +0200
 
 monotone (1.0-5) unstable; urgency=low
 
