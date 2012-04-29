@@ -8,7 +8,7 @@ Uploaders: Richard Levitte <richard@levitte.org>,
 Homepage: http://monotone.ca/
 Vcs-Browser: https://code.monotone.ca/p/debian-mtn/source/tree/h:org.debian.monotone/
 Vcs-Mtn: mtn://monotone.ca/debian-mtn?org.debian.monotone
-Build-Depends: debhelper (>= 7.0.50~), autotools-dev, po-debconf, quilt, patch,
+Build-Depends: debhelper (>= 9), autotools-dev, po-debconf, quilt, patch,
  libboost-dev, libbotan1.10-dev, libidn11-dev, liblua5.1-0-dev,
  libpcre3-dev, libsqlite3-dev, libz-dev, texinfo, expect, bash-completion,
  bash (>= 4.0), source-highlight, mime-construct
