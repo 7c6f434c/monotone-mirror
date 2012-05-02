@@ -106,6 +106,10 @@ override_dh_installchangelogs:
 override_dh_compress:
 	dh_compress -Xcolorize -X.pdf
 
+# For now, we link /usr/share/doc/monotone-doc to /usr/share/doc/monotone
+override_dh_installdocs:
+	dh_installdocs --link-doc=monotone
+
 # Install init for monotone-server, but with the name monotone
 override_dh_installinit:
 	dh_installinit --name=monotone

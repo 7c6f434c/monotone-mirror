@@ -14,7 +14,7 @@ Build-Depends: debhelper (>= 9), autotools-dev, po-debconf, quilt, patch,
  bash (>= 4.0), source-highlight, mime-construct
 Build-Depends-Indep: poppler-utils | xpdf-utils, ps2eps,
  texlive-generic-recommended, texlive-latex-base
-Standards-Version: 3.9.3
+Standards-Version: 3.9.2
 
 Package: monotone
 Architecture: any

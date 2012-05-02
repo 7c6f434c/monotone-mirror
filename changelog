@@ -3,8 +3,6 @@ monotone (1.0-6) unstable; urgency=low
   * patches/04-botan-1.10-adaption.diff: Backport upstream fix for
     building and running with Botan-1.10.x.
   * Change debian/control to link against Botan 1.10. Closes: #359050.
-  * Upgrade Standards-Version to 3.9.3, move documentation to the
-    monotone-doc directory. Drop call to dh_installdocs.
   * Adjust Build-Depends debhelper to require version >= 9 as well.
 
  -- Markus Wanner <markus@bluegap.ch>  Sun, 29 Apr 2012 14:19:41 +0200
