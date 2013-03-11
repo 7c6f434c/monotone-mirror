@@ -1,3 +1,10 @@
+monotone (1.0-7) UNRELEASED; urgency=low
+
+  * Add Brazilian Portuguese translation by Adriano Rafael Gomes.
+    Closes: #693378.
+
+ -- Markus Wanner <markus@bluegap.ch>  Fri, 08 Mar 2013 21:44:48 +0100
+
 monotone (1.0-6) unstable; urgency=low
 
   * patches/04-botan-1.10-adaption.diff: Backport upstream fix for
