@@ -1,9 +1,12 @@
-monotone (1.0-7) UNRELEASED; urgency=low
+monotone (1.0-7) experimental; urgency=low
 
+  * Team upload.
+  * Fix compilation on hurd, back-porting an upstream fix in
+    patches/05-hurd-compilation-fix.diff. Closes: #624779.
   * Add Brazilian Portuguese translation by Adriano Rafael Gomes.
     Closes: #693378.
 
- -- Markus Wanner <markus@bluegap.ch>  Fri, 08 Mar 2013 21:44:48 +0100
+ -- Markus Wanner <markus@bluegap.ch>  Thu, 14 Mar 2013 21:00:46 +0100
 
 monotone (1.0-6) unstable; urgency=low
 
