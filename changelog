@@ -5,6 +5,8 @@ monotone (1.0-7) experimental; urgency=low
     patches/05-hurd-compilation-fix.diff. Closes: #624779.
   * Add Brazilian Portuguese translation by Adriano Rafael Gomes.
     Closes: #693378.
+  * Standards-Version: 3.9.4 (no changes required).
+  * Drop build dependency on quilt.
 
  -- Markus Wanner <markus@bluegap.ch>  Thu, 14 Mar 2013 21:00:46 +0100
 
