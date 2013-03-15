@@ -5,6 +5,8 @@ monotone (1.0-7) experimental; urgency=low
     patches/05-hurd-compilation-fix.diff. Closes: #624779.
   * Add Brazilian Portuguese translation by Adriano Rafael Gomes.
     Closes: #693378.
+  * Add work-around to skip a test in case we are behind a broken DNS
+    gateway. Closes: #671080.
   * Standards-Version: 3.9.4 (no changes required).
   * Drop build dependency on quilt.
 
