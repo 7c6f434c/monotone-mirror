@@ -8,9 +8,9 @@ monotone (1.0-7) experimental; urgency=low
   * Add work-around to skip a test in case we are behind a broken DNS
     gateway. Closes: #671080.
   * Standards-Version: 3.9.4 (no changes required).
-  * Drop build dependency on quilt.
+  * Drop build dependencies on quilt and patch.
 
- -- Markus Wanner <markus@bluegap.ch>  Thu, 14 Mar 2013 21:00:46 +0100
+ -- Markus Wanner <markus@bluegap.ch>  Fri, 15 Mar 2013 22:05:37 +0100
 
 monotone (1.0-6) unstable; urgency=low
 
