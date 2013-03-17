@@ -1,3 +1,17 @@
+monotone (1.0-7) experimental; urgency=low
+
+  * Team upload.
+  * Fix compilation on hurd, back-porting an upstream fix in
+    patches/05-hurd-compilation-fix.diff. Closes: #624779.
+  * Add Brazilian Portuguese translation by Adriano Rafael Gomes.
+    Closes: #693378.
+  * Add work-around to skip a test in case we are behind a broken DNS
+    gateway. Closes: #671080.
+  * Standards-Version: 3.9.4 (no changes required).
+  * Drop build dependencies on quilt and patch.
+
+ -- Markus Wanner <markus@bluegap.ch>  Fri, 15 Mar 2013 22:05:37 +0100
+
 monotone (1.0-6) unstable; urgency=low
 
   * patches/04-botan-1.10-adaption.diff: Backport upstream fix for

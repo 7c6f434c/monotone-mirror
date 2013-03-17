@@ -3,5 +3,7 @@
 02-file_handle.diff
 03-url_escaping.diff
 04-botan-1.10-adaption.diff
+05-hurd-compilation-fix.diff
+06-broken-dns-work-around.diff
 10-mtn-ignore-syntax-error-test.diff
 90-stacktrace-on-crash.diff
