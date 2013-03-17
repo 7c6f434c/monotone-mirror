@@ -2455,8 +2455,7 @@ automate_stdio_shared_setup(app_state & app,
       id.push_back(utf8(*i, origin::user));
     }
 
-  set< command_id > matches =
-    CMD_REF(automate)->complete_command(id);
+  set<command_id> matches =  CMD_REF(automate)->complete_command(id);
 
   if (matches.empty())
     {

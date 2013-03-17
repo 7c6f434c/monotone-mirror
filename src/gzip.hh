@@ -7,9 +7,11 @@
 #ifndef BOTAN_EXT_GZIP_H__
 #define BOTAN_EXT_GZIP_H__
 
+#include "base.hh"
 #include <botan/version.h>
 #include <botan/filter.h>
 #include <botan/pipe.h>
+#include "botan_glue.hh"
 
 namespace Botan {
 
@@ -68,7 +70,7 @@ class Gzip_Compression : public Filter
       void put_header();
       void put_footer();
       const u32bit level;
-      SecureVector<byte> buffer;
+      secure_byte_vector buffer;
       class Zlib_Stream* zlib;
       Pipe pipe; /* A pipe for the crc32 processing */
       u32bit count;
@@ -91,13 +93,13 @@ class Gzip_Decompression : public Filter
       u32bit eat_footer(const byte input[], u32bit length);
       void check_footer();
       void clear();
-      SecureVector<byte> buffer;
+      secure_byte_vector buffer;
       class Zlib_Stream* zlib;
       bool no_writes;
       u32bit pos; /* Current position in the message */
       Pipe pipe; /* A pipe for the crc32 processing */
       u32bit datacount; /* Amount of uncompressed output */
-      SecureVector<byte> footer;
+      secure_byte_vector footer;
       bool in_footer;
    };
 
