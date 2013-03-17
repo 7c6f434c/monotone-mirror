@@ -3514,7 +3514,7 @@ database::check_signature(key_id const & id,
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,10,0)
       verifier.reset(new Botan::PK_Verifier(*pub_key, "EMSA3(SHA1)"));
 #else
-      verifier.reset(get_pk_verifier(*pub_key, "EMSA3(SHA-1)"));
+      verifier.reset(Botan::get_pk_verifier(*pub_key, "EMSA3(SHA-1)"));
 #endif
 
       /* XXX This is ugly. We need to keep the key around

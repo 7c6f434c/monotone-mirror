@@ -760,7 +760,7 @@ key_store::create_key_pair(database & db,
   // serialize the public key
   unfiltered_pipe->start_msg();
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,10,0)
-  unfiltered_pipe->write(Botan::PKCS8::BER_encode(priv));
+  unfiltered_pipe->write(Botan::X509::BER_encode(priv));
 #else
   Botan::X509::encode(priv, *unfiltered_pipe, Botan::RAW_BER);
 #endif
@@ -1084,7 +1084,7 @@ key_store::export_key_for_agent(key_id const & id,
   p.start_msg();
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,10,0)
   if (new_phrase().length())
-    p.write(Botan::PKCS8::BER_encode(*priv,
+    p.write(Botan::PKCS8::PEM_encode(*priv,
                                      lazy_rng::get(),
                                      new_phrase(),
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
