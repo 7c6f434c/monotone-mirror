@@ -27,6 +27,8 @@
 #include <map>
 #include <zlib.h>
 
+#include "botan_glue.hh"
+
 namespace Botan {
 
 namespace {
@@ -203,8 +205,8 @@ void Gzip_Compression::put_header()
 void Gzip_Compression::put_footer()
    {
    // 4 byte CRC32, and 4 byte length field
-   SecureVector<byte> buf(4);
-   SecureVector<byte> tmpbuf(4);
+   secure_byte_vector buf(4);
+   secure_byte_vector tmpbuf(4);
 
    pipe.read(tmpbuf.begin(), tmpbuf.size(), Pipe::LAST_MESSAGE);
 

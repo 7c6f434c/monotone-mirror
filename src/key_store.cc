@@ -738,7 +738,7 @@ key_store::create_key_pair(database & db,
 #endif
                                "PBE-PKCS5v20(SHA-1,TripleDES/CBC)"));
   else
-    unfiltered_pipe->write(Botan::PKCS8::BER_encode(priv));
+    unfiltered_pipe->write(Botan::PKCS8::PEM_encode(priv));
 #else
   if ((*maybe_passphrase)().length())
     Botan::PKCS8::encrypt_key(priv, *unfiltered_pipe,
@@ -840,7 +840,7 @@ key_store::change_key_passphrase(key_id const & id)
 #endif
                                "PBE-PKCS5v20(SHA-1,TripleDES/CBC)"));
   else
-    unfiltered_pipe->write(Botan::PKCS8::BER_encode(*priv));
+    unfiltered_pipe->write(Botan::PKCS8::PEM_encode(*priv));
 #else
   if (new_phrase().length())
     Botan::PKCS8::encrypt_key(*priv, *unfiltered_pipe,
@@ -1092,7 +1092,7 @@ key_store::export_key_for_agent(key_id const & id,
 #endif
                                      "PBE-PKCS5v20(SHA-1,TripleDES/CBC)"));
   else
-    p.write(Botan::PKCS8::BER_encode(*priv));
+    p.write(Botan::PKCS8::PEM_encode(*priv));
 #else
   if (new_phrase().length())
     Botan::PKCS8::encrypt_key(*priv,
