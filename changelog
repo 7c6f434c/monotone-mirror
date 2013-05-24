@@ -1,3 +1,11 @@
+monotone (1.0-8) unstable; urgency=low
+
+  * Upload to unstable.
+  * Enable patches/07-support-boost-1.53.diff
+  * Add myself as an Uploader.
+
+ -- Markus Wanner <markus@bluegap.ch>  Fri, 24 May 2013 17:16:14 +0200
+
 monotone (1.0-7) experimental; urgency=low
 
   * Team upload.

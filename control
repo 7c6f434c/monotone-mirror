@@ -4,7 +4,8 @@ Priority: optional
 Maintainer: Debian Maintainers for Monotone <monotone-debian@nongnu.org>
 Uploaders: Richard Levitte <richard@levitte.org>,
  Zack Weinberg <zackw@panix.com>, Ludovic Brenta <lbrenta@debian.org>,
- Francis Russell <francis@unchartedbackwaters.co.uk>
+ Francis Russell <francis@unchartedbackwaters.co.uk>,
+ Markus Wanner <markus@bluegap.ch>
 Homepage: http://monotone.ca/
 Vcs-Browser: https://code.monotone.ca/p/debian-mtn/source/tree/h:org.debian.monotone/
 Vcs-Mtn: mtn://monotone.ca/debian-mtn?org.debian.monotone
