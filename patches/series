@@ -7,4 +7,5 @@
 06-broken-dns-work-around.diff
 07-support-boost-1.53.diff
 10-mtn-ignore-syntax-error-test.diff
+08-texinfo-fix.diff
 90-stacktrace-on-crash.diff

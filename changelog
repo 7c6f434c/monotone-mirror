@@ -1,3 +1,9 @@
+monotone (1.0-9) unstable; urgency=low
+
+  * Add patches/08-texinfo-fix.diff. Closes: #712340.
+
+ -- Markus Wanner <markus@bluegap.ch>  Tue, 16 Jul 2013 22:28:42 +0200
+
 monotone (1.0-8) unstable; urgency=low
 
   * Upload to unstable.
