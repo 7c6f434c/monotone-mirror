@@ -11,6 +11,8 @@
 # Default-Start: 2 3 4 5
 # Default-Stop: 0 1 6
 # Short-Description: Monotone server.
+# Description: Provides synchronization services of a monotone
+#              repository via netsync.
 ### END INIT INFO
 
 set -e
@@ -103,6 +105,9 @@ case "$1" in
     restart|force-reload)
 	d_stop
 	d_start
+	;;
+    status)
+	status_of_proc $DAEMON mtn && exit 0 || exit $?
 	;;
     *)
 	echo "Usage: $SCRIPTNAME {start|stop|restart|force-reload}" >&2

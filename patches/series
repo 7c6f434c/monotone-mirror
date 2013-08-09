@@ -9,4 +9,5 @@
 08-texinfo-fix.diff
 09-ignore-aggressive-gnu-patch.diff
 10-mtn-ignore-syntax-error-test.diff
+11-no-gettext-on-lua.diff
 90-stacktrace-on-crash.diff

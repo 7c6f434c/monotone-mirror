@@ -78,8 +78,12 @@ export DISABLE_NETWORK_TESTS = 1
 export MTN_STACKTRACE_ON_CRASH = 1
 
 override_dh_auto_test:
+#	While dh_auto_test checks for 'nocheck', running it through
+#	nofakeroot seems to confuse it. So we do the check, here.
+ifeq (,$(findstring nocheck,$(DEB_BUILD_OPTIONS)))
 	debian/nofakeroot dh_auto_test -pmonotone -- INFO_DEPS='' || \
 	    sh extra/building/dump-test-logs.sh
+endif
 
 override_dh_auto_install:
 	dh_auto_install -Nmonotone-doc -- INFO_DEPS=''

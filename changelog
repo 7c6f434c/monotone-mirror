@@ -1,3 +1,16 @@
+monotone (1.0-10) unstable; urgency=low
+
+  * Add patches/11-no-gettext-on-lua.diff, remove a lua file from gettext
+    invocation.
+  * Add a full description and 'status' capabilities to the monotone-server
+    init script.
+  * Honor nocheck in DEB_BUILD_OPTIONS.
+  * Invoke autoreconf prior to configure. Allows us to patch Makefile.am
+    directly and helps with the out-of-date config.guess file.
+  * Add source/options extend-diff-ignore.
+
+ -- Markus Wanner <markus@bluegap.ch>  Thu, 08 Aug 2013 23:38:55 +0200
+
 monotone (1.0-9) unstable; urgency=low
 
   * Add patches/08-texinfo-fix.diff. Sanitizes .texi files. Closes: #712340.
