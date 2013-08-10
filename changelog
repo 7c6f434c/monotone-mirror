@@ -1,3 +1,9 @@
+monotone (1.0-11) unstable; urgency=low
+
+  * Really invoke autoreconf prior to configure, now.
+
+ -- Markus Wanner <markus@bluegap.ch>  Sat, 10 Aug 2013 08:24:53 +0200
+
 monotone (1.0-10) unstable; urgency=low
 
   * Add patches/11-no-gettext-on-lua.diff, remove a lua file from gettext

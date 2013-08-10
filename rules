@@ -53,7 +53,7 @@ export DH_VERBOSE=1
 # enter an infinite loop. When the cause has been determined and
 # resolved, this option should be re-enabled.
 %:
-	dh $@ --with=bash_completion
+	dh $@ --with=bash_completion,autoreconf
 
 override_dh_auto_configure:
 	debian/nofakeroot dh_auto_configure
