@@ -1,9 +1,17 @@
-monotone (1.0-12) unstable; urgency=low
+monotone (1.1-1) UNRELEASED; urgency=medium
+
+  * New upstream release
+  * Drop all patches from upstream commits now integrated: from patch
+    numbered 00 through 10.
+
+ -- Markus Wanner <markus@bluegap.ch>  Sun, 04 May 2014 13:02:15 +0200
+
+monotone (1.0-12) unstable; urgency=medium
 
   * Add texlive-fonts-recommended as a B-D-I. Closes: #735933.
   * Bump Standards-Version to 3.9.5; no changes required.
 
- -- Markus Wanner <markus@bluegap.ch>  Thu, 27 Feb 2014 19:00:19 +0100
+ -- Markus Wanner <markus@bluegap.ch>  Thu, 27 Feb 2014 11:44:07 +0100
 
 monotone (1.0-11) unstable; urgency=low
 
