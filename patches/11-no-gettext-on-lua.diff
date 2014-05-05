@@ -1,0 +1,16 @@
+Description: Drop std_hooks.lua from xgettext invocation
+ Looks like xgettext doesn't like lua (anymore). Removing it from the list
+ of files to process fixes a FTBFS.
+Author: Markus Wanner <markus@bluegap.ch>
+Last-Update: 2013-08-08
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -500,7 +500,7 @@
+ # for the template file
+ POTFILES = $(filter-out package_%, $(MOST_SOURCES)) \
+ 	$(UNIX_PLATFORM_SOURCES) $(WIN32_PLATFORM_SOURCES) \
+-	src/monotone.cc src/std_hooks.lua
++	src/monotone.cc
+ 
+ po/$(PACKAGE).pot: $(POTFILES)
+ 	[ -d po ] || mkdir -p po
