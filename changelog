@@ -1,3 +1,10 @@
+monotone (1.1-2) unstable; urgency=low
+
+  * Disable network tests, again, as we still have issues with some of
+    those tests on some of the buildd hosts.
+
+ -- Markus Wanner <markus@bluegap.ch>  Tue, 06 May 2014 11:28:15 +0200
+
 monotone (1.1-1) unstable; urgency=low
 
   * New upstream release

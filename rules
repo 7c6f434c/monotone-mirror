@@ -72,10 +72,7 @@ override_dh_auto_build:
 # me in sufficient detail to detect reliably, we have to disable all
 # netsync tests until upstream gets around to converting them to local
 # network sockets.
-#
-# With 1.1-1, I'm now giving it a try: Enable network tests - these
-# worked for me on a disconnected box.
-# export DISABLE_NETWORK_TESTS = 1
+export DISABLE_NETWORK_TESTS = 1
 
 # This is a hack to get more detail out of the alpha and sparc testsuite
 # crashes.
