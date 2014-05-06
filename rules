@@ -57,6 +57,7 @@ export DH_VERBOSE=1
 
 override_dh_auto_configure:
 	debian/nofakeroot dh_auto_configure
+
 # To enable documentation to only be built for the monotone-doc
 # package (really, any -indep target), we need to make sure all
 # relevant dh_auto_* calls behave differently for arch and indep
@@ -71,7 +72,10 @@ override_dh_auto_build:
 # me in sufficient detail to detect reliably, we have to disable all
 # netsync tests until upstream gets around to converting them to local
 # network sockets.
-export DISABLE_NETWORK_TESTS = 1
+#
+# With 1.1-1, I'm now giving it a try: Enable network tests - these
+# worked for me on a disconnected box.
+# export DISABLE_NETWORK_TESTS = 1
 
 # This is a hack to get more detail out of the alpha and sparc testsuite
 # crashes.
@@ -89,7 +93,7 @@ override_dh_auto_install:
 	dh_auto_install -Nmonotone-doc -- INFO_DEPS=''
 	dh_auto_install -pmonotone-doc
 
-	# monotone-server uses these
+#	monotone-server uses these
 	mkdir -p debian/tmp/usr/share/monotone
 	for x in read-permissions write-permissions server-setup/serverrc; do \
 		cp -p examples/$$x debian/tmp/usr/share/monotone/$${x##*/}.base; \
@@ -105,14 +109,10 @@ override_dh_install:
 override_dh_installchangelogs:
 	dh_installchangelogs -X ChangeLog
 
-# colorize seems to compress to something weird, Lintian keeps warning about it
-# PDFs should generally not be compressed.
+# colorize seems to compress to something weird, Lintian keeps warning
+# about it PDFs should generally not be compressed.
 override_dh_compress:
 	dh_compress -Xcolorize -X.pdf
-
-# For now, we link /usr/share/doc/monotone-doc to /usr/share/doc/monotone
-override_dh_installdocs:
-	dh_installdocs --link-doc=monotone
 
 # Install init for monotone-server, but with the name monotone
 override_dh_installinit:

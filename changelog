@@ -1,10 +1,13 @@
-monotone (1.1-1) UNRELEASED; urgency=medium
+monotone (1.1-1) unstable; urgency=low
 
   * New upstream release
   * Drop all patches from upstream commits now integrated: from patch
     numbered 00 through 10.
+  * Give the documentation its own directory in /usr/share/doc, so
+    monotone-doc doesn't need to depend on monotone, anymore.
+  * Enable network tests, again, to see how well 1.1 behaves on buildd.
 
- -- Markus Wanner <markus@bluegap.ch>  Sun, 04 May 2014 13:02:15 +0200
+ -- Markus Wanner <markus@bluegap.ch>  Mon, 05 May 2014 08:45:49 +0200
 
 monotone (1.0-12) unstable; urgency=medium
 
