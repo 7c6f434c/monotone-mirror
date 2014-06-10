@@ -1,9 +1,10 @@
-monotone (1.1-3) UNRELEASED; urgency=low
+monotone (1.1-3) unstable; urgency=medium
 
+  * Reintroduce the overrid_dh_installdocs rule. Closes: #749348.
   * Add patch 00-copyright-clarification.diff, granting the right to
     distribute two files under GPL-2, which were marked GPL-3+, before.
 
- -- Markus Wanner <markus@bluegap.ch>  Wed, 07 May 2014 21:41:53 +0200
+ -- Markus Wanner <markus@bluegap.ch>  Tue, 10 Jun 2014 21:13:20 +0200
 
 monotone (1.1-2) unstable; urgency=low
 

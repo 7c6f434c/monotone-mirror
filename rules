@@ -107,9 +107,17 @@ override_dh_installchangelogs:
 	dh_installchangelogs -X ChangeLog
 
 # colorize seems to compress to something weird, Lintian keeps warning
-# about it PDFs should generally not be compressed.
+# about it. PDFs should generally not be compressed.
 override_dh_compress:
 	dh_compress -Xcolorize -X.pdf
+
+# For now, we link /usr/share/doc/monotone-doc to /usr/share/doc/monotone.
+#
+# Note that the monotone-server postinst script relies on
+# /usr/share/doc/monotone-server being a symlink (or an empty
+# directory after removal).
+override_dh_installdocs:
+	dh_installdocs --link-doc=monotone
 
 # Install init for monotone-server, but with the name monotone
 override_dh_installinit:
