@@ -11,11 +11,13 @@ Vcs-Browser: https://code.monotone.ca/p/debian-mtn/source/tree/h:org.debian.mono
 Vcs-Mtn: mtn://monotone.ca/debian-mtn?org.debian.monotone
 Build-Depends: debhelper (>= 9), dh-autoreconf, autotools-dev,
  po-debconf, bind9-host,
- libboost-dev, libbotan1.10-dev, libidn11-dev, liblua5.1-0-dev,
+ libboost-dev, libbotan1.10-dev, libidn11-dev,
+ liblua5.2-dev | liblua5.1-0-dev,
  libpcre3-dev, libsqlite3-dev, libz-dev, texinfo, expect, bash-completion,
  bash (>= 4.0), source-highlight, mime-construct
 Build-Depends-Indep: poppler-utils | xpdf-utils, ps2eps,
- texlive-latex-base, texlive-generic-recommended, texlive-fonts-recommended
+ texlive-latex-base, texlive-generic-recommended, texlive-fonts-recommended,
+ cm-super-minimal
 Standards-Version: 3.9.5
 
 Package: monotone
