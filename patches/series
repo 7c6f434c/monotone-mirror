@@ -1,3 +1,4 @@
 00-copyright-clarification.diff
 11-no-gettext-on-lua.diff
+12-fix-std-cerr.diff
 90-stacktrace-on-crash.diff

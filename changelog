@@ -1,3 +1,10 @@
+monotone (1.1-5) UNRELEASED; urgency=medium
+
+  * Add patch 12-fix-std-cerr.diff to make std::cerr known.
+    Closes: #796734.
+
+ -- Markus Wanner <markus@bluegap.ch>  Tue, 25 Aug 2015 21:12:31 +0200
+
 monotone (1.1-4) unstable; urgency=medium
 
   * Allow compilation against lua version 5.2, if available.
