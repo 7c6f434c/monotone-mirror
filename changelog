@@ -1,9 +1,9 @@
-monotone (1.1-5) UNRELEASED; urgency=medium
+monotone (1.1-4.1) unstable; urgency=medium
 
-  * Add patch 12-fix-std-cerr.diff to make std::cerr known.
-    Closes: #796734.
+  * Non-maintainer upload.
+  * Fix FTBFS due to missing #include <iostream>. Closes: #796734
 
- -- Markus Wanner <markus@bluegap.ch>  Tue, 25 Aug 2015 21:12:31 +0200
+ -- Christian Hofstaedtler <zeha@debian.org>  Wed, 26 Aug 2015 12:48:57 +0000
 
 monotone (1.1-4) unstable; urgency=medium
 

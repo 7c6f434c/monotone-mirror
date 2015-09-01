@@ -1,0 +1,18 @@
+Description: Fix FTBFS because of missing iostream include
+Author: Christian Hofstaedtler <zeha@debian.org>
+Origin: Debian
+Bug-Debian: https://bugs.debian.org/796734
+Forwarded: no
+Last-Update: 2015-08-26
+
+--- monotone-1.1.orig/test/unit/tests/merge_3way.cc
++++ monotone-1.1/test/unit/tests/merge_3way.cc
+@@ -17,6 +17,8 @@
+ #include "../randomfile.hh"
+ #include "../../../src/simplestring_xform.hh"
+ 
++#include <iostream>
++
+ using std::cerr;
+ using std::cout;
+ using std::stringstream;
