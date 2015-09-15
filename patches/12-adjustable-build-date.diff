@@ -1,0 +1,20 @@
+Description: Allow to set BUILD_DATE externally.
+ Tweaks configure.ac a bit to only set BUILD_DATE to the current date
+ if it's not already set in the environment. Allows reproducible builds
+Author: Markus Wanner <markus@bluegap.ch>
+Forwarded: no
+Last-Update: 2013-09-15
+
+--- a/configure.ac
++++ b/configure.ac
+@@ -42,7 +42,9 @@
+ AC_CANONICAL_HOST
+ AC_MSG_CHECKING([category of operating system])
+ 
+-BUILD_DATE=`date '+%F'`
++if test x"$BUILD_DATE" = x; then
++  BUILD_DATE=`date '+%F'`
++fi
+ AC_SUBST([BUILD_DATE])
+ AC_DEFINE_UNQUOTED([BUILD_DATE], ["$BUILD_DATE"],
+ 	[The date of the build, used in the manual page and other places.])

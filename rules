@@ -48,6 +48,11 @@ build:
 # Uncomment this to turn on verbose mode.
 export DH_VERBOSE=1
 
+# Use the date of the last changelog entry as the build date to
+# get reproducible builds.
+export BUILD_DATE = $(shell LC_ALL=C \
+	date -u --date="`dpkg-parsechangelog -SDate`" +'%Y-%m-%d')
+
 # It is desirable to be able to pass the "--parallel" option to dh.
 # Unfortunately, parallel builds of monotone currently cause make to
 # enter an infinite loop. When the cause has been determined and
