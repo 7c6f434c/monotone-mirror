@@ -63,6 +63,10 @@ export BUILD_DATE = $(shell LC_ALL=C \
 override_dh_auto_configure:
 	debian/nofakeroot dh_auto_configure
 
+override_dh_auto_clean:
+	test ! -f Makefile || $(MAKE) -C $(CURDIR) clean
+	rm -rf config.h config.guess stamp-h1 config.status Makefile
+
 # To enable documentation to only be built for the monotone-doc
 # package (really, any -indep target), we need to make sure all
 # relevant dh_auto_* calls behave differently for arch and indep

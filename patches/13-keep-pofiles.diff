@@ -1,0 +1,71 @@
+Description: Drop all REBUILD_NLS=true code
+ While there's code in Makefile.am to cope with missing xgettext et al,
+ the variable cannot be set externally. Instead, we simply drop the
+ corresponding rules and act as if REBUILD_NLS == false. This helps
+ generate reproducible builds.
+ .
+ At the same time, this corrects builds in the source directory for
+ REBUILD_NLS == false.
+Author: Markus Wanner <markus@bluegap.ch>
+Last-Update: 2015-09-17
+
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -480,53 +480,15 @@
+ endif
+ 
+ .PHONY: dist-nls
+-if REBUILD_NLS
+-po/%.gmo: po/%.merged.po
+-	$(V_msgfmt)$(MSGFMT) -c --statistics -o $@ $<
+ 
+-po/%.merged.po: $(srcdir)/po/%.po po/$(PACKAGE).pot
+-	$(V_msgmerge)$(MSGMERGE) $^ -q -o $@
+-
+-# for translators' use
+-UPDATEPOFILES = $(addprefix po/,$(addsuffix .po-update, $(ALL_LINGUAS)))
+-
+-po/%.po-update: $(srcdir)/po/%.po po/$(PACKAGE).pot
+-	$(MSGMERGE) --update $^
+-
+-update-po: $(UPDATEPOFILES)
+-
+-update-gmo: update-po $(ALL_GMOFILES)
+-
+-# for the template file
+-POTFILES = $(filter-out package_%, $(MOST_SOURCES)) \
+-	$(UNIX_PLATFORM_SOURCES) $(WIN32_PLATFORM_SOURCES) \
+-	src/monotone.cc src/std_hooks.lua
+-
+-po/$(PACKAGE).pot: $(POTFILES)
+-	[ -d po ] || mkdir -p po
+-	$(V_xgettext)$(XGETTEXT) -o$@.in -D. -D$(top_srcdir) -cTRANSLATORS: \
+-	  --copyright-holder='$(COPYRIGHT_HOLDER)' \
+-	  --msgid-bugs-address='$(PACKAGE_BUGREPORT)' \
+-	  $(XGETTEXT_PKG_OPTS) $(XGETTEXT_OPTS) \
+-	  $(POTFILES)
+-        YEAR=$(word 1, $(subst -, ,$(BUILD_DATE)))
+-	sed -e 's/FIRST AUTHOR <EMAIL@ADDRESS>, YEAR./Please see po\/README.<lang> for individual copyrights./' \
+-	  -e 's/(C) YEAR/(C) 2003 - $(YEAR)/' -e 's/PACKAGE/$(PACKAGE)/' \
+-	  -e 's/SOME DESCRIPTIVE TITLE/monotone message string catalogue/' < $@.in > $@
+-	rm $@.in
+-
+-dist-nls: $(ALL_GMOFILES)
+-	cp $(ALL_GMOFILES) $(distdir)/po
+-else
+-
+-po/%.gmo: $(srcdir)/po/%.gmo
+-	cp $< $@
++# This doesn't quite work nor is it necessary if we directly build in
++# the source directory.
++#po/%.gmo: $(srcdir)/po/%.gmo
++#	cp $< $@
+ 
+ dist-nls:
+ 	@echo "*** Cannot 'make dist' without xgettext" >&2; exit 1
+ 
+-endif
+-
+ _install_data = \
+ 	list='$(1)'; test -n "$(3)" || list=; \
+ 	for p in $$list; do \

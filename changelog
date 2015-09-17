@@ -1,3 +1,14 @@
+monotone (1.1-6) UNRELEASED; urgency=medium
+
+  * Patch Makefile.am to not rebuild NLS (i.e. pot and po files) so as
+    to generate more reproducible builds. Drop a patch that helped NLS
+    rebuilds (11-no-gettext-on-lua.diff), which obviously isn't
+    necessary if not rebuilding.
+  * Run just the clean target, not distclean, as the latter removes the
+    generated and distributed gmo files.
+
+ -- Markus Wanner <markus@bluegap.ch>  Thu, 17 Sep 2015 21:40:09 +0200
+
 monotone (1.1-5) unstable; urgency=medium
 
   * Patch build system to allow the build date to be set externally,
