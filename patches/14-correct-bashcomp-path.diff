@@ -1,0 +1,27 @@
+Description: Correct installation location of bash completion file.
+Author: Markus Wanner <markus@bluegap.ch>
+Forwarded: no
+Last-Update: 2015-09-17
+
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -243,7 +243,7 @@
+ src_lib3rdparty_a_SOURCES = $(BOOST_SANDBOX_SOURCES) \
+ 			    $(NETXX_SOURCES)
+ 
+-bashcompdir = $(sysconfdir)/bash_completion.d
++bashcompdir = $(datadir)/bash-completion/completions
+ bashcomp_DATA = extra/shell/monotone.bash_completion
+ 
+ monotonedir = $(datadir)/monotone
+--- a/extra/shell/monotone.bash_completion.in
++++ b/extra/shell/monotone.bash_completion.in
+@@ -16,7 +16,7 @@
+ 
+ # Requirements:
+ #    the bash completion package <http://www.caliban.org/bash/>,
+-# copy this file in the directory /etc/bash_completion.d
++# copy this file in the directory /usr/share/bash-completion/completions
+ 
+ 
+ # List information on the stuff to parse (this could really be in a

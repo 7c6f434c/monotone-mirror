@@ -1,1 +1,1 @@
-etc/bash_completion.d/monotone.bash_completion monotone
+usr/share/bash-completion/completions/monotone.bash_completion monotone

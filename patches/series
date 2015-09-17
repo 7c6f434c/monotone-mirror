@@ -1,5 +1,6 @@
 00-copyright-clarification.diff
 12-adjustable-build-date.diff
 13-keep-pofiles.diff
+14-correct-bashcomp-path.diff
 50-missing-iostream.diff
 90-stacktrace-on-crash.diff
