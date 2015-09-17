@@ -1,4 +1,4 @@
-monotone (1.1-6) UNRELEASED; urgency=medium
+monotone (1.1-6) unstable; urgency=medium
 
   * Patch Makefile.am to not rebuild NLS (i.e. pot and po files) so as
     to generate more reproducible builds. Drop a patch that helped NLS
@@ -11,7 +11,7 @@ monotone (1.1-6) UNRELEASED; urgency=medium
   * Add patch 51-sigpipe-test.diff attempting to fix an FTBFS (#797386)
   * Bump S-V: no changes needed.
 
- -- Markus Wanner <markus@bluegap.ch>  Thu, 17 Sep 2015 21:40:09 +0200
+ -- Markus Wanner <markus@bluegap.ch>  Thu, 17 Sep 2015 23:15:52 +0200
 
 monotone (1.1-5) unstable; urgency=medium
 
