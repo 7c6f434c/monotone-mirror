@@ -3,4 +3,5 @@
 13-keep-pofiles.diff
 14-correct-bashcomp-path.diff
 50-missing-iostream.diff
+51-sigpipe-test.diff
 90-stacktrace-on-crash.diff

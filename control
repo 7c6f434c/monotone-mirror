@@ -18,7 +18,7 @@ Build-Depends: debhelper (>= 9), dh-autoreconf, autotools-dev,
 Build-Depends-Indep: poppler-utils | xpdf-utils, ps2eps,
  texlive-latex-base, texlive-generic-recommended, texlive-fonts-recommended,
  cm-super-minimal
-Standards-Version: 3.9.5
+Standards-Version: 3.9.6
 
 Package: monotone
 Architecture: any

@@ -1,0 +1,43 @@
+Description: Attempt to fix 'log_quits_on_SIGPIPE' failure on powerpc
+ Double the number of commits in preparation for the SIGPIPE test, so
+ we're not just writing (somewhere above) 256K but 512K.
+ .
+ This is a somewhat desperate but conservative attempt at fixing a
+ buildd issue that's hard to reproduce.
+Bug-Debian: https://bugs.debian.org/797386
+Forwarded: no
+Last-Update: 2015-09-18
+
+--- a/test/func/log_quits_on_SIGPIPE/__driver__.lua
++++ b/test/func/log_quits_on_SIGPIPE/__driver__.lua
+@@ -29,18 +29,13 @@
+ -- the reader closes its end.  Unfortunately, there is no way to find
+ -- out how much buffer space the kernel provides, so we resort to
+ -- writing a ridiculous amount of data.  Typical pipe capacities are
+--- 4K and 64K, so "ridiculous" in this case is "approximately 256K."
++-- 4K and 64K, so "ridiculous" in this case is "approximately 512K."
+ --
+ -- We would like to make that data realistic -- typical commits to the
+ -- monotone repository have between 100 and 200 characters of commit
+--- log -- but in order to get the ridiculous 256K, we would need
++-- log -- but in order to get the ridiculous 512K, we would need
+ -- several thousand commits, which would take too long to execute.
+--- So instead we make four commits each with 64K commit messages.
+--- (There is a temptation to make it sixteen; I can imagine someone
+--- deciding to bulk up the pipe buffer to a nice round megabyte.
+--- But the time this test takes is proportional to the number of
+--- commits, so I won't.  I tried having a bigger log message but that
+--- crashed "mtn commit".)
++-- So instead we make eight commits each with 64K commit messages.
+ --
+ -- The following 1024-byte block of nonsense is courtesy of the Eater
+ -- of Meaning.
+@@ -71,7 +66,7 @@
+ 
+ mtn_setup()
+ addfile("file", "fnord")
+-for i = 1,4 do
++for i = 1,8 do
+    writefile("file", "commit "..tonumber(i).."\n")
+    commit(nil, message)
+ end

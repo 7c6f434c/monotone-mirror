@@ -8,6 +8,8 @@ monotone (1.1-6) UNRELEASED; urgency=medium
     generated and distributed gmo files.
   * Add patch 14-correct-bashcomp-path.diff to correct the installation
     location of the bash completion data.
+  * Add patch 51-sigpipe-test.diff attempting to fix an FTBFS (#797386)
+  * Bump S-V: no changes needed.
 
  -- Markus Wanner <markus@bluegap.ch>  Thu, 17 Sep 2015 21:40:09 +0200
 
