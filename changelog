@@ -6,6 +6,8 @@ monotone (1.1-6) UNRELEASED; urgency=medium
     necessary if not rebuilding.
   * Run just the clean target, not distclean, as the latter removes the
     generated and distributed gmo files.
+  * Add patch 14-correct-bashcomp-path.diff to correct the installation
+    location of the bash completion data.
 
  -- Markus Wanner <markus@bluegap.ch>  Thu, 17 Sep 2015 21:40:09 +0200
 
