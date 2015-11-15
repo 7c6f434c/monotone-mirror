@@ -1,3 +1,10 @@
+monotone (1.1-7) unstable; urgency=medium
+
+  * Modify patch 51-sigpipe-test.diff: increase bytes written to 1M to
+    increase chances to overflow the pipe buffer even further.
+
+ -- Markus Wanner <markus@bluegap.ch>  Sun, 15 Nov 2015 18:14:19 +0100
+
 monotone (1.1-6) unstable; urgency=medium
 
   * Patch Makefile.am to not rebuild NLS (i.e. pot and po files) so as
