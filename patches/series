@@ -4,4 +4,5 @@
 14-correct-bashcomp-path.diff
 50-missing-iostream.diff
 51-sigpipe-test.diff
+52-negative_number_fix.diff
 90-stacktrace-on-crash.diff

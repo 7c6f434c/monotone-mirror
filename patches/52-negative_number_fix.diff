@@ -1,0 +1,28 @@
+Description: Correct negative numbers from Sqlite
+ * src/database.cc: looks like there could have been negative
+   numbers forever, but since Sqlite v3.7.10, they are
+   interpreted differently. And on at least one system a
+   negative number now is the default.
+Author: Markus Wanner <markus@bluegap.ch>
+Last-Update: 2016-06-04
+Origin: https://code.monotone.ca/p/monotone/source/commit/5dfc8257f76cec365b43d7fd6f09ef9e93f214c0/
+
+--- a/src/database.cc
++++ b/src/database.cc
+@@ -1818,7 +1818,15 @@
+   results res;
+   query q("PRAGMA default_cache_size");
+   fetch(res, one_col, one_row, q);
+-  return lexical_cast<unsigned int>(res[0][0]);
++
++  string result = res[0][0];
++  if (result[0] == '-') {
++    // Handling of negative numbers changed with SQLite 3.7.10.
++    int factor = sqlite3_libversion_number() >= 300710 ? 1024 : 1;
++    return lexical_cast<unsigned int>(result.substr(1)) * factor;
++  } else {
++    return lexical_cast<unsigned int>(result);
++  }
+ }
+ 
+ void
