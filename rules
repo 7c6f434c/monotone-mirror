@@ -48,6 +48,9 @@ build:
 # Uncomment this to turn on verbose mode.
 export DH_VERBOSE=1
 
+# Enable all hardening features.
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
 # Use the date of the last changelog entry as the build date to
 # get reproducible builds.
 export BUILD_DATE = $(shell LC_ALL=C \

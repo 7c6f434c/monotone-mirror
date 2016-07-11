@@ -2,6 +2,8 @@ monotone (1.1-9) UNRELEASED; urgency=medium
 
   * Disable test log_dirs which fails intermittently for unknown
     reasons.
+  * Bump Standards-Version; no changes required.
+  * Enable all hardening options.
 
  -- Markus Wanner <markus@bluegap.ch>  Mon, 11 Jul 2016 07:23:07 +0200
 
