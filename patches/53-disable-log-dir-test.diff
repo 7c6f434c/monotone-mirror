@@ -1,3 +1,8 @@
+Description: disable the log_dir tests which fails intermittently.
+Author: Markus Wanner <markus@bluegap.ch>
+Last-Update: 2016-07-11
+Forwarded: no
+
 --- a/test/func/log_dir/__driver__.lua
 +++ b/test/func/log_dir/__driver__.lua
 @@ -42,6 +42,10 @@
