@@ -1,4 +1,4 @@
-monotone (1.1-9) UNRELEASED; urgency=medium
+monotone (1.1-9) unstable; urgency=medium
 
   * Disable test log_dirs which fails intermittently for unknown
     reasons.
