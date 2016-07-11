@@ -1,0 +1,128 @@
+
+Description: correct a couple of spelling errors
+Author: Markus Wanner <markus@bluegap.ch>
+Last-Update: 2016-07-11
+Forwarded: no
+
+--- a/extra/mtn-hooks/monotone-mail-notify.lua
++++ b/extra/mtn-hooks/monotone-mail-notify.lua
+@@ -270,7 +270,7 @@
+ 	       end
+ 
+ 	       if status ~= 200 then
+-		  -- some error occured, no further processing takes place
++		  -- some error occurred, no further processing takes place
+ 		  return "continue", nil
+ 	       end
+ 
+--- a/src/sanity.cc
++++ b/src/sanity.cc
+@@ -337,7 +337,7 @@
+                         char const * file, int line)
+ {
+   if (!imp)
+-    throw std::logic_error("sanity::generic_failure occured "
++    throw std::logic_error("sanity::generic_failure occurred "
+                            "before sanity::initialize");
+ 
+   log(FL("Encountered an error while musing upon the following:"),
+@@ -378,7 +378,7 @@
+   char const * pattern
+     = N_("%s:%d: index '%s' = %d overflowed vector '%s' with size %d");
+   if (!imp)
+-    throw std::logic_error("sanity::index_failure occured "
++    throw std::logic_error("sanity::index_failure occurred "
+                             "before sanity::initialize");
+   if (debug_p())
+     log(FL(pattern) % file % line % idx_expr % idx % vec_expr % sz,
+--- a/src/netxx/datagram.h
++++ b/src/netxx/datagram.h
+@@ -139,7 +139,7 @@
+      * @param buffer The buffer to send to the peer.
+      * @param length The size of the buffer.
+      * @return Greater than or equal to 0: The number of bytes sent to the peer.
+-     * @return -1: A timeout occured.
++     * @return -1: A timeout occurred.
+      * @author Peter Jones
+     **/
+     //####################################################################
+@@ -155,7 +155,7 @@
+      * @param buffer A place to store the incoming datagram message.
+      * @param length The size of the buffer.
+      * @return receive_type.first greater than or equal to 0: The number of bytes that were placed in the buffer.
+-     * @return receive_type.first == -1: A timeout occured.
++     * @return receive_type.first == -1: A timeout occurred.
+      * @author Peter Jones
+     **/
+     //####################################################################
+@@ -170,7 +170,7 @@
+      * @param buffer The buffer that contains the messeage to send to the peer.
+      * @param length The size of the buffer.
+      * @return Greater than or equal to 0: The number of bytes sent to the peer.
+-     * @return -1 A timeout occured.
++     * @return -1 A timeout occurred.
+      * @author Peter Jones
+     **/
+     //####################################################################
+@@ -185,7 +185,7 @@
+      * @param buffer The place to store the received message from the peer.
+      * @param length The size of the buffer.
+      * @return Greater than or equal to 0:The number of bytes placed in your buffer.
+-     * @return -1 A timeout occured.
++     * @return -1 A timeout occurred.
+      * @author Peter Jones
+     **/
+     //####################################################################
+--- a/src/netxx/stream.h
++++ b/src/netxx/stream.h
+@@ -169,7 +169,7 @@
+      * @param length The size of the given buffer.
+      * @return Greater than 0: The number of bytes read from the peer and placed into your buffer.
+      * @return 0: The peer closed the connection.
+-     * @return -1: A timeout occured.
++     * @return -1: A timeout occurred.
+      * @see Netxx::SockOpt
+      * @author Peter Jones
+     **/
+@@ -190,7 +190,7 @@
+      * @param length The amount of data to use from the buffer.
+      * @return Greater than 0: The number of bytes that were sent to the peer.
+      * @return 0: The peer closed the connection.
+-     * @return -1: A timeout occured.
++     * @return -1: A timeout occurred.
+      * @see Netxx::SockOpt
+      * @author Peter Jones
+     **/
+--- a/src/netxx/streamserver.h
++++ b/src/netxx/streamserver.h
+@@ -95,7 +95,7 @@
+     /** 
+      * Try to accept a connection from a Peer. The returned value will
+      * indicate whether or not a connection was established or a timeout
+-     * occured. This member function will throw an exception if there is an
++     * occurred. This member function will throw an exception if there is an
+      * error.
+      *
+      * @return A Peer that contains info about the connected peer.
+--- a/src/work.hh
++++ b/src/work.hh
+@@ -184,7 +184,7 @@
+   void get_work_rev(revision_t & rev);
+ 
+   // read the revision id that was the parent of this workspace before
+-  // the last update occured. this is used for the u: (update) selector
++  // the last update occurred. this is used for the u: (update) selector
+   void get_update_id(revision_id & update_id);
+ 
+   // write the revision id that was the parent of this workspace before
+--- a/src/schema.sql
++++ b/src/schema.sql
+@@ -21,7 +21,7 @@
+ BEGIN EXCLUSIVE;
+ 
+ -- primary data structures concerned with storing and 
+--- versionning state-of-tree configurations
++-- versioning state-of-tree configurations
+ 
+ CREATE TABLE files
+ 	(

@@ -6,4 +6,5 @@
 51-sigpipe-test.diff
 52-negative_number_fix.diff
 53-disable-log-dir-test.diff
+54-spelling-fixes.diff
 90-stacktrace-on-crash.diff
