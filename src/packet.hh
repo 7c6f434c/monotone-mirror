@@ -10,7 +10,7 @@
 #ifndef __PACKET_HH__
 #define __PACKET_HH__
 
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11)
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11) && BOTAN_VERSION_CODE <= BOTAN_VERSION_CODE_FOR(2,0,0)
 #include <botan/ui.h>
 #endif
 
@@ -88,7 +88,7 @@ struct packet_writer : public packet_consumer
 
 size_t read_packets(std::istream & in, packet_consumer & cons);
 
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11)
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11) && BOTAN_VERSION_CODE <= BOTAN_VERSION_CODE_FOR(2,0,0)
 // A helper class implementing Botan::User_Interface - which doesn't really
 // interface with the user, but provides the necessary plumbing for Botan.
 //

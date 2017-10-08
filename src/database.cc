@@ -28,7 +28,13 @@
 #include <botan/botan.h>
 #include <botan/rsa.h>
 #include <botan/pem.h>
-#include <botan/look_pk.h>
+#include <botan/x509_key.h>
+
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
+  #include <botan/pubkey.h>
+#else
+  #include <botan/look_pk.h>
+#endif
 #include "lazy_rng.hh"
 
 #include <sqlite3.h>
@@ -3352,17 +3358,27 @@ database::encrypt_rsa(key_id const & pub_id,
   rsa_pub_key pub;
   get_key(pub_id, pub);
 
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
+  Botan::DataSource_Memory pub_block(
+    (reinterpret_cast<Botan::byte const *>(pub().data())), pub().size());
+  shared_ptr<X509_PublicKey> x509_key(Botan::X509::load_key(pub_block));
+#else
   SecureVector<Botan::byte> pub_block
     (reinterpret_cast<Botan::byte const *>(pub().data()), pub().size());
 
   shared_ptr<X509_PublicKey> x509_key(Botan::X509::load_key(pub_block));
+#endif
   shared_ptr<RSA_PublicKey> pub_key
     = dynamic_pointer_cast<RSA_PublicKey>(x509_key);
   if (!pub_key)
     throw recoverable_failure(origin::system,
                               "Failed to get RSA encrypting key");
 
-  SecureVector<Botan::byte> ct;
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
+     std::vector<Botan::byte> ct;
+#else
+     SecureVector<Botan::byte> ct;
+#endif
 
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,5)
   PK_Encryptor_EME encryptor(*pub_key, "EME1(SHA-1)");
@@ -3386,7 +3402,11 @@ database::encrypt_rsa(key_id const & pub_id,
 #endif
 
   ciphertext = rsa_oaep_sha_data(
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
+    string(reinterpret_cast<char const *>(ct.data()), ct.size()),
+#else
     string(reinterpret_cast<char const *>(ct.begin()), ct.size()),
+#endif
     origin::database);
 }
 
@@ -3411,10 +3431,10 @@ database::check_signature(key_id const & id,
         return cert_unknown;
 
       get_key(id, pub);
-      SecureVector<Botan::byte> pub_block
-        (reinterpret_cast<Botan::byte const *>(pub().data()), pub().size());
+      Botan::DataSource_Memory pub_block(
+        (reinterpret_cast<Botan::byte const *>(pub().data())), pub().size());
 
-      L(FL("building verifier for %d-byte pub key") % pub_block.size());
+      L(FL("building verifier for %d-byte pub key") % pub().size());
       shared_ptr<X509_PublicKey> x509_key(Botan::X509::load_key(pub_block));
       shared_ptr<RSA_PublicKey> pub_key
         = std::dynamic_pointer_cast<RSA_PublicKey>(x509_key);

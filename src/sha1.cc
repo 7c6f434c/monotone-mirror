@@ -17,7 +17,7 @@
 // Botan 1.7.23+ and 1.8.x specific sha1 benchmarking code uses botan's
 // own timer and measures botan's different SHA1 providers, instead of
 // only measuring one.
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,23)
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,23) && BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(1,11,0)
   #include <botan/libstate.h>
   #include <botan/benchmark.h>
 #endif
@@ -37,7 +37,7 @@ CMD_HIDDEN(benchmark_sha1, "benchmark_sha1", "", CMD_REF(debug), "",
 {
   P(F("Benchmarking botan's SHA-1 core"));
 
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,23)
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,23) && BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(1,11,0)
 
   Botan::AutoSeeded_RNG rng;
   Botan::Algorithm_Factory& af =

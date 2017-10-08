@@ -14,6 +14,7 @@
 
 #include <botan/botan.h>
 #include <botan/rsa.h>
+#include <botan/x509_key.h>
 #include <botan/numthry.h>
 
 #include "ssh_agent.hh"
@@ -210,11 +211,20 @@ put_bigint_into_buf(BigInt const & bi, string & buf)
   L(FL("ssh_agent: put_bigint_into_buf: bigint.bytes(): %u, bigint: %s")
     % bi.bytes()
     % bi);
-  SecureVector<Botan::byte> bi_buf = BigInt::encode(bi);
+
   string bi_str;
+
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
+  std::vector<Botan::byte> bi_buf = BigInt::encode(bi);
+  if (*bi_buf.data() & 0x80)
+    bi_str.append(1, static_cast<char>(0));
+  bi_str.append((char *) bi_buf.data(), bi_buf.size());
+#else
+  SecureVector<Botan::byte> bi_buf = BigInt::encode(bi);
   if (*bi_buf.begin() & 0x80)
     bi_str.append(1, static_cast<char>(0));
   bi_str.append((char *) bi_buf.begin(), bi_buf.size());
+#endif
   put_string_into_buf(bi_str, buf);
   L(FL("ssh_agent: put_bigint_into_buf: buf len now %i") % buf.length());
 }
@@ -387,10 +397,10 @@ bool
 ssh_agent::has_key(const keypair & key)
 {
   //grab the monotone public key as an RSA_PublicKey
-  SecureVector<Botan::byte> pub_block
+  Botan::DataSource_Memory pub_block
     (reinterpret_cast<Botan::byte const *>((key.pub)().data()),
      (key.pub)().size());
-  L(FL("has_key: building %d-byte pub key") % pub_block.size());
+  L(FL("has_key: building %d-byte pub key") % key.pub().size());
   shared_ptr<X509_PublicKey> x509_key =
     shared_ptr<X509_PublicKey>(Botan::X509::load_key(pub_block));
   shared_ptr<RSA_PublicKey> pub_key =

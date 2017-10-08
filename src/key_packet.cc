@@ -15,6 +15,8 @@
 #include <sstream>
 #include <botan/botan.h>
 #include <botan/rsa.h>
+#include <botan/x509_key.h>
+#include <botan/pkcs8.h>
 
 #include "cset.hh"
 #include "constants.hh"
@@ -106,7 +108,7 @@ namespace
     void validate_public_key_data(string const & name, string const & keydata) const
     {
       string decoded = decode_base64_as<string>(keydata, origin::user);
-      Botan::SecureVector<Botan::byte> key_block
+      Botan::DataSource_Memory key_block
         (reinterpret_cast<Botan::byte const *>(decoded.c_str()), decoded.size());
       try
         {

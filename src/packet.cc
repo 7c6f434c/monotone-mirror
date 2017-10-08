@@ -11,6 +11,7 @@
 #include <sstream>
 #include <botan/botan.h>
 #include <botan/rsa.h>
+#include <botan/pkcs8.h>
 
 #include "cset.hh"
 #include "constants.hh"
@@ -156,7 +157,7 @@ namespace
     void validate_public_key_data(string const & name, string const & keydata) const
     {
       string decoded = decode_base64_as<string>(keydata, origin::user);
-      Botan::SecureVector<Botan::byte> key_block
+      Botan::DataSource_Memory key_block
         (reinterpret_cast<Botan::byte const *>(decoded.c_str()), decoded.size());
       try
         {
@@ -175,7 +176,9 @@ namespace
       Botan::DataSource_Memory ds(decoded);
       try
         {
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11)
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
+          Botan::PKCS8::load_key(ds, lazy_rng::get());
+#elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11)
           Botan::PKCS8::load_key(ds, lazy_rng::get(), Dummy_UI());
 #elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
           Botan::PKCS8::load_key(ds, lazy_rng::get(), string());
@@ -191,7 +194,7 @@ namespace
         }
       // since we do not want to prompt for a password to decode it finally,
       // we ignore all other exceptions
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11)
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11) && BOTAN_VERSION_CODE <= BOTAN_VERSION_CODE_FOR(1,11,0)
       catch (Passphrase_Required) {}
 #else
       catch (Botan::Invalid_Argument) {}
@@ -467,7 +470,7 @@ read_packets(istream & in, packet_consumer & cons)
 }
 
 // Dummy User_Interface implementation for Botan
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11)
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11) && BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(1,11,0)
 std::string
 Dummy_UI::get_passphrase(const std::string &, const std::string &,
                          Botan::User_Interface::UI_Result&) const

@@ -7,6 +7,7 @@
 #ifndef BOTAN_EXT_GZIP_H__
 #define BOTAN_EXT_GZIP_H__
 
+#include <botan/botan.h>
 #include <botan/version.h>
 #include <botan/filter.h>
 #include <botan/pipe.h>

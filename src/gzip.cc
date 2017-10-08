@@ -38,9 +38,6 @@ class Zlib_Alloc_Info
    {
    public:
       std::map<void*, u32bit> current_allocs;
-      Allocator* alloc;
-
-      Zlib_Alloc_Info() { alloc = Allocator::get(false); }
    };
 
 /*************************************************
@@ -49,7 +46,7 @@ class Zlib_Alloc_Info
 void* zlib_malloc(void* info_ptr, unsigned int n, unsigned int size)
    {
    Zlib_Alloc_Info* info = static_cast<Zlib_Alloc_Info*>(info_ptr);
-   void* ptr = info->alloc->allocate(n * size);
+   void* ptr = calloc(n, size);
    info->current_allocs[ptr] = n * size;
    return ptr;
    }
@@ -63,7 +60,8 @@ void zlib_free(void* info_ptr, void* ptr)
    std::map<void*, u32bit>::const_iterator i = info->current_allocs.find(ptr);
    if(i == info->current_allocs.end())
       throw Invalid_Argument("zlib_free: Got pointer not allocated by us");
-   info->alloc->deallocate(ptr, i->second);
+   memset(ptr, 0, i->second);
+   free(ptr);
    }
 }
 
@@ -110,7 +108,7 @@ Gzip_Compression::Gzip_Compression(u32bit l) :
    if(deflateInit2(&(zlib->stream), level, Z_DEFLATED, -15, 8, Z_DEFAULT_STRATEGY) != Z_OK)
       {
       delete zlib; zlib = 0;
-      throw Memory_Exhaustion();
+      throw std::bad_alloc();
       }
    }
 
@@ -148,12 +146,12 @@ void Gzip_Compression::write(const byte input[], filter_length_t length)
 
    while(zlib->stream.avail_in != 0)
       {
-      zlib->stream.next_out = (Bytef*)buffer.begin();
+      zlib->stream.next_out = (Bytef*)&buffer[0];
       zlib->stream.avail_out = buffer.size();
       int rc = deflate(&(zlib->stream), Z_NO_FLUSH);
       if (rc != Z_OK && rc != Z_STREAM_END)
          throw Invalid_State("Internal error in Gzip_Compression deflate.");
-      send(buffer.begin(), buffer.size() - zlib->stream.avail_out);
+      send(&buffer[0], buffer.size() - zlib->stream.avail_out);
       }
    }
 
@@ -168,12 +166,12 @@ void Gzip_Compression::end_msg()
    int rc = Z_OK;
    while(rc != Z_STREAM_END)
       {
-      zlib->stream.next_out = (Bytef*)buffer.begin();
+      zlib->stream.next_out = (Bytef*)&buffer[0];
       zlib->stream.avail_out = buffer.size();
       rc = deflate(&(zlib->stream), Z_FINISH);
       if (rc != Z_OK && rc != Z_STREAM_END)
          throw Invalid_State("Internal error in Gzip_Compression finishing deflate.");
-      send(buffer.begin(), buffer.size() - zlib->stream.avail_out);
+      send(&buffer[0], buffer.size() - zlib->stream.avail_out);
       }
 
    pipe.end_msg();
@@ -206,19 +204,19 @@ void Gzip_Compression::put_footer()
    SecureVector<byte> buf(4);
    SecureVector<byte> tmpbuf(4);
 
-   pipe.read(tmpbuf.begin(), tmpbuf.size(), Pipe::LAST_MESSAGE);
+   pipe.read(&tmpbuf[0], tmpbuf.size(), Pipe::LAST_MESSAGE);
 
    // CRC32 is the reverse order to what gzip expects.
    for (int i = 0; i < 4; i++)
       buf[3-i] = tmpbuf[i];
 
-   send(buf.begin(), buf.size());
+   send(&buf[0], buf.size());
 
    // Length - LSB first
    for (int i = 0; i < 4; i++)
       buf[3-i] = get_byte(i, count);
 
-   send(buf.begin(), buf.size());
+   send(&buf[0], buf.size());
    }
 
 /*************************************************
@@ -237,7 +235,7 @@ Gzip_Decompression::Gzip_Decompression() : buffer(DEFAULT_BUFFERSIZE),
    if(inflateInit2(&(zlib->stream), -15) != Z_OK)
       {
       delete zlib; zlib = 0;
-      throw Memory_Exhaustion();
+      throw std::bad_alloc();
       }
    }
 
@@ -307,7 +305,7 @@ void Gzip_Decompression::write(const byte input[], filter_length_t length)
 
    while(zlib->stream.avail_in != 0)
       {
-      zlib->stream.next_out = (Bytef*)buffer.begin();
+      zlib->stream.next_out = (Bytef*)&buffer[0];
       zlib->stream.avail_out = buffer.size();
 
       int rc = inflate(&(zlib->stream), Z_SYNC_FLUSH);
@@ -318,11 +316,11 @@ void Gzip_Decompression::write(const byte input[], filter_length_t length)
          if(rc == Z_NEED_DICT)
             throw Decoding_Error("Gzip_Decompression: Need preset dictionary");
          if(rc == Z_MEM_ERROR)
-            throw Memory_Exhaustion();
+            throw std::bad_alloc();
          throw Decoding_Error("Gzip_Decompression: Unknown decompress error");
          }
-      send(buffer.begin(), buffer.size() - zlib->stream.avail_out);
-      pipe.write(buffer.begin(), buffer.size() - zlib->stream.avail_out);
+      send(&buffer[0], buffer.size() - zlib->stream.avail_out);
+      pipe.write(&buffer[0], buffer.size() - zlib->stream.avail_out);
       datacount += buffer.size() - zlib->stream.avail_out;
 
       // Reached the end - we now need to check the footer
@@ -378,13 +376,15 @@ void Gzip_Decompression::check_footer()
    // 4 byte CRC32, and 4 byte length field
    SecureVector<byte> buf(4);
    SecureVector<byte> tmpbuf(4);
-   pipe.read(tmpbuf.begin(), tmpbuf.size(), Pipe::LAST_MESSAGE);
+   pipe.read(&tmpbuf[0], tmpbuf.size(), Pipe::LAST_MESSAGE);
 
   // CRC32 is the reverse order to what gzip expects.
   for (int i = 0; i < 4; i++)
      buf[3-i] = tmpbuf[i];
 
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11)
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
+  tmpbuf.assign(footer.begin(), footer.end());
+#elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11)
   tmpbuf.resize(4);
   tmpbuf.copy(footer.begin(), 4);
 #else
