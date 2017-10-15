@@ -39,6 +39,7 @@
 #include "ui.hh"
 #include "lazy_rng.hh"
 #include "botan_pipe_cache.hh"
+#include "botan_glue.hh"
 
 using std::dynamic_pointer_cast;
 using std::make_pair;
@@ -54,7 +55,6 @@ using std::vector;
 
 using Botan::RSA_PrivateKey;
 using Botan::RSA_PublicKey;
-using Botan::SecureVector;
 using Botan::X509_PublicKey;
 using Botan::PKCS8_PrivateKey;
 using Botan::PK_Decryptor;
@@ -549,7 +549,14 @@ get_passphrase(utf8 & phrase,
   memset(pass2, 0, constants::maxpasswd);
 }
 
-
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
+std::function<std::pair<bool, std::string> ()> pass_req_throw_func =
+  [] ()
+    {
+      throw Passphrase_Required("Passphrase required");
+      return std::pair<bool, string>();
+    };
+#endif
 
 shared_ptr<RSA_PrivateKey>
 key_store_state::decrypt_private_key(key_id const & id,
@@ -573,9 +580,11 @@ key_store_state::decrypt_private_key(key_id const & id,
     {
       Botan::DataSource_Memory ds(kp.priv());
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
-      pkcs8_key.reset(Botan::PKCS8::load_key(ds, lazy_rng::get()));
+      pkcs8_key.reset(Botan::PKCS8::load_key(ds, lazy_rng::get(),
+                                             pass_req_throw_func));
 #elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11)
-      pkcs8_key.reset(Botan::PKCS8::load_key(ds, lazy_rng::get(), Dummy_UI()));
+      pkcs8_key.reset(Botan::PKCS8::load_key(ds, lazy_rng::get(),
+                                             Dummy_UI()));
 #elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
       pkcs8_key.reset(Botan::PKCS8::load_key(ds, lazy_rng::get(), ""));
 #else
@@ -714,7 +723,7 @@ key_store::create_key_pair(database & db,
 
   // serialize and maybe encrypt the private key
   keypair kp;
-  SecureVector<byte> pubkey, privkey;
+  secure_byte_vector /* pubkey, */ privkey;
 
   unfiltered_pipe->start_msg();
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,10,0)
@@ -863,7 +872,7 @@ key_store::decrypt_rsa(key_id const & id,
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,10,0)
       Botan::PK_Decryptor_EME decryptor(*priv_key, "EME1(SHA-1)");
 
-      SecureVector<byte> plain =
+      secure_byte_vector plain =
         decryptor.decrypt(reinterpret_cast<byte const *>(ciphertext().data()),
                           ciphertext().size());
       plaintext = string(plain.begin(), plain.end());
@@ -871,7 +880,7 @@ key_store::decrypt_rsa(key_id const & id,
       shared_ptr<PK_Decryptor>
         decryptor(Botan::get_pk_decryptor(*priv_key, "EME1(SHA-1)"));
 
-      SecureVector<byte> plain =
+      secure_byte_vector plain =
         decryptor->decrypt(reinterpret_cast<byte const *>(ciphertext().data()),
                            ciphertext().size());
       plaintext = string(reinterpret_cast<char const*>(plain.begin()),
@@ -916,10 +925,14 @@ key_store::make_signature(database & db,
     {
       if (agent.connected()) {
         //grab the monotone public key as an RSA_PublicKey
-        Botan::DataSource_Memory pub_block
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
+        vector<byte> pub_block(key.pub().begin(), key.pub().end());
+#else
+        secure_byte_vector pub_block
           (reinterpret_cast<byte const *>(key.pub().data()),
            key.pub().size());
-        L(FL("make_signature: building %d-byte pub key") % key.pub().size());
+#endif
+        L(FL("make_signature: building %d-byte pub key") % pub_block.size());
         shared_ptr<X509_PublicKey> x509_key =
           shared_ptr<X509_PublicKey>(Botan::X509::load_key(pub_block));
         shared_ptr<RSA_PublicKey> pub_key =
@@ -946,9 +959,9 @@ key_store::make_signature(database & db,
       || s->ssh_sign_mode == "no")
     {
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
-      std::vector<byte> sig;
+      vector<byte> sig;
 #else
-      SecureVector<byte> sig;
+      secure_byte_vector sig;
 #endif
 
       // we permit the user to relax security here, by caching a decrypted key
@@ -999,9 +1012,10 @@ key_store::make_signature(database & db,
 #endif
 
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
-      sig_string = string(reinterpret_cast<char const*>(sig.data()), sig.size());
+      sig_string = string(sig.begin(), sig.end());
 #else
-      sig_string = string(reinterpret_cast<char const*>(sig.begin()), sig.size());
+      sig_string = string(reinterpret_cast<char const*>(sig.begin()),
+                          sig.size());
 #endif
     }
 
@@ -1102,7 +1116,7 @@ key_store_state::migrate_old_key_pair
      rsa_pub_key const & pub)
 {
   keypair kp;
-  SecureVector<byte> arc4_key;
+  secure_byte_vector arc4_key;
   utf8 phrase;
   shared_ptr<PKCS8_PrivateKey> pkcs8_key;
   shared_ptr<RSA_PrivateKey> priv_key;
@@ -1121,9 +1135,7 @@ key_store_state::migrate_old_key_pair
     try
       {
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
-        arc4_key.assign(reinterpret_cast<byte const *>(phrase().data()),
-                        reinterpret_cast<byte const *>(phrase().data()) + phrase().size());
-
+        arc4_key = secure_byte_vector(phrase().begin(), phrase().end());
 #elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11)
         arc4_key.resize(phrase().size());
         arc4_key.copy(reinterpret_cast<byte const *>(phrase().data()),
@@ -1140,7 +1152,7 @@ key_store_state::migrate_old_key_pair
         // This is necessary because PKCS8::load_key() cannot currently
         // recognize an unencrypted, raw-BER blob as such, but gets it
         // right if it's PEM-coded.
-        SecureVector<byte> arc4_decrypt(arc4_decryptor.read_all());
+        secure_byte_vector arc4_decrypt(arc4_decryptor.read_all());
         Botan::DataSource_Memory ds(Botan::PEM_Code::encode(arc4_decrypt,
                                                             "PRIVATE KEY"));
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)

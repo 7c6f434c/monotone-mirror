@@ -72,6 +72,7 @@
 #include "outdated_indicator.hh"
 #include "lru_writeback_cache.hh"
 #include "char_classifiers.hh"
+#include "botan_glue.hh"
 
 // defined in schema.c, generated from schema.sql:
 extern char const schema_constant[];
@@ -114,7 +115,6 @@ using Botan::PK_Encryptor_EME;
 using Botan::PK_Encryptor;
 #endif
 using Botan::PK_Verifier;
-using Botan::SecureVector;
 using Botan::X509_PublicKey;
 using Botan::RSA_PublicKey;
 
@@ -3359,12 +3359,12 @@ database::encrypt_rsa(key_id const & pub_id,
   get_key(pub_id, pub);
 
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
-  Botan::DataSource_Memory pub_block(
-    (reinterpret_cast<Botan::byte const *>(pub().data())), pub().size());
-  shared_ptr<X509_PublicKey> x509_key(Botan::X509::load_key(pub_block));
+  vector<Botan::byte> pub_block(pub().begin(), pub().end());
 #else
-  SecureVector<Botan::byte> pub_block
+  secure_byte_vector pub_block
+#else
     (reinterpret_cast<Botan::byte const *>(pub().data()), pub().size());
+#endif
 
   shared_ptr<X509_PublicKey> x509_key(Botan::X509::load_key(pub_block));
 #endif
@@ -3375,9 +3375,9 @@ database::encrypt_rsa(key_id const & pub_id,
                               "Failed to get RSA encrypting key");
 
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
-     std::vector<Botan::byte> ct;
+  vector<Botan::byte> ct;
 #else
-     SecureVector<Botan::byte> ct;
+  secure_byte_vector ct;
 #endif
 
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,5)
@@ -3403,7 +3403,7 @@ database::encrypt_rsa(key_id const & pub_id,
 
   ciphertext = rsa_oaep_sha_data(
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
-    string(reinterpret_cast<char const *>(ct.data()), ct.size()),
+    string(ct.begin(), ct.end()),
 #else
     string(reinterpret_cast<char const *>(ct.begin()), ct.size()),
 #endif
@@ -3431,8 +3431,12 @@ database::check_signature(key_id const & id,
         return cert_unknown;
 
       get_key(id, pub);
-      Botan::DataSource_Memory pub_block(
-        (reinterpret_cast<Botan::byte const *>(pub().data())), pub().size());
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
+      vector<Botan::byte> pub_block(pub().begin(), pub().end());
+#else
+      secure_byte_vector pub_block
+        (reinterpret_cast<Botan::byte const *>(pub().data()), pub().size());
+#endif
 
       L(FL("building verifier for %d-byte pub key") % pub().size());
       shared_ptr<X509_PublicKey> x509_key(Botan::X509::load_key(pub_block));

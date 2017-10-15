@@ -12,6 +12,7 @@
 // keep this.
 
 #include "base.hh"
+#include <vector>
 #include <sstream>
 #include <botan/botan.h>
 #include <botan/rsa.h>
@@ -29,16 +30,20 @@
 #include "key_store.hh" // for keypair
 #include "char_classifiers.hh"
 #include "lazy_rng.hh"
+#include "botan_glue.hh"
 
 using std::istream;
 using std::istringstream;
 using std::make_pair;
 using std::map;
+using std::vector;
 using std::ostream;
 using std::pair;
 using std::string;
 
 using std::shared_ptr;
+
+using Botan::byte;
 
 // --- key_packet writer ---
 
@@ -108,8 +113,12 @@ namespace
     void validate_public_key_data(string const & name, string const & keydata) const
     {
       string decoded = decode_base64_as<string>(keydata, origin::user);
-      Botan::DataSource_Memory key_block
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
+      vector<byte> key_block(decoded.begin(), decoded.end());
+#else
+      secure_byte_vector key_block
         (reinterpret_cast<Botan::byte const *>(decoded.c_str()), decoded.size());
+#endif
       try
         {
           Botan::X509::load_key(key_block);

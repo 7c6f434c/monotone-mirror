@@ -46,7 +46,11 @@ CMD_HIDDEN(benchmark_sha1, "benchmark_sha1", "", CMD_REF(debug), "",
   const int milliseconds = 5000;
 
   // timer argument was removed in 1.9.4
-#if BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(1,9,4)
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
+  std::map<std::string, double> results =
+    Botan::algorithm_benchmark("SHA-1",  af, rng,
+                               std::chrono::milliseconds(milliseconds), 16);
+#elif BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(1,9,4)
   Botan::Default_Benchmark_Timer timer;
   std::map<std::string, double> results =
     Botan::algorithm_benchmark("SHA-1",  milliseconds, timer, rng, af);

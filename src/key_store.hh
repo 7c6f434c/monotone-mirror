@@ -27,6 +27,13 @@ class app_state;
 class globish;
 class database;
 
+typedef std::runtime_error Passphrase_Required;
+
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
+// A simplistic function throwing the above error whenever called.
+extern std::function<std::pair<bool, std::string> ()> pass_req_throw_func;
+#endif
+
 struct keypair
 {
   rsa_pub_key pub;
