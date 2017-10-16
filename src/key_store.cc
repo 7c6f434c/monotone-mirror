@@ -542,7 +542,14 @@ get_passphrase(utf8 & phrase,
   memset(pass2, 0, constants::maxpasswd);
 }
 
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(2,0,0)
+std::function<std::string ()> pass_req_throw_func =
+  [] ()
+    {
+      throw Passphrase_Required("Passphrase required");
+      return string();
+    };
+#elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
 std::function<std::pair<bool, std::string> ()> pass_req_throw_func =
   [] ()
     {
