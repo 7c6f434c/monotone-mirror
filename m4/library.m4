@@ -175,10 +175,15 @@ rm -f conftest.candcfg conftest.candpc
 
 # Checks for specific libraries that can be probed this way.
 
+# Note that the LibraryInitializer has been deprecated, so it might not
+# be the best check, but it's backwards-compatible as long as Botan still
+# ships the shim.
+
 AC_DEFUN([MTN_FIND_BOTAN],
 [MTN_CHECK_MODULE([botan], [1.6.3],
   [AC_LANG_PROGRAM(
     [#include <botan/botan.h>
+     #include <botan/init.h>
      #if BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(1,6,3)
      #error too old
      #endif
