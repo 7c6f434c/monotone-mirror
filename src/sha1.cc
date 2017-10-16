@@ -72,9 +72,8 @@ CMD_HIDDEN(benchmark_sha1, "benchmark_sha1", "", CMD_REF(debug), "",
   int mebibytes = 100;
   string test_str(mebibytes << 20, 'a');
   data test_data(test_str, origin::internal);
-  id foo;
   double start = cpu_now();
-  calculate_ident(test_data, foo);
+  id foo = calculate_ident(test_data);
   double end = cpu_now();
   double mebibytes_per_sec = mebibytes / (end - start);
   P(F("%s MiB/s") % mebibytes_per_sec);

@@ -110,10 +110,12 @@ cpp_main(int argc, char ** argv)
       // side effect of making the 'prog_name' global usable.
       global_sanity.initialize(argc, argv, localename);
 
+#if BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(1,11,14)
       // Set up secure memory allocation etc
       Botan::LibraryInitializer acquire_botan("thread_safe=0 selftest=0 "
                                               "seed_rng=1 use_engines=0 "
                                               "secure_memory=1 fips140=0");
+#endif
 
       // and caching for botan pipes
       pipe_cache_cleanup acquire_botan_pipe_caching;

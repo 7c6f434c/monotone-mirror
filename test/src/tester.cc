@@ -10,7 +10,8 @@
 #include "../../src/base.hh"
 
 #include <cstring>
-#include <botan/botan.h>
+
+#include "../../src/botan.hh"
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
@@ -897,9 +898,12 @@ int main(int argc, char **argv)
     {
       global_sanity.initialize(argc, argv, "C");
       // Set up secure memory allocation etc
+
+#if BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(2,0,0)
       Botan::LibraryInitializer acquire_botan("thread_safe=0 selftest=0 "
                                               "seed_rng=1 use_engines=0 "
                                               "secure_memory=1 fips140=0");
+#endif
 
       // and caching for botan pipes
       pipe_cache_cleanup acquire_botan_pipe_caching;

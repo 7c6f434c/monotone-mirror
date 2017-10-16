@@ -10,10 +10,11 @@
 // PURPOSE.
 
 #include "base.hh"
+
 #include <iostream>
 #include <fstream>
 
-#include <botan/botan.h>
+#include "botan.hh"
 #include "botan_pipe_cache.hh"
 
 #include "file_io.hh"
