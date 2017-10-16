@@ -11,7 +11,7 @@
 #include <map>
 #include <vector>
 #include <sstream>
-#include <botan/botan.h>
+#include "botan.hh"
 #include <botan/rsa.h>
 #include <botan/pkcs8.h>
 
@@ -26,7 +26,6 @@
 #include "key_store.hh" // for keypair
 #include "char_classifiers.hh"
 #include "lazy_rng.hh"
-#include "botan_glue.hh"
 
 using std::istream;
 using std::istringstream;

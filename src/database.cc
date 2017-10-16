@@ -25,16 +25,11 @@
 #include <tuple>
 #include <functional>
 
-#include <botan/botan.h>
+#include "botan.hh"
 #include <botan/rsa.h>
 #include <botan/pem.h>
 #include <botan/x509_key.h>
 
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
-  #include <botan/pubkey.h>
-#else
-  #include <botan/look_pk.h>
-#endif
 #include "lazy_rng.hh"
 
 #include <sqlite3.h>
@@ -72,7 +67,6 @@
 #include "outdated_indicator.hh"
 #include "lru_writeback_cache.hh"
 #include "char_classifiers.hh"
-#include "botan_glue.hh"
 
 // defined in schema.c, generated from schema.sql:
 extern char const schema_constant[];
@@ -3362,12 +3356,10 @@ database::encrypt_rsa(key_id const & pub_id,
   vector<Botan::byte> pub_block(pub().begin(), pub().end());
 #else
   secure_byte_vector pub_block
-#else
     (reinterpret_cast<Botan::byte const *>(pub().data()), pub().size());
 #endif
 
   shared_ptr<X509_PublicKey> x509_key(Botan::X509::load_key(pub_block));
-#endif
   shared_ptr<RSA_PublicKey> pub_key
     = dynamic_pointer_cast<RSA_PublicKey>(x509_key);
   if (!pub_key)

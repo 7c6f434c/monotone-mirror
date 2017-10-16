@@ -14,20 +14,13 @@
  * Zlib Compressor, with window_bits+=16 for deflateInit2(), etc */
 
 #include "base.hh"
-#include "gzip.hh"
 
-#include <botan/botan.h>
-
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
-#include <botan/loadstor.h>
-#include <botan/filters.h>
-#endif
-
+#include "botan.hh"
 #include <cstring>
 #include <map>
 #include <zlib.h>
 
-#include "botan_glue.hh"
+#include "gzip.hh"
 
 namespace Botan {
 

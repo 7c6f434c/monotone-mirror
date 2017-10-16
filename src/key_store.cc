@@ -11,16 +11,10 @@
 #include "base.hh"
 #include <sstream>
 
-#include <botan/botan.h>
+#include "botan.hh"
 #include <botan/rsa.h>
 #include <botan/pem.h>
 #include <botan/pkcs8.h>
-
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
-#include <botan/pubkey.h>
-#else
-#include <botan/look_pk.h>
-#endif
 
 #include "char_classifiers.hh"
 #include "key_store.hh"
@@ -39,7 +33,6 @@
 #include "ui.hh"
 #include "lazy_rng.hh"
 #include "botan_pipe_cache.hh"
-#include "botan_glue.hh"
 
 using std::dynamic_pointer_cast;
 using std::make_pair;

@@ -12,7 +12,7 @@
 #include <cstdlib>
 #include <memory>
 
-#include <botan/botan.h>
+#include "botan.hh"
 #include <botan/rsa.h>
 #include <botan/x509_key.h>
 #include <botan/numthry.h>
@@ -23,7 +23,6 @@
 #include "numeric_vocab.hh"
 #include "platform.hh"
 #include "key_store.hh"
-#include "botan_glue.hh"
 
 #if defined(_WIN32) || defined(_WIN64)
 #include "win32/ssh_agent_platform.hh"

@@ -8,11 +8,11 @@
 #define BOTAN_EXT_GZIP_H__
 
 #include "base.hh"
-#include <botan/botan.h>
+
+#include "botan.hh"
 #include <botan/version.h>
 #include <botan/filter.h>
 #include <botan/pipe.h>
-#include "botan_glue.hh"
 
 namespace Botan {
 

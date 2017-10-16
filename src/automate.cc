@@ -2430,6 +2430,7 @@ automate_stdio_shared_setup(app_state & app,
 
   id = *matches.begin();
 
+  commands::command* automate_cmd = CMD_REF(automate);
   command const * cmd = automate_cmd->find_command(id);
   I(cmd != NULL);
 
