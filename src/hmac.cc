@@ -8,7 +8,7 @@
 // PURPOSE.
 
 #include "base.hh"
-#include <botan/botan.h>
+#include "botan.hh"
 
 #include "sanity.hh"
 #include "hmac.hh"
