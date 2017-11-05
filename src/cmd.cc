@@ -1,6 +1,6 @@
 // Copyright (C) 2002 Graydon Hoare <graydon@pobox.com>
 //               2007 Julio M. Merino Vidal <jmmv@NetBSD.org>
-//               2014-2016 Markus Wanner <markus@bluegap.ch>
+//               2014-2017 Markus Wanner <markus@bluegap.ch>
 //
 // This program is made available under the GNU GPL version 2.0 or
 // greater. See the accompanying file COPYING for details.
@@ -578,7 +578,7 @@ CMD_HIDDEN(crash, "crash", "", CMD_REF(debug),
       {
       public:
         throwing_dtor() {}
-        ~throwing_dtor()
+        ~throwing_dtor() noexcept(false)
         {
           throw std::exception();
         }

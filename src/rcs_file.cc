@@ -60,7 +60,7 @@ rcs_file_handle
       if (fd == -1)
         throw oops("open of " + filename + " failed");
     }
-  ~rcs_file_handle()
+  ~rcs_file_handle() noexcept(false)
     {
       if (close(fd) == -1)
         throw oops("close of " + filename + " failed");
@@ -104,7 +104,7 @@ struct rcs_file_source
     if (mapping == MAP_FAILED)
       throw oops("mmap of " + filename + " failed");
   }
-  ~rcs_file_source()
+  ~rcs_file_source() noexcept(false)
   {
     if (munmap(mapping, length) == -1)
       throw oops("munmapping " + filename + " failed, after reading RCS file");
@@ -134,7 +134,7 @@ rcs_file_handle
       if (fd == NULL)
         throw oops("open of " + filename + " failed");
     }
-  ~rcs_file_handle()
+  ~rcs_file_handle() noexcept(false)
     {
       if (CloseHandle(fd)==0)
         throw oops("close of " + filename + " failed");
