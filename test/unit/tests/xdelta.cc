@@ -117,7 +117,7 @@ xdelta_randomly_insert(string & str)
       tmp.reserve(len);
       for (size_t i = 0; i < len; ++i)
         tmp += xdelta_chargen(xdelta_prng);
-        str.insert(pos, tmp);
+      str.insert(pos, tmp);
       nedits--;
     }
 }
