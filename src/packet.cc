@@ -11,9 +11,9 @@
 #include <map>
 #include <vector>
 #include <sstream>
-#include "botan.hh"
+#include "botan_glue.hh"
 #include <botan/rsa.h>
-#include <botan/pkcs8.h>
+#include <botan/x509_key.h>
 
 #include "cset.hh"
 #include "constants.hh"
@@ -181,18 +181,9 @@ namespace
     void validate_private_key_data(string const & name, string const & keydata) const
     {
       string decoded = decode_base64_as<string>(keydata, origin::user);
-      Botan::DataSource_Memory ds(decoded);
       try
         {
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
-          Botan::PKCS8::load_key(ds, lazy_rng::get(), pass_req_throw_func);
-#elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11)
-          Botan::PKCS8::load_key(ds, lazy_rng::get(), Dummy_UI());
-#elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
-          Botan::PKCS8::load_key(ds, lazy_rng::get(), string());
-#else
-          Botan::PKCS8::load_key(ds, string());
-#endif
+          load_pkcs8_key(decoded);
         }
       catch (Botan::Decoding_Error const & e)
         {
@@ -478,17 +469,6 @@ read_packets(istream & in, packet_consumer & cons)
     }
   return count;
 }
-
-// Dummy User_Interface implementation for Botan
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11) && \
-  BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(1,11,0)
-std::string
-Dummy_UI::get_passphrase(const std::string &, const std::string &,
-                         Botan::User_Interface::UI_Result&) const
-{
-  throw Passphrase_Required("Passphrase required");
-}
-#endif
 
 // Local Variables:
 // mode: C++

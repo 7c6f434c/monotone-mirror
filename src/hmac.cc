@@ -8,7 +8,7 @@
 // PURPOSE.
 
 #include "base.hh"
-#include "botan.hh"
+#include "botan_glue.hh"
 
 #include "sanity.hh"
 #include "hmac.hh"

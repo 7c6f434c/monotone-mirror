@@ -7,15 +7,16 @@
 // implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
 // PURPOSE.
 
-#include "base.hh"
+#ifndef __BOTAN_GLUE_H__
+#define __BOTAN_GLUE_H__
 
 // This header file represents a very tiny wrapper around Botan to abstract
 // a bit from the various versions monotone supports.  It certainly
-// deduplicates some of the version checks.  Every compilation unit that
-// requires Botan should include this file, preferably after base.hh and
-// the standard library includes.
+// deduplicates some of the version checks.  All compilation units that
+// would otherwise require at least one BOTAN_VERSION_CODE condition should
+// instead include this header, so the conditional code is centralized.
 
-#include <botan/botan.h>
+#include <botan/version.h>
 
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
   #include <botan/loadstor.h>
@@ -36,8 +37,23 @@
   // use the custom gzip code otherwise
 #endif
 
+
+#if BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(1,11,14)
+  #include <botan/init.h>
+#endif
+
+
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(2,0,0)
   typedef Botan::secure_vector<Botan::byte> secure_byte_vector;
 #else
   typedef Botan::SecureVector<Botan::byte> secure_byte_vector;
 #endif
+
+extern void initialize_botan(bool for_testing = false);
+
+// Botan version agnostic helper functions for loading a private key.
+typedef std::runtime_error Passphrase_Required;
+extern Botan::PKCS8_PrivateKey * load_pkcs8_key(std::string const & kp);
+
+
+#endif   // __BOTAN_GLUE_H__

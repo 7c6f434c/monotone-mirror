@@ -9,6 +9,7 @@
 
 #include "../../../src/base.hh"
 #include "../unit_tests.hh"
+#include "../../../src/botan_glue.hh"
 #include "../../../src/transforms.hh"
 #include "../../../src/vocab_cast.hh"
 #include "../../../src/xdelta.hh"

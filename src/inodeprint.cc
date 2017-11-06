@@ -13,7 +13,6 @@
 #include <algorithm>
 #include <iterator>
 
-#include <botan/botan.h>
 #include <botan/sha160.h>
 
 #include "inodeprint.hh"

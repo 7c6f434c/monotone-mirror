@@ -1,5 +1,5 @@
 // Copyright (C) 2002 Graydon Hoare <graydon@pobox.com>
-// Copyright (C) 2008-2016 Markus Wanner <markus@bluegap.ch>
+// Copyright (C) 2008-2017 Markus Wanner <markus@bluegap.ch>
 //
 // This program is made available under the GNU GPL version 2.0 or
 // greater. See the accompanying file COPYING for details.
@@ -18,10 +18,10 @@
 #include <cstdlib>
 
 #include <sqlite3.h>
-#include <botan/botan.h>
 
 #include "app_state.hh"
 #include "database.hh"
+#include "botan_glue.hh"
 #include "botan_pipe_cache.hh"
 #include "commands.hh"
 #include "sanity.hh"
@@ -110,12 +110,7 @@ cpp_main(int argc, char ** argv)
       // side effect of making the 'prog_name' global usable.
       global_sanity.initialize(argc, argv, localename);
 
-#if BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(1,11,14)
-      // Set up secure memory allocation etc
-      Botan::LibraryInitializer acquire_botan("thread_safe=0 selftest=0 "
-                                              "seed_rng=1 use_engines=0 "
-                                              "secure_memory=1 fips140=0");
-#endif
+      initialize_botan();
 
       // and caching for botan pipes
       pipe_cache_cleanup acquire_botan_pipe_caching;

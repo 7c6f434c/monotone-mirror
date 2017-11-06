@@ -11,7 +11,7 @@
 
 #include <cstring>
 
-#include "../../src/botan.hh"
+#include "../../src/botan_glue.hh"
 
 #if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>

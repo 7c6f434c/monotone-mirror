@@ -1,6 +1,6 @@
 // Copyright (C) 2004 Nathaniel Smith <njs@pobox.com>
 //               2007, 2010 Stephen Leake <stephen_leake@stephe-leake.org>
-//               2016 Markus Wanner <markus@bluegap.ch>
+//               2016-2017 Markus Wanner <markus@bluegap.ch>
 //
 // This program is made available under the GNU GPL version 2.0 or
 // greater. See the accompanying file COPYING for details.
@@ -2415,7 +2415,8 @@ automate_stdio_shared_setup(app_state & app,
       id.push_back(utf8(*i, origin::user));
     }
 
-  set<command_id> matches =  CMD_REF(automate)->complete_command(id);
+  commands::command* automate_cmd = CMD_REF(automate);
+  set<command_id> matches = automate_cmd->complete_command(id);
 
   if (matches.empty())
     {
@@ -2430,7 +2431,6 @@ automate_stdio_shared_setup(app_state & app,
 
   id = *matches.begin();
 
-  commands::command* automate_cmd = CMD_REF(automate);
   command const * cmd = automate_cmd->find_command(id);
   I(cmd != NULL);
 

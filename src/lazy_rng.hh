@@ -1,4 +1,5 @@
 // Copyright (C) 2002 Graydon Hoare <graydon@pobox.com>
+//               2017 Markus Wanner <markus@bluegap.ch>
 //
 // This program is made available under the GNU GPL version 2.0 or
 // greater. See the accompanying file COPYING for details.
@@ -18,11 +19,19 @@
 
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
 #include <botan/rng.h>
+#include <botan/auto_rng.h>
 
 class lazy_rng
 {
   Botan::RandomNumberGenerator * rng;
-  lazy_rng() { rng = Botan::RandomNumberGenerator::make_rng(); }
+  lazy_rng()
+    {
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(2,0,0)
+      rng = new Botan::AutoSeeded_RNG();
+#else
+      rng = Botan::RandomNumberGenerator::make_rng();
+#endif
+    }
   ~lazy_rng() { delete rng; }
 
 public:

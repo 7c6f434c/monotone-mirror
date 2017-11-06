@@ -12,7 +12,6 @@
 
 #include <memory>
 
-#include <botan/botan.h>
 #include <botan/pipe.h>
 
 #include "sanity.hh"

@@ -13,7 +13,6 @@
 #include <sstream>
 
 #include <boost/dynamic_bitset.hpp>
-#include <botan/botan.h>
 #include <botan/sha160.h>
 
 #include "constants.hh"

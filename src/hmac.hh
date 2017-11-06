@@ -10,8 +10,8 @@
 #ifndef __HMAC_HH__
 #define __HMAC_HH__
 
-#include "botan.hh"
 #include <botan/pipe.h>
+#include <botan/symkey.h>
 
 #include "vocab.hh"
 #include "constants.hh"

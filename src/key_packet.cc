@@ -14,10 +14,9 @@
 #include "base.hh"
 #include <vector>
 #include <sstream>
-#include "botan.hh"
+#include "botan_glue.hh"
 #include <botan/rsa.h>
 #include <botan/x509_key.h>
-#include <botan/pkcs8.h>
 
 #include "cset.hh"
 #include "constants.hh"
@@ -132,14 +131,9 @@ namespace
     void validate_private_key_data(string const & name, string const & keydata) const
     {
       string decoded = decode_base64_as<string>(keydata, origin::user);
-      Botan::DataSource_Memory ds(decoded);
       try
         {
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
-          Botan::PKCS8::load_key(ds, lazy_rng::get(), string());
-#else
-          Botan::PKCS8::load_key(ds, string());
-#endif
+          load_pkcs8_key(decoded);
         }
       catch (Botan::Decoding_Error const & e)
         {

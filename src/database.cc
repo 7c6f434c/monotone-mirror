@@ -25,7 +25,7 @@
 #include <tuple>
 #include <functional>
 
-#include "botan.hh"
+#include "botan_glue.hh"
 #include <botan/rsa.h>
 #include <botan/pem.h>
 #include <botan/x509_key.h>
@@ -3372,7 +3372,13 @@ database::encrypt_rsa(key_id const & pub_id,
   secure_byte_vector ct;
 #endif
 
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,5)
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(2,0,0)
+  PK_Encryptor_EME encryptor(*pub_key, lazy_rng::get(),
+                             "EME1(SHA-1)");
+  ct = encryptor.encrypt(
+          reinterpret_cast<Botan::byte const *>(plaintext.data()),
+          plaintext.size(), lazy_rng::get());
+#elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,5)
   PK_Encryptor_EME encryptor(*pub_key, "EME1(SHA-1)");
   ct = encryptor.encrypt(
           reinterpret_cast<Botan::byte const *>(plaintext.data()),

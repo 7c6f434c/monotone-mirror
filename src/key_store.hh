@@ -12,12 +12,8 @@
 
 #include <memory>
 
-#include <botan/botan.h>
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
-#include <botan/rng.h>
-#else
-#include <botan/libstate.h>
-#endif
+#include <botan/version.h>
+#include <botan/pk_keys.h>
 
 #include "vector.hh"
 #include "vocab.hh"
@@ -26,15 +22,6 @@
 class app_state;
 class globish;
 class database;
-
-typedef std::runtime_error Passphrase_Required;
-
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(2,0,0)
-// A simplistic function throwing the above error whenever called.
-extern std::function<std::string ()> pass_req_throw_func;
-#elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
-extern std::function<std::pair<bool, std::string> ()> pass_req_throw_func;
-#endif
 
 struct keypair
 {
@@ -61,10 +48,6 @@ public:
 
   explicit key_store(app_state & a);
   ~key_store();
-
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
-  Botan::RandomNumberGenerator & get_rng();
-#endif
 
   system_path const & get_key_dir() const;
 

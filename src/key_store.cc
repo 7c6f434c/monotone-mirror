@@ -11,11 +11,12 @@
 #include "base.hh"
 #include <sstream>
 
-#include "botan.hh"
 #include <botan/rsa.h>
 #include <botan/pem.h>
 #include <botan/pkcs8.h>
+#include <botan/x509_key.h>
 
+#include "botan_glue.hh"
 #include "char_classifiers.hh"
 #include "key_store.hh"
 #include "file_io.hh"
@@ -542,22 +543,6 @@ get_passphrase(utf8 & phrase,
   memset(pass2, 0, constants::maxpasswd);
 }
 
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(2,0,0)
-std::function<std::string ()> pass_req_throw_func =
-  [] ()
-    {
-      throw Passphrase_Required("Passphrase required");
-      return string();
-    };
-#elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
-std::function<std::pair<bool, std::string> ()> pass_req_throw_func =
-  [] ()
-    {
-      throw Passphrase_Required("Passphrase required");
-      return std::pair<bool, string>();
-    };
-#endif
-
 shared_ptr<RSA_PrivateKey>
 key_store_state::decrypt_private_key(key_id const & id,
                                      bool force_from_user)
@@ -578,18 +563,7 @@ key_store_state::decrypt_private_key(key_id const & id,
   shared_ptr<PKCS8_PrivateKey> pkcs8_key;
   try // with empty passphrase
     {
-      Botan::DataSource_Memory ds(kp.priv());
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
-      pkcs8_key.reset(Botan::PKCS8::load_key(ds, lazy_rng::get(),
-                                             pass_req_throw_func));
-#elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11)
-      pkcs8_key.reset(Botan::PKCS8::load_key(ds, lazy_rng::get(),
-                                             Dummy_UI()));
-#elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
-      pkcs8_key.reset(Botan::PKCS8::load_key(ds, lazy_rng::get(), ""));
-#else
-      pkcs8_key.reset(Botan::PKCS8::load_key(ds, ""));
-#endif
+      pkcs8_key.reset(load_pkcs8_key(kp.priv()));
     }
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
   catch (Botan::Exception & e)
@@ -869,7 +843,14 @@ key_store::decrypt_rsa(key_id const & id,
       load_key_pair(*this, id, kp);
       shared_ptr<RSA_PrivateKey> priv_key = s->decrypt_private_key(id);
 
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,10,0)
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(2,0,0)
+      Botan::PK_Decryptor_EME decryptor(*priv_key, lazy_rng::get(),
+                                        "EME1(SHA-1)");
+      secure_byte_vector plain =
+        decryptor.decrypt(reinterpret_cast<byte const *>(ciphertext().data()),
+                          ciphertext().size());
+      plaintext = string(plain.begin(), plain.end());
+#elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,10,0)
       Botan::PK_Decryptor_EME decryptor(*priv_key, "EME1(SHA-1)");
 
       secure_byte_vector plain =
@@ -986,7 +967,11 @@ key_store::make_signature(database & db,
             L(FL("make_signature: adding private key (%s) to ssh-agent") % id);
             agent.add_identity(*priv_key, name());
           }
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,10,0)
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(2,0,0)
+          signer = shared_ptr<PK_Signer>(
+                     new PK_Signer(*priv_key, lazy_rng::get(),
+                                   "EMSA3(SHA-1)"));
+#elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,10,0)
           signer = shared_ptr<PK_Signer>(
                      new PK_Signer(*priv_key, "EMSA3(SHA-1)"));
 #else

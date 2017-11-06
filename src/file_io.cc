@@ -14,7 +14,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "botan.hh"
+#include "botan_glue.hh"
 #include "botan_pipe_cache.hh"
 
 #include "file_io.hh"

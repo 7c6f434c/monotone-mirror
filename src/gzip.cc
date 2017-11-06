@@ -15,7 +15,7 @@
 
 #include "base.hh"
 
-#include "botan.hh"
+#include "botan_glue.hh"
 #include <cstring>
 #include <map>
 #include <zlib.h>
@@ -199,7 +199,9 @@ void Gzip_Compression::put_footer()
    secure_byte_vector buf(4);
    secure_byte_vector tmpbuf(4);
 
-   pipe.read(&tmpbuf[0], tmpbuf.size(), Pipe::LAST_MESSAGE);
+   size_t bytes_read = pipe.read(&tmpbuf[0], tmpbuf.size(), Pipe::LAST_MESSAGE);
+   if (bytes_read != tmpbuf.size())
+      throw Decoding_Error("Gzip_Decompression: Failed reading from pipe");
 
    // CRC32 is the reverse order to what gzip expects.
    for (int i = 0; i < 4; i++)
@@ -371,7 +373,9 @@ void Gzip_Decompression::check_footer()
    // 4 byte CRC32, and 4 byte length field
    secure_byte_vector buf(4);
    secure_byte_vector tmpbuf(4);
-   pipe.read(&tmpbuf[0], tmpbuf.size(), Pipe::LAST_MESSAGE);
+   size_t bytes_read = pipe.read(&tmpbuf[0], tmpbuf.size(), Pipe::LAST_MESSAGE);
+   if (bytes_read != tmpbuf.size())
+      throw Decoding_Error("Gzip_Decompression: Failed reading from pipe");
 
   // CRC32 is the reverse order to what gzip expects.
   for (int i = 0; i < 4; i++)

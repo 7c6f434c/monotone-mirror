@@ -10,7 +10,7 @@
 
 #include "base.hh"
 #include <iterator>
-#include <botan/botan.h>
+#include <botan/filters.h>
 #include <botan/sha160.h>
 
 #include "botan_pipe_cache.hh"

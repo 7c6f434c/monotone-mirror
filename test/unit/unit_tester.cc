@@ -17,7 +17,7 @@
 #include <cstring>
 #include <cerrno>
 
-#include "../../src/botan.hh"
+#include "../../src/botan_glue.hh"
 
 #include "../../src/option.hh"
 #include "unit_tests.hh"
@@ -211,14 +211,7 @@ int main(int argc, char * argv[])
       return 0;
     }
 
-
-#if BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(2,0,0)
-  // set up some global state before running the tests
-  // keep this in sync with monotone.cc, except for selftest=1 here, =0 there
-  Botan::LibraryInitializer acquire_botan("thread_safe=0 selftest=1 "
-                                          "seed_rng=1 use_engines=0 "
-                                          "secure_memory=1 fips140=0");
-#endif
+  initialize_botan(true);
 
   // and caching for botan pipes
   pipe_cache_cleanup acquire_botan_pipe_caching;

@@ -10,11 +10,6 @@
 #ifndef __PACKET_HH__
 #define __PACKET_HH__
 
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11) && \
-  BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(1,11,0)
-#include <botan/ui.h>
-#endif
-
 #include "vocab.hh"
 
 struct cert;
@@ -88,20 +83,6 @@ struct packet_writer : public packet_consumer
 };
 
 size_t read_packets(std::istream & in, packet_consumer & cons);
-
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11) && \
-  BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(1,11,0)
-// A helper class implementing Botan::User_Interface - which doesn't really
-// interface with the user, but provides the necessary plumbing for Botan.
-//
-// See Botan commit 2d09d7d0cd4bd0e7155d001dd65a4f29103b158c
-class Dummy_UI : public Botan::User_Interface
-{
-public:
-  virtual std::string get_passphrase(const std::string &, const std::string &,
-                                     Botan::User_Interface::UI_Result &) const;
-};
-#endif
 
 #endif
 

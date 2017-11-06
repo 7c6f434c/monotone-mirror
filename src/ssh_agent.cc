@@ -12,7 +12,7 @@
 #include <cstdlib>
 #include <memory>
 
-#include "botan.hh"
+#include "botan_glue.hh"
 #include <botan/rsa.h>
 #include <botan/x509_key.h>
 #include <botan/numthry.h>

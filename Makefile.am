@@ -46,6 +46,7 @@ MOST_SOURCES = 								\
 	src/app_state.hh src/automate_ostream.hh			\
 	src/automate_ostream_demuxed.hh	src/automate_reader.hh		\
 	src/automate_reader.cc src/automate_stdio_helpers.hh		\
+	src/botan_glue.hh src/botan_glue.cc				\
 	src/botan_pipe_cache.hh	src/cache_logger.hh src/cache_logger.cc	\
 	src/commands.cc src/commands.hh $(CMD_SOURCES)			\
 	src/colorizer.cc src/colorizer.hh				\
@@ -204,6 +205,7 @@ UNIT_TESTERS_PRIV =						\
 # these files do not contain unit tests, but are required for unit testing
 # note that some are and some aren't part of the main program
 UNIT_TEST_SUPPORT =						\
+	src/botan_glue.cc					\
 	src/constants.cc src/file_io.cc src/gzip.cc src/hmac.cc \
 	src/lcs.cc src/merkle_tree.cc src/roster_delta.cc 	\
 	src/sanity.cc src/specialized_lexical_cast.cc		\
