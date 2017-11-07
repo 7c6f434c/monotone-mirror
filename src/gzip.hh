@@ -42,7 +42,8 @@ namespace GZIP {
       0xff, /* Operating system (unknown) */
    };
 
-   const unsigned int HEADER_POS_OS = 9;
+   const unsigned int HEADER_POS_MTIME = 4;
+   const unsigned int HEADER_POS_EXTRA_FLAGS = 8;
 
    const unsigned int FOOTER_LENGTH = 8;
 

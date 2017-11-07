@@ -21,8 +21,9 @@ UNIT_TEST(gzip_encode)
 {
   vector<unsigned char> const
     EXP_HDR = {0x1f, 0x8b, 0x08, 0x00},
+    EXP_TS  = {0x00, 0x00, 0x00, 0x00},
     EXP_CRC = {0x37, 0xf0, 0x29, 0xb6},
-    EXP_LEN = {0x11, 0, 0, 0};
+    EXP_LEN = {0x11, 0x00, 0x00, 0x00};
 
   gzip<data> gzd;
   encode_gzip(data("the rain in spain"), gzd);
@@ -34,7 +35,17 @@ UNIT_TEST(gzip_encode)
   string hdr = gzd().substr(0, 4);
   UNIT_TEST_CHECK(hdr == string(EXP_HDR.begin(), EXP_HDR.end()));
 
-  if (gzd().size() > 8)
+  // check the header's timestamp
+  //
+  // monotone *requires* a zeroed timestamp field up until version 1.1.
+  // Therefore, to remain compatible with that and older versions, the
+  // gzip transformation must continue to zero out the timestamp field.
+  string ts = gzd().substr(4, 4);
+  UNIT_TEST_CHECK(ts == string(EXP_TS.begin(), EXP_TS.end()));
+
+  // Prevent failing with strange errors on substr invocations below. The
+  // size is checked above, already.
+  if (gzd().size() < 8)
     {
       // check the trailor's CRC
       string crc = gzd().substr(gzd().size() - 8, 4);
@@ -49,10 +60,22 @@ UNIT_TEST(gzip_encode)
 UNIT_TEST(gzip_decode_old)
 {
   // "the rain in spain" gzipped with monotone's old gzip logic, which
-  // doesn't set the timestamp and indicates a length of zero in the
-  // trailer.
+  // doesn't set the timestamp.
   base64< gzip<data> >
     bgzd("H4sIAAAAAAAA/yvJSFUoSszMUwCi4gIgAwA38Cm2EQAAAA==");
+  gzip<data> gzd2;
+  gzd2 = decode_base64(bgzd);
+  data d2;
+  decode_gzip(gzd2, d2);
+  UNIT_TEST_CHECK(d2() == "the rain in spain");
+}
+
+UNIT_TEST(gzip_decode_real)
+{
+  // "the rain in spain" gzipped with real gzip, i.e. including a proper
+  // time stamp.
+  base64< gzip<data> >
+    bgzd("H4sIACoLAloAAyvJSFUoSszMUwCi4gIgAwA38Cm2EQAAAA==");
   gzip<data> gzd2;
   gzd2 = decode_base64(bgzd);
   data d2;

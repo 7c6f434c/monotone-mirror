@@ -1,7 +1,8 @@
 /*************************************************
 * Gzip Compressor Source File                    *
 * (C) 2001 Peter J Jones (pjones@pmade.org)      *
-*     2001-2004 Jack Lloyd                       *
+*     2001-2017 Jack Lloyd                       *
+*     2007-2017 Markus Wanner                    *
 *                                                *
 * Based on the comp_zlib module, modified        *
 * by Matt Johnston. This is not a complete       *
@@ -201,7 +202,7 @@ void Gzip_Compression::put_footer()
 
    size_t bytes_read = pipe.read(&tmpbuf[0], tmpbuf.size(), Pipe::LAST_MESSAGE);
    if (bytes_read != tmpbuf.size())
-      throw Decoding_Error("Gzip_Decompression: Failed reading from pipe");
+      throw Encoding_Error("Gzip_Compression: Failed reading from pipe");
 
    // CRC32 is the reverse order to what gzip expects.
    for (int i = 0; i < 4; i++)
@@ -280,19 +281,34 @@ void Gzip_Decompression::write(const byte input[], filter_length_t length)
    // Check the gzip header
    if (pos < sizeof(GZIP::GZIP_HEADER))
       {
-      filter_length_t len = std::min((filter_length_t)sizeof(GZIP::GZIP_HEADER)-pos, length);
-      filter_length_t cmplen = len;
-      // The last byte is the OS flag - we don't care about that
-      if (pos + len - 1 >= GZIP::HEADER_POS_OS)
-         cmplen--;
+      filter_length_t eatlen = std::min(length,
+         (filter_length_t) sizeof(GZIP::GZIP_HEADER) - pos);
 
-      if (std::memcmp(input, &GZIP::GZIP_HEADER[pos], cmplen) != 0)
+      // Check the magic header, compression method and flags.
+      if (pos < GZIP::HEADER_POS_MTIME)
          {
-         throw Decoding_Error("Gzip_Decompression: Data integrity error in header");
+         filter_length_t cmplen = std::min(length,
+            (filter_length_t) GZIP::HEADER_POS_MTIME - pos);
+         if (std::memcmp(input, &GZIP::GZIP_HEADER[pos], cmplen) != 0)
+            throw Decoding_Error(
+               "Gzip_Decompression: Data integrity error in header");
          }
-      input += len;
-      length -= len;
-      pos += len;
+
+      // Monotone ignores the modification time (only since version 1.2
+      // though, it resulted in the above data integrity error, before).
+
+      // Check the extra flag, if in the range.
+      if (pos <= GZIP::HEADER_POS_EXTRA_FLAGS
+             && pos + eatlen > GZIP::HEADER_POS_EXTRA_FLAGS
+             && input[GZIP::HEADER_POS_EXTRA_FLAGS - pos] != 0)
+          throw Decoding_Error(
+             "Gzip_Decompression: Extra flags not supported");
+
+      // The last byte is the OS flag - we don't care about that, either.
+
+      input += eatlen;
+      length -= eatlen;
+      pos += eatlen;
       }
 
    pos += length;
