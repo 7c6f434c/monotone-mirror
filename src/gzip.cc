@@ -398,7 +398,7 @@ void Gzip_Decompression::check_footer()
      buf[3-i] = tmpbuf[i];
 
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
-  tmpbuf.assign(footer.begin(), footer.end());
+  tmpbuf.assign(footer.begin(), footer.begin() + 4);
 #elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11)
   tmpbuf.resize(4);
   tmpbuf.copy(footer.begin(), 4);
