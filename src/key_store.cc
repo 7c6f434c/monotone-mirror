@@ -11,12 +11,13 @@
 #include "base.hh"
 #include <sstream>
 
-#include <botan/rsa.h>
+#include "botan_glue.hh"
+#include <botan/lookup.h>
 #include <botan/pem.h>
 #include <botan/pkcs8.h>
+#include <botan/rsa.h>
 #include <botan/x509_key.h>
 
-#include "botan_glue.hh"
 #include "char_classifiers.hh"
 #include "key_store.hh"
 #include "file_io.hh"

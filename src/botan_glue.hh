@@ -16,6 +16,8 @@
 // would otherwise require at least one BOTAN_VERSION_CODE condition should
 // instead include this header, so the conditional code is centralized.
 
+#include <stdexcept>
+
 #include <botan/version.h>
 
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
