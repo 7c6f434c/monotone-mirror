@@ -1,5 +1,5 @@
 # Copyright (C) 2003 Graydon Hoare <graydon@pobox.com>
-#               2014 Markus Wanner <markus@bluegap.ch>
+#               2014-2017 Markus Wanner <markus@bluegap.ch>
 #
 # This program is made available under the GNU GPL version 2.0 or
 # greater. See the accompanying file COPYING for details.
@@ -231,7 +231,8 @@ noinst_SCRIPTS = extra/building/dump-test-logs.sh
 check_PROGRAMS = test/bin/unit_tester test/bin/tester test/bin/check_net
 test_bin_unit_tester_SOURCES = $(UNIT_TESTERS) $(UNIT_TESTERS_PRIV) \
 	$(UNIT_TESTEES) $(UNIT_TEST_SUPPORT)
-test_bin_tester_SOURCES = test/src/tester.cc test/src/tester-plaf.hh src/transforms.cc src/gzip.cc \
+test_bin_tester_SOURCES = test/src/tester.cc test/src/tester-plaf.hh \
+        src/botan_glue.cc src/transforms.cc src/gzip.cc \
 	$(SANITY_CORE_SOURCES) $(LUAEXT_SOURCES) src/pcrewrap.cc \
 	src/specialized_lexical_cast.cc
 nodist_test_bin_tester_SOURCES = test/src/testlib.cc

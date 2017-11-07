@@ -2,6 +2,7 @@
 * Gzip Compressor Header File                    *
 * (C) 2001 Peter J Jones (pjones@pmade.org)      *
 *     2001-2004 Jack Lloyd                       *
+*     2007-2017 Markus Wanner                    *
 *************************************************/
 
 #ifndef BOTAN_EXT_GZIP_H__
@@ -9,11 +10,10 @@
 
 #include "base.hh"
 
+#include "botan_glue.hh"
 #include <botan/version.h>
 #include <botan/filter.h>
 #include <botan/pipe.h>
-
-#include "botan_glue.hh"
 
 namespace Botan {
 
