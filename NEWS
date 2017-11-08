@@ -8,14 +8,17 @@ XXX XXX XX XX XX XX UTC XXXX
           headers.  This allows us to get rid of some compatibility
           code.
 
+        - Similarly, the requirements for Botan have been raised to
+          version 1.8.0 and newer.
+
         -
 
         New features
 
         - Monotone has a new global '--colorize' option which colors
           the output of the commands 'diff', 'fdiff', 'log' and
-          'status' for better readability. On smart terminals, this
-          feature is enabled by default. (Unix only).
+          'status' for better readability.  On smart terminals, this
+          feature is enabled by default (Unix only, though).
 
         - In addition, piping all output through a pager is now
           supported and enabled by default on smart terminals. So far,
@@ -41,7 +44,7 @@ XXX XXX XX XX XX XX UTC XXXX
           INSTALL for details.
 
         - Monotone tests now work fine when building against Lua 5.3
-          as well.
+          as well newer versions of Botan, tested up to version 2.3.0.
 
         -
 

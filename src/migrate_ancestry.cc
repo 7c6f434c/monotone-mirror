@@ -204,13 +204,8 @@ void anc_graph::write_certs()
     for (set<string>::const_iterator i = branches.begin(); i != branches.end(); ++i)
       {
         char buf[constants::epochlen_bytes];
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
         lazy_rng::get().randomize(reinterpret_cast<Botan::byte *>(buf),
                                  constants::epochlen_bytes);
-#else
-        Botan::Global_RNG::randomize(reinterpret_cast<Botan::byte *>(buf),
-                                     constants::epochlen_bytes);
-#endif
         epoch_data new_epoch(string(buf, buf + constants::epochlen_bytes),
                              origin::internal);
         L(FL("setting epoch for %s to %s")

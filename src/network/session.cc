@@ -89,13 +89,8 @@ session::mk_nonce()
   I(this->saved_nonce().empty());
   char buf[constants::merkle_hash_length_in_bytes];
 
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
   lazy_rng::get().randomize(reinterpret_cast<Botan::byte *>(buf),
                             constants::merkle_hash_length_in_bytes);
-#else
-  Botan::Global_RNG::randomize(reinterpret_cast<Botan::byte *>(buf),
-                               constants::merkle_hash_length_in_bytes);
-#endif
   this->saved_nonce = id(string(buf, buf + constants::merkle_hash_length_in_bytes),
                          origin::internal);
   I(this->saved_nonce().size() == constants::merkle_hash_length_in_bytes);

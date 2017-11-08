@@ -17,8 +17,7 @@
 
 namespace Botan {
 
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,12) && \
-  BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(1,9,4)
+#if BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(1,9,4)
 // Botan versions between 1.7.12 and 1.9.3 (including) keep their
 // Memory_Exception private. Give this gzip implementation something
 // compatible to work with.

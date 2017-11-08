@@ -12,7 +12,6 @@
 
 #include <memory>
 
-#include <botan/version.h>
 #include <botan/pk_keys.h>
 
 #include "vector.hh"

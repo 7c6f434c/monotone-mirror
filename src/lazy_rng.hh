@@ -15,11 +15,9 @@
 // its get() method is called.  Subsequent calls return the same object.
 // It is expected that callers will not hang on to the reference.
 
-#include <botan/version.h>
-
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
 #include <botan/rng.h>
 #include <botan/auto_rng.h>
+#include <botan/version.h>
 
 class lazy_rng
 {
@@ -44,8 +42,6 @@ public:
     return *instance->rng;
   }
 };
-
-#endif /* botan >= 1.7.7 */
 
 #endif /* lazy_rng.hh */
 

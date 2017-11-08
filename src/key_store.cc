@@ -600,12 +600,8 @@ key_store_state::decrypt_private_key(key_id const & id,
         try
           {
             Botan::DataSource_Memory ds(kp.priv());
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
             pkcs8_key.reset(Botan::PKCS8::load_key(ds, lazy_rng::get(),
                                                    phrase()));
-#else
-            pkcs8_key.reset(Botan::PKCS8::load_key(ds, phrase()));
-#endif
             break;
           }
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,4)
@@ -689,12 +685,8 @@ key_store::create_key_pair(database & db,
     {
       L(FL("generating key-pair '%s'") % ident);
     }
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
   RSA_PrivateKey priv(lazy_rng::get(),
                       static_cast<Botan::u32bit>(constants::keylen));
-#else
-  RSA_PrivateKey priv(static_cast<Botan::u32bit>(constants::keylen));
-#endif
 
   // serialize and maybe encrypt the private key
   keypair kp;
@@ -714,10 +706,7 @@ key_store::create_key_pair(database & db,
     unfiltered_pipe->write(Botan::PKCS8::PEM_encode(priv));
 #else
   if ((*maybe_passphrase)().length())
-    Botan::PKCS8::encrypt_key(priv, *unfiltered_pipe,
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
-                              lazy_rng::get(),
-#endif
+    Botan::PKCS8::encrypt_key(priv, *unfiltered_pipe, lazy_rng::get(),
                               (*maybe_passphrase)(),
                               "PBE-PKCS5v20(SHA-1,TripleDES/CBC)",
                               Botan::RAW_BER);
@@ -814,10 +803,7 @@ key_store::change_key_passphrase(key_id const & id)
     unfiltered_pipe->write(Botan::PKCS8::PEM_encode(*priv));
 #else
   if (new_phrase().length())
-    Botan::PKCS8::encrypt_key(*priv, *unfiltered_pipe,
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
-                              lazy_rng::get(),
-#endif
+    Botan::PKCS8::encrypt_key(*priv, *unfiltered_pipe, lazy_rng::get(),
                               new_phrase(),
                               "PBE-PKCS5v20(SHA-1,TripleDES/CBC)",
                               Botan::RAW_BER);
@@ -987,15 +973,9 @@ key_store::make_signature(database & db,
             s->signer_cache.insert(make_pair(id, signer));
         }
 
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
       sig = signer->sign_message(
         reinterpret_cast<byte const *>(tosign.data()),
         tosign.size(), lazy_rng::get());
-#else
-      sig = signer->sign_message(
-        reinterpret_cast<byte const *>(tosign.data()),
-        tosign.size());
-#endif
 
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
       sig_string = string(sig.begin(), sig.end());
@@ -1077,12 +1057,7 @@ key_store::export_key_for_agent(key_id const & id,
     p.write(Botan::PKCS8::PEM_encode(*priv));
 #else
   if (new_phrase().length())
-    Botan::PKCS8::encrypt_key(*priv,
-                              p,
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
-                              lazy_rng::get(),
-#endif
-                              new_phrase(),
+    Botan::PKCS8::encrypt_key(*priv, p, lazy_rng::get(), new_phrase(),
                               "PBE-PKCS5v20(SHA-1,TripleDES/CBC)");
   else
     Botan::PKCS8::encode(*priv, p);
@@ -1141,11 +1116,7 @@ key_store_state::migrate_old_key_pair
         secure_byte_vector arc4_decrypt(arc4_decryptor.read_all());
         Botan::DataSource_Memory ds(Botan::PEM_Code::encode(arc4_decrypt,
                                                             "PRIVATE KEY"));
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
         pkcs8_key.reset(Botan::PKCS8::load_key(ds, lazy_rng::get()));
-#else
-        pkcs8_key.reset(Botan::PKCS8::load_key(ds));
-#endif
         break;
       }
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,4)
@@ -1179,10 +1150,7 @@ key_store_state::migrate_old_key_pair
 #endif
     "PBE-PKCS5v20(SHA-1,TripleDES/CBC)"));
 #else
-  Botan::PKCS8::encrypt_key(*priv_key, *unfiltered_pipe,
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
-                            lazy_rng::get(),
-#endif
+  Botan::PKCS8::encrypt_key(*priv_key, *unfiltered_pipe, lazy_rng::get(),
                             phrase(),
                             "PBE-PKCS5v20(SHA-1,TripleDES/CBC)",
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)

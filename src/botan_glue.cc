@@ -101,9 +101,7 @@ load_pkcs8_key(string const & priv_key)
 #elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11)
   return Botan::PKCS8::load_key(ds, lazy_rng::get(),
                                          Dummy_UI());
-#elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
-  return Botan::PKCS8::load_key(ds, lazy_rng::get(), "");
 #else
-  return Botan::PKCS8::load_key(ds, "");
+  return Botan::PKCS8::load_key(ds, lazy_rng::get(), "");
 #endif
 }

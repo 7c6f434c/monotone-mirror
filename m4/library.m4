@@ -184,7 +184,7 @@ AC_DEFUN([MTN_FIND_BOTAN],
   [AC_LANG_PROGRAM(
     [#include <botan/botan.h>
      #include <botan/init.h>
-     #if BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(1,6,3)
+     #if BOTAN_VERSION_CODE < BOTAN_VERSION_CODE_FOR(1,8,0)
      #error too old
      #endif
      #if BOTAN_VERSION_CODE == BOTAN_VERSION_CODE_FOR(1,7,14)

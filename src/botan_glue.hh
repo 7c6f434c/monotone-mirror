@@ -19,11 +19,8 @@
 #include <stdexcept>
 
 #include <botan/version.h>
-
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
-  #include <botan/loadstor.h>
-  #include <botan/filters.h>
-#endif
+#include <botan/loadstor.h>
+#include <botan/filters.h>
 
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
   #include <botan/pubkey.h>

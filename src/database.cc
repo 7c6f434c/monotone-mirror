@@ -3383,20 +3383,13 @@ database::encrypt_rsa(key_id const & pub_id,
   ct = encryptor.encrypt(
           reinterpret_cast<Botan::byte const *>(plaintext.data()),
           plaintext.size(), lazy_rng::get());
-#elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,7,7)
+#else
   shared_ptr<PK_Encryptor>
     encryptor(get_pk_encryptor(*pub_key, "EME1(SHA-1)"));
 
   ct = encryptor->encrypt(
           reinterpret_cast<Botan::byte const *>(plaintext.data()),
           plaintext.size(), lazy_rng::get());
-#else
-  shared_ptr<PK_Encryptor>
-    encryptor(Botan::get_pk_encryptor(*pub_key, "EME1(SHA-1)"));
-
-  ct = encryptor->encrypt(
-          reinterpret_cast<Botan::byte const *>(plaintext.data()),
-          plaintext.size());
 #endif
 
   ciphertext = rsa_oaep_sha_data(
