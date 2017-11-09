@@ -178,29 +178,17 @@ namespace
               % name % e.what());
         }
     }
+
     void validate_private_key_data(string const & name, string const & keydata) const
     {
       string decoded = decode_base64_as<string>(keydata, origin::user);
       try
         {
-          load_pkcs8_key(decoded);
+          load_pkcs8_key(name, decoded);
         }
-      catch (Botan::Decoding_Error const & e)
-        {
-          E(false, origin::user,
-            F("malformed packet: invalid private key data for '%s': %s")
-              % name % e.what());
-        }
-      // since we do not want to prompt for a password to decode it finally,
-      // we ignore all other exceptions
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
-      // That version simply throws a Decoding_Error, again.
-#elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11)
-      catch (Passphrase_Required) {}
-#else
-      catch (Botan::Invalid_Argument) {}
-#endif
+      catch (Passphrase_Required & e) { }
     }
+
     void validate_certname(string const & cn) const
     {
       E(!cn.empty()

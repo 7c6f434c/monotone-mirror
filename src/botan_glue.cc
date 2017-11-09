@@ -24,6 +24,7 @@
 
 #include "gzip.hh"
 #include "lazy_rng.hh"
+#include "sanity.hh"
 
 using std::make_shared;
 using std::shared_ptr;
@@ -57,15 +58,9 @@ class Dummy_UI : public Botan::User_Interface
 {
 public:
   virtual std::string get_passphrase(const std::string &, const std::string &,
-                                     Botan::User_Interface::UI_Result &) const;
+                                     Botan::User_Interface::UI_Result &) const
+    { throw Passphrase_Required("Passphrase required"); }
 };
-
-std::string
-Dummy_UI::get_passphrase(const std::string &, const std::string &,
-                         Botan::User_Interface::UI_Result&) const
-{
-  throw Passphrase_Required("Passphrase required");
-}
 #endif
 
 
@@ -87,21 +82,58 @@ std::function<std::pair<bool, std::string> ()> pass_req_throw_func =
     };
 #endif
 
-
 // A Botan-version agnostic key loader function trying to load an
-// unprotected key, i.e. one that loads without any password.
-PKCS8_PrivateKey *
-load_pkcs8_key(string const & priv_key)
+// unprotected key, i.e. one that loads without any password. Returns
+// a pointer to the loaded key, if successful, throws a Passphrase_Required
+// exception, if a password is required or throws a Decoding_error in case
+// of invalid data.
+shared_ptr<PKCS8_PrivateKey>
+load_pkcs8_key(string const & name, string const & priv_key)
 {
-  shared_ptr<PKCS8_PrivateKey> pkcs8_key;
-  Botan::DataSource_Memory ds(priv_key);
+  try
+    {
+      Botan::DataSource_Memory ds(priv_key);
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
-  return Botan::PKCS8::load_key(ds, lazy_rng::get(),
-                                pass_req_throw_func);
+      return shared_ptr<PKCS8_PrivateKey>(
+        Botan::PKCS8::load_key(ds, lazy_rng::get(), pass_req_throw_func));
 #elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11)
-  return Botan::PKCS8::load_key(ds, lazy_rng::get(),
-                                         Dummy_UI());
+      // For the 1.10.x series, Botan used a User_Interface class. In case of
+      // a missing password, the handler above threw a Passphrase_Required
+      // exception bailing out of the load_key method.
+      return shared_ptr<PKCS8_PrivateKey>(
+        Botan::PKCS8::load_key(ds, lazy_rng::get(), Dummy_UI()));
 #else
-  return Botan::PKCS8::load_key(ds, lazy_rng::get(), "");
+      return shared_ptr<PKCS8_PrivateKey>(
+        Botan::PKCS8::load_key(ds, lazy_rng::get(), ""));
+#endif
+    }
+  catch (Botan::Decoding_Error const & e)
+    {
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,14)
+      // Since Botan 1.11.14, the load_key method catches *all* exceptions
+      // thrown by the `get_passphrase` function passed and wrapps them in
+      // a `Decoding_Error`. The only way to figure it has been thrown is
+      // checking the error message.
+      //
+      // FIXME: instead of blindly calling load_key and let it throw,
+      //        consider parsing the PEM header before-hand, instead.
+      if (strstr(e.what(), "Passphrase required") != NULL)
+        throw Passphrase_Required("Passphrase required");
+#endif
+      E(false, origin::user,
+        F("malformed key_packet: invalid private key data for '%s': %s")
+          % name % e.what());
+    }
+  // Since we do not want to prompt for a password to decode it finally,
+  // we ignore the exceptions that indicate a missing password.  These
+  // differ slightly between Botan versions.
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,14)
+  // Handled above, no specific exception.
+#elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11)
+  catch (Passphrase_Required)
+    { throw Passphrase_Required("Passphrase required"); }
+#else
+  catch (Botan::Invalid_Argument)
+    { throw Passphrase_Required("Passphrase required"); }
 #endif
 }

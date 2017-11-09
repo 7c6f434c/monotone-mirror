@@ -16,6 +16,7 @@
 // would otherwise require at least one BOTAN_VERSION_CODE condition should
 // instead include this header, so the conditional code is centralized.
 
+#include <memory>
 #include <stdexcept>
 
 #include <botan/version.h>
@@ -51,8 +52,10 @@
 extern void initialize_botan(bool for_testing = false);
 
 // Botan version agnostic helper functions for loading a private key.
-typedef std::runtime_error Passphrase_Required;
-extern Botan::PKCS8_PrivateKey * load_pkcs8_key(std::string const & kp);
+class Passphrase_Required : public std::runtime_error
+  { using std::runtime_error::runtime_error; };
 
+extern std::shared_ptr<Botan::PKCS8_PrivateKey>
+load_pkcs8_key(std::string const & name, std::string const & kp);
 
 #endif   // __BOTAN_GLUE_H__

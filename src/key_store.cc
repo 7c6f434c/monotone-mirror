@@ -564,17 +564,9 @@ key_store_state::decrypt_private_key(key_id const & id,
   shared_ptr<PKCS8_PrivateKey> pkcs8_key;
   try // with empty passphrase
     {
-      pkcs8_key.reset(load_pkcs8_key(kp.priv()));
+      pkcs8_key = load_pkcs8_key(name(), kp.priv());
     }
-#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
-  catch (Botan::Exception & e)
-#elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,11)
   catch (Passphrase_Required & e)
-#elif BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,9,4)
-  catch (Botan::Invalid_Argument & e)
-#else
-  catch (Botan::Exception & e)
-#endif
     {
       L(FL("failed to load key with no passphrase: %s") % e.what());
 
