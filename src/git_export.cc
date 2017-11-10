@@ -444,12 +444,19 @@ export_changes(database & db, lua_hooks & lua,
 
       marked_revs[*r] = mark_id++;
 
+      s64 date_ms = author_date.as_millisecs_since_unix_epoch() / 1000;
+
+      // git does not accept negative values, so we truncate anything
+      // before 1970-01-01.
+      if (date_ms < 0)
+        date_ms = 0;
+
       cout << "commit refs/heads/" << branch_name << "\n"
            << "mark :" << marked_revs[*r] << "\n"
            << "author " << author_name << " "
-           << (author_date.as_millisecs_since_unix_epoch() / 1000) << " +0000\n"
+           << date_ms << " +0000\n"
            << "committer " << author_key << " "
-           << (author_date.as_millisecs_since_unix_epoch() / 1000) << " +0000\n"
+           << date_ms << " +0000\n"
            << "data " << data.size() << "\n" << data << "\n";
 
       if (!null_id(parent1))
