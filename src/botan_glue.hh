@@ -42,6 +42,15 @@
   #include <botan/init.h>
 #endif
 
+// In Botan revision d8021f3e (back when it still used monotone) the name
+// of SHA-1 changed to SHA-160.
+const static char * PBE_PKCS5_KEY_FORMAT =
+#if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(1,11,0)
+  "PBE-PKCS5v20(SHA-160,TripleDES/CBC)";
+#else
+  "PBE-PKCS5v20(SHA-1,TripleDES/CBC)";
+#endif
+
 
 #if BOTAN_VERSION_CODE >= BOTAN_VERSION_CODE_FOR(2,0,0)
   typedef Botan::secure_vector<Botan::byte> secure_byte_vector;
