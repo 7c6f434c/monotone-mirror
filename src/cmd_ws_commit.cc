@@ -965,7 +965,7 @@ list_heads_status(string const & first_msg,
 
       first = false;
       count_matching_heads += 1;
-      // FIXME: rpeort more details, here (date, author)
+      // FIXME: report more details, here (date, author)
     }
   return count_matching_heads;
 }
@@ -1055,10 +1055,10 @@ CMD(status, "status", "", CMD_REF(informative), N_("[PATH]..."),
       branch_head_ity = heads.insert
         (make_pair(app.opts.branch, map<revision_id, head_state>())).first;
 
-      set<revision_id> heads;
-      project.get_branch_heads(app.opts.branch, heads,
+      set<revision_id> branch_heads;
+      project.get_branch_heads(app.opts.branch, branch_heads,
                                app.opts.ignore_suspend_certs);
-      for (revision_id const & rev_id : heads)
+      for (revision_id const & rev_id : branch_heads)
         branch_head_ity->second.insert(make_pair(rev_id, head_state()));
     }
 
@@ -1069,19 +1069,18 @@ CMD(status, "status", "", CMD_REF(informative), N_("[PATH]..."),
   // collected in the following data structure.
   struct parent_state
   {
-    s64 height_diff;
     vector<branch_name> branches;
     set<branch_name> suspended_branches;
     set<utf8> tags;
     bool in_current_branch;
     parent_state()
-      : height_diff(INT_MAX),
-        in_current_branch(false)
+      : in_current_branch(false)
       { };
   };
   map<revision_id, parent_state> parent_states;
 
   // Collect information about all parents, not emitting any output, yet.
+  graph_loader loader(project.db);
   for (parent_entry const & i : old_rosters)
     {
       revision_id parent = parent_id(i);
@@ -1136,25 +1135,31 @@ CMD(status, "status", "", CMD_REF(informative), N_("[PATH]..."),
                 (make_pair(parent_branch,
                            map<revision_id, head_state>())).first;
 
-              set<revision_id> heads;
+              set<revision_id> branch_heads;
               project.get_branch_heads(parent_branch,
-                                       heads,
+                                       branch_heads,
                                        app.opts.ignore_suspend_certs);
-              for (revision_id const & rev_id : heads)
+              for (revision_id const & rev_id : branch_heads)
                 branch_head_ity->second.insert(make_pair(rev_id, head_state()));
             }
 
-          // Check revision graph.
+          // Check the revision graph for descendants of this parent
+          // revision which are also a head (of this branch)
+          set<revision_id> parent_descendants;
+          parent_descendants.insert(parent);
+          loader.load_descendants(parent_descendants);
 
-          // FIXME: blatantly copied from automate.cc - should be
-          // merged. Consider using graph_loader or some such.
-
-          // FIXME: for this use case, we might want to limit search depth.
-
-          set<revision_id> descendents;
-          project.get_branch_heads(parent_branch, descendents,
+          set<revision_id> branch_heads;
+          project.get_branch_heads(parent_branch,
+                                   branch_heads,
                                    app.opts.ignore_suspend_certs);
-          if (descendents.empty())
+
+          set<revision_id> descendants;
+          set_intersection(parent_descendants.begin(), parent_descendants.end(),
+                           branch_heads.begin(), branch_heads.end(),
+                           inserter(descendants, descendants.end()));
+
+          if (descendants.empty())
             {
               if (parent_branch == app.opts.branch)
                 on_head_of_current_branch = true;
@@ -1162,39 +1167,52 @@ CMD(status, "status", "", CMD_REF(informative), N_("[PATH]..."),
           else
             {
               rev_height parent_h = project.db.get_rev_height(parent);
-              for (revision_id const & head : descendents)
+              for (auto ity = branch_head_ity->second.begin();
+                   ity != branch_head_ity->second.end(); ++ity)
                 {
-                  // Determine the (height) distance of the parent
-                  // revision to this head.
-                  rev_height head_h = project.db.get_rev_height(head);
-                  L(FL("Head '%s' of branch '%s' has height %s")
-                    % color.colorize(encode_hexenc(head.inner()(),
-                                                   head.inner().made_from),
-                                     colorizer::rev_id)
-                    % color.colorize(parent_branch(), colorizer::branch)
-                    % head_h);
+                  revision_id const & head = ity->first;
+                  head_state & hs = ity->second;
 
-                  pair<bool, s64> diff = head_h.distance_to(parent_h);
+                  // If this branch head is a descendant of the current
+                  // parent revision, mark it as not divergent and come up
+                  // with a reasonable estimate for the distance between
+                  // the two.
+                  if (descendants.find(head) != descendants.end())
+                    {
+                      hs.is_divergent = false;
 
-                  // Mark as not divergent and store the distance.
-                  auto head_state_ity = branch_head_ity->second.find(head);
-                  if (head_state_ity == branch_head_ity->second.end())
-                    head_state_ity = branch_head_ity->second.insert
-                      (make_pair(head, head_state())).first;
+                      rev_height head_h = project.db.get_rev_height(head);
+                      pair<bool, s64> diff = head_h.distance_to(parent_h);
 
-                  head_state_ity->second.is_divergent = false;
-                  head_state_ity->second.is_parent = head == parent;
+                      L(FL("Dencendant head '%s' of branch '%s' "
+                           "has height %s and distance %d")
+                        % encode_hexenc(head.inner()(),
+                                        head.inner().made_from)
+                        % parent_branch()
+                        % head_h
+                        % diff.second);
 
-                  // FIXME: if the distance cannot be determined from the
-                  // revision height, we should use breadth first seach with
-                  // some limit. For now, we simply punt and do not display
-                  // anything.
-                  //
-                  // FIXME: cases where diff.second < 0 should be
-                  // analyzed. diff.second == 0 is easily possible for head
-                  // == parent.
-                  if (diff.first && diff.second > 0)
-                    head_state_ity->second.distance = diff.second;
+                      // FIXME: if the distance cannot be determined from
+                      // the revision height, we should use breadth first
+                      // search with some limit. For now, we simply punt
+                      // and do not display anything.
+                      if (diff.first)
+                        {
+                          I(diff.second >= 0);
+                          hs.distance = diff.second;
+                        }
+                    }
+                  else
+                    L(FL("Head '%s' of branch '%s' "
+                         "is not a descendant of parent '%s'")
+                      % encode_hexenc(head.inner()(),
+                                      head.inner().made_from)
+                      % parent_branch()
+                      % encode_hexenc(parent.inner()(),
+                                      parent.inner().made_from));
+
+                  if (head == parent)
+                    hs.is_parent = true;
                 }
             }
         }
