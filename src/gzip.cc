@@ -88,7 +88,7 @@ class Zlib_Stream
 * Gzip_Compression Constructor                   *
 *************************************************/
 Gzip_Compression::Gzip_Compression(u32bit l) :
-   level((l >= 9) ? 9 : l), buffer(DEFAULT_BUFFERSIZE),
+   level((l >= 9) ? 9 : l), buffer(BOTAN_DEFAULT_BUFFER_SIZE),
    pipe(new Hash_Filter("CRC32")), count( 0 )
    {
 
@@ -220,11 +220,11 @@ void Gzip_Compression::put_footer()
 /*************************************************
 * Gzip_Decompression Constructor                 *
 *************************************************/
-Gzip_Decompression::Gzip_Decompression() : buffer(DEFAULT_BUFFERSIZE),
+Gzip_Decompression::Gzip_Decompression() : buffer(BOTAN_DEFAULT_BUFFER_SIZE),
    no_writes(true), pipe(new Hash_Filter("CRC32")), footer(0)
    {
-   if (DEFAULT_BUFFERSIZE < sizeof(GZIP::GZIP_HEADER))
-      throw Decoding_Error("DEFAULT_BUFFERSIZE is too small");
+   if (BOTAN_DEFAULT_BUFFER_SIZE < sizeof(GZIP::GZIP_HEADER))
+      throw Decoding_Error("BOTAN_DEFAULT_BUFFER_SIZE is too small");
 
    zlib = new Zlib_Stream;
 

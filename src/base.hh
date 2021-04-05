@@ -97,6 +97,10 @@ template <> void dump(unsigned long long const & obj, std::string & out);
 #define _(str) gettext(str)
 #define N_(str) gettext_noop(str)
 
+// include it here so that it gets loaded before "sanity.hh"
+// as it defines an "E" macro which conflicts with it
+#include "botan/exceptn.h"
+
 #endif // __BASE_HH__
 
 // Local Variables:
