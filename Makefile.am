@@ -521,7 +521,7 @@ po/%.gmo: $(srcdir)/po/%.gmo
 #	Some versions of gmake just drop the argument, but still
 #	execute the rule. Therefore, we check if the source is not
 #	empty.
-	[[ -z $< ]] || cp $< $@
+	[[ -z "$<" ]] || cp $< $@
 
 dist-nls:
 	@echo "*** Cannot 'make dist' without xgettext" >&2; exit 1
